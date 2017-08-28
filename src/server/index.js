@@ -5,6 +5,7 @@ import logger from 'morgan';
 import parser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import db from './db/config';
+import router from './router';
 
 import { APP_NAME, STATIC_PATH, WEB_PORT } from '../shared/config';
 import { isProd } from '../shared/util';
@@ -32,3 +33,5 @@ app.listen(WEB_PORT, () => {
   console.log(`Server running on port ${WEB_PORT} ${isProd ? '(production)' :
     '(development).\nKeep "yarn dev:wds" running in an other terminal'}.`);
 });
+
+router(app);
