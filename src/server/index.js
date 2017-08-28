@@ -15,9 +15,6 @@ app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME));
 });
 
-app.get('*', (req, res) => {
-  res.send('wild card')
-})
 
 app.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console
