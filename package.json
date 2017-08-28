@@ -12,7 +12,7 @@
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "eslint src && mocha --coverage",
+    "test": "eslint src",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
