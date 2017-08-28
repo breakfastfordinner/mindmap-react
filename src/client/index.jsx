@@ -6,13 +6,16 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './app';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
+import { BrowserRouter } from 'react-router-dom';
 
 const rootEl = document.querySelector(APP_CONTAINER_SELECTOR);
 
 const wrapApp = AppComponent =>
-  <AppContainer>
-    <AppComponent />
-  </AppContainer>;
+  <BrowserRouter>
+    <AppContainer>
+      <AppComponent />
+   </AppContainer>
+  </BrowserRouter>;
 
 ReactDOM.render(wrapApp(App), rootEl);
 
