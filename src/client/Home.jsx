@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Link
 } from 'react-router-dom';
@@ -14,11 +14,11 @@ class Home extends React.Component {
     this.state = {
       maps: [{
         id: '1234qwer', 
-        name: 'test1'
+        name: 'Map1'
       }, 
       { 
         id: '5678asdf',
-        name: 'test2'
+        name: 'Another map'
       }, 
       {
         id: '9999qqqq',
@@ -30,9 +30,17 @@ class Home extends React.Component {
   
 
   render() {
+    let mapsLinks = this.state.maps.map((map, i)=>{
+      return (
+        <li key={map.id}>
+          <Link to={`/canvas/${map.id}`}>{map.name}</Link>
+        </li>
+        )
+    })
     return (
       <div>
-        home page here?
+        Click on the following to link to different maps:
+        {mapsLinks}
       </div>
     )
   }

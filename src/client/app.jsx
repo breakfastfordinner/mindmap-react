@@ -8,6 +8,8 @@
 import React from 'react';
 import Home from './Home.jsx';
 import Auth from './Auth.jsx';
+import Canvas from './Canvas.jsx';
+
 
 import {
   Route,
@@ -19,8 +21,9 @@ const App = () =>
     <div>
         <h1>Home</h1>
           <Switch>
-            <Route path="/auth" component={Auth} />
-            <Route path="/" component={Home} />
+            <Route exact path="/" render={() => <Home />} />
+            <Route path="/canvas/:id" component={Canvas}/>
+            <Route path="/auth" render={() => <Auth />} />
           </Switch>
 
 
