@@ -3,7 +3,7 @@ global.Promise = require('bluebird');
 mongoose.Promise = require('bluebird');
 
 mongoose.connect('mongodb://localhost/mindmap', {
-  server: {reconnectTries: Number.MAX_VALUE}
+  server: { reconnectTries: Number.MAX_VALUE },
 });
 
 const db = mongoose.connection;

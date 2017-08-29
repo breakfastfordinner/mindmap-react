@@ -6,7 +6,7 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', { session: false });
 const requireLogin = passport.authenticate('local', { session: false });
 
-const routes = app => {
+const routes = (app) => {
   const apiRoutes = express.Router();
   const authRoutes = express.Router();
 
@@ -14,8 +14,8 @@ const routes = app => {
   authRoutes.post('/register', AuthCtrl.register);
   authRoutes.post('/login', requireLogin, AuthCtrl.login);
 
-  apiRoutes.get('/data', requireAuth, (req, res, next) => {
-    res.send('Your protected route is working!');
+  apiRoutes.get('/data', requireAuth, (req, res) => {
+    res.send('Your protected route is working');
   });
 
   app.use('/api', apiRoutes);

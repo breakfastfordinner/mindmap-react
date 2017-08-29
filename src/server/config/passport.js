@@ -8,7 +8,6 @@ const LocalStrat = require('passport-local');
 const LOCAL_OPTS = { usernameField: 'username' };
 
 const JWT_OPTS = {
-  // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
   secretOrKey: config.secret,
 };
@@ -16,16 +15,24 @@ const JWT_OPTS = {
 
 const localLogin = new LocalStrat(LOCAL_OPTS, (username, password, done) => {
   User.findOne({ username: username }, (err, user) => {
-    if (err) return done(err);
-    if (!user) return done(null, false, {
-      error: 'Your login details could not be verified.  Please try again.'
-    });
+    if (err) {
+      return done(err);
+    }
+    if (!user) {
+      return done(null, false, {
+        error: 'Your login details could not be verified.  Please try again.',
+      });
+    }
 
     user.comparePassword(password, (err, matches) => {
-      if (err) return done(err);
-      if (!matches) return done(null, false, {
-        error: 'Your login details could not be verified.  Please try agian.'
-      });
+      if (err) {
+        return done(err);
+      }
+      if (!matches) {
+        return done(null, false, {
+          error: 'Your login details could not be verified.  Please try agian.',
+        });
+      }
 
       return done(null, user);
     });
