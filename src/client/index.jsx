@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
-import App from './App';
+import App from './app';
 import { APP_CONTAINER_SELECTOR } from '../shared/config';
 import { BrowserRouter } from 'react-router-dom';
 

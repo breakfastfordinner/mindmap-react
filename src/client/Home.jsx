@@ -18,7 +18,7 @@ class Home extends React.Component {
       }, 
       { 
         id: '5678asdf',
-        name: 'Another map'
+        name: 'Another Map'
       }, 
       {
         id: '9999qqqq',
