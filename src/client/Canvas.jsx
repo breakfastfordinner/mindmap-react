@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TestMap from './TestMap.jsx';
 // import signUp from './signUp.jsx';
 
         // <Link to="/signup" component={signUp}</Link>
@@ -25,18 +26,18 @@ class Canvas extends React.Component {
   }
 
 
-  
+
 
   render() {
     return (
       <div>
         The map being rendered is:
         {this.props.match.params.id}
-
+        <TestMap ></TestMap>
       </div>
       )
   }
-  
+
 }
 
 export default Canvas;
