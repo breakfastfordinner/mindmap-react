@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-  withRouter,
-  Route,
-  Link
-} from 'react-router-dom';
-// import signUp from './signUp.jsx';
+import { withRouter, Route, Link } from 'react-router-dom';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
-        // <Link to="/signup" component={signUp}</Link>
 
 class Register extends React.Component {
   constructor(props) {
@@ -19,7 +15,7 @@ class Register extends React.Component {
     console.log('registers props:', this.props)
     console.log('hi is it here', e.target.username.value, e.target.password.value)
     /*
-    e.target.username.value 
+    e.target.username.value
     e.target.password.value
     */
     /*
@@ -28,19 +24,19 @@ class Register extends React.Component {
     */
   }
 
-  
+
 
   render() {
-    // console.log(this)
     return (
       <div>
-        <form onSubmit={this.handleSubmit}> 
-          <input className="username" name="username" type="text" placeholder="username" />
-          <input className="password" name="password" type="text" placeholder="password" />
-          <input className="submit" type="submit" value="Log In"/>
+        <h1 className="login"> Create An Account </h1>
+        <form onSubmit={this.handleSubmit}>
+          <TextField className="username" name="username" type="text" hintText="username" /><br />
+          <TextField className="password" name="password" type="text" hintText="password" /><br />
+          <RaisedButton className="submit" label="Submit" type="submit" value="Log In"/>
         </form>
         <div>
-        Want to <Link to="/auth">log-in</Link>?
+        <p>Already registered? <Link to="/login">Login</Link></p>
         </div>
       </div>
     )
