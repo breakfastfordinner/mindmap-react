@@ -26,7 +26,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="auth">
         <h1 className="login"> Welcome back! </h1>
         <form onSubmit={this.handleSubmit}>
           <TextField className="username" name="username" type="text" hintText="username" /><br />
