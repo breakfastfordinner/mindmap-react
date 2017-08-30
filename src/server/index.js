@@ -27,6 +27,10 @@ app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME));
 });
 
+app.all('*', (req, res) => {
+  res.redirect('/');
+});
+
 
 app.listen(WEB_PORT, () => {
   // eslint-disable-next-line no-console

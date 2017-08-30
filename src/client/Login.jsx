@@ -1,10 +1,9 @@
 import React from 'react';
-import { withRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
-
-class Register extends React.Component {
+class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -12,8 +11,8 @@ class Register extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log('registers props:', this.props)
     console.log('hi is it here', e.target.username.value, e.target.password.value)
+    console.log('auth props:', this.props);
     /*
     e.target.username.value
     e.target.password.value
@@ -25,22 +24,22 @@ class Register extends React.Component {
   }
 
 
-
   render() {
     return (
       <div className="auth">
-        <h1 className="register"> Create An Account </h1>
+        <h1 className="login"> Welcome back! </h1>
         <form onSubmit={this.handleSubmit}>
           <TextField className="username" name="username" type="text" hintText="username" /><br />
           <TextField className="password" name="password" type="text" hintText="password" /><br />
           <RaisedButton className="submit" label="Submit" type="submit" value="Log In"/>
         </form>
         <div>
-        <p>Already registered? <Link to="/login">Login</Link></p>
+        <p> Need an account? <Link to="/register">Sign Up</Link></p>
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(Register);
+export default withRouter(Login);
+

@@ -1,16 +1,14 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import Home from './Home.jsx';
-import Auth from './Auth.jsx';
 import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
+import Login from './Login.jsx';
+import Nav from './Nav.jsx';
 
 
-import {
-  Route,
-  Link,
-  Switch
-} from 'react-router-dom';
-
+import { Route, Link, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,11 +45,11 @@ class App extends React.Component {
         user: cookie.user
       })
 
-    } 
+    }
     */
 
-    //asyn ajax call that updates 
-    //the array of maps after the user id was 
+    //asyn ajax call that updates
+    //the array of maps after the user id was
     //obtained from previous syn fall
     /*
     MapModel.getMap((maps)=>{
@@ -81,20 +79,18 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Home</h1>
-          <Switch>
-            <Route exact path="/" render={()=><Home maps={this.state.maps}/>} />
-            <Route path="/canvas/:id" render={()=><Canvas />} />
-            <Route path="/auth" render={()=><Auth updateUser={this.handleLogin}/>} />
-            <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
-          </Switch>
-
-        <footer>
-            <Link to="/">Home </Link>
-            <Link to="/auth">Auth</Link>
-        </footer>
-
-      </div>
+       <MuiThemeProvider>
+        <div>
+            <Nav />
+              <Switch>
+                <Route exact path="/" render={()=><Home maps={this.state.maps}/>} />
+                <Route path="/canvas/:id" render={()=><Canvas />} />
+                <Route path="/login" render={()=><Login updateUser={this.handleLogin}/>} />
+                <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
+              </Switch>
+          </div>
+        </MuiThemeProvider>
+     </div>
 
 
     )
