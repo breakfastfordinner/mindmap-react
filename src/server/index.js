@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME));
 });
 
-app.all('*', function(req, res) {
+app.all('*', (req, res) => {
   res.redirect('/');
 });
 

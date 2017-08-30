@@ -1,9 +1,8 @@
 import React from 'react';
-import {
-  withRouter,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-dom';
+import Signup from './Signup.jsx';
+import Login from './Login.jsx';
+
 // import signUp from './signUp.jsx';
 
         // <Link to="/signup" component={signUp}</Link>
@@ -19,7 +18,7 @@ class Auth extends React.Component {
     console.log('hi is it here', e.target.username.value, e.target.password.value)
     console.log('auth props:', this.props);
     /*
-    e.target.username.value 
+    e.target.username.value
     e.target.password.value
     */
     /*
@@ -28,12 +27,12 @@ class Auth extends React.Component {
     */
   }
 
-  
+
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}> 
+        <form onSubmit={this.handleSubmit}>
           <input className="username" name="username" type="text" placeholder="username" />
           <input className="password" name="password" type="text" placeholder="password" />
           <input className="submit" type="submit" value="Log In"/>
@@ -46,4 +45,8 @@ class Auth extends React.Component {
   }
 }
 
+<<<<<<< ef3adee0e1ad0bb4c82f19a8b21ec28a2beb7dd6
 export default withRouter(Auth);
+=======
+export default Auth;
+>>>>>>> add signup and login components
