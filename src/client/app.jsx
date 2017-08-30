@@ -96,14 +96,21 @@ class App extends React.Component {
   async handleLogin(username, password, typeObj) {
     //also send a axio request to the server to varify
     const response = await AuthModel.authenticateUser(username, password, typeObj);
-    // console.log(cookies.get('user'));
-    this.setState({
-      signedIn: true,
-      user: cookies.get('user')
-    })
-    console.log(this.state.user)
+    console.log(cookies.get('user'));
+    console.log(cookies)
+    if (response.status === 201) {
+      this.setState({
+        signedIn: true,
+        user: cookies.get('user')
+      })
+      this.props.history.push("/");
+      
+    } else {
+      console.log('something wrong')
+    }
+    // console.log(this.state.user)
     // console.log(username, password, typeObj, 'check on data')
-    console.log(this, 'this did invoked right??? why didnt this reredner????????')
+    // console.log(this, 'this did invoked right??? why didnt this reredner????????')
   }
 
   async handleLogout() {

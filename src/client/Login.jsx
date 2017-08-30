@@ -19,7 +19,6 @@ class Login extends React.Component {
     // console.log('hi is it here', e.target.username.value, e.target.password.value)
     // console.log('auth props:', this.props);
     await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'login'});
-    this.props.history.push("/");
     /*
     e.target.username.value
     e.target.password.value

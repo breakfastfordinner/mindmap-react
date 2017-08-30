@@ -21,7 +21,6 @@ class Register extends React.Component {
     console.log('registers props:', this.props)
     await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'register'});
     // console.log('hi is it here', e.target.username.value, e.target.password.value)
-    this.props.history.push("/");
     /*
     e.target.username.value
     e.target.password.value
