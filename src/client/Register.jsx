@@ -10,10 +10,16 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  componentDidMount() {
+    this.props.signedIn? this.props.history.push("/") : null;
+  }
+
+  async handleSubmit(e) {
     e.preventDefault();
-    console.log('registers props:', this.props)
-    console.log('hi is it here', e.target.username.value, e.target.password.value)
+    // console.log('registers props:', this.props)
+    // console.log('hi is it here', e.target.username.value, e.target.password.value)
+    await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'register'});
+    this.props.history.push("/");
     /*
     e.target.username.value
     e.target.password.value
