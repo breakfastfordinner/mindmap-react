@@ -24,5 +24,5 @@ if (module.hot) {
     // eslint-disable-next-line global-require
     const NextApp = require('./app').default
     ReactDOM.render(wrapApp(NextApp), rootEl)
-  })qd
+  })
 };
