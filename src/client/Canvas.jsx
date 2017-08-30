@@ -33,7 +33,7 @@ class Canvas extends React.Component {
       <div>
         The map being rendered is:
         {this.props.match.params.id}
-        <TestMap ></TestMap>
+        <TestMap></TestMap>
       </div>
       )
   }

@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
 body {
   width: 960px;
   margin: auto;
-  font-family: sans-serif;
+  font-family: 'Roboto';
 }
 
 h1 {
-  color: limegreen;
+  color: #2a2a66;
 }
