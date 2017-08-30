@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 // import signUp from './signUp.jsx';
 
@@ -40,4 +40,4 @@ class Canvas extends React.Component {
 
 }
 
-export default Canvas;
+export default withRouter(Canvas);

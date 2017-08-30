@@ -1,14 +1,8 @@
-
-// import React from 'react'
-
-// const App = () => <h1>Hello breakfastfordinner!</h1>
-
-// export default App
-
 import React from 'react';
 import Home from './Home.jsx';
 import Auth from './Auth.jsx';
 import Canvas from './Canvas.jsx';
+import Register from './Register.jsx';
 
 
 import {
@@ -17,33 +11,55 @@ import {
   Switch
 } from 'react-router-dom';
 
-// const App = () =>
-//     <div>
-//         <h1>Home</h1>
-//           <Switch>
-//             <Route exact path="/" render={()=><Home auth="213"/>} />
-//             <Route path="/canvas/:id" component={Canvas}/>
-//             <Route path="/auth" component={Auth} />
-//           </Switch>
-
-//         <footer>
-//             <Link to="/">Home </Link>
-//             <Link to="/auth">Auth</Link>
-//         </footer>
-
-//     </div>;
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      signedIn: false,
+      user: {},
+      maps: [],
+
 
     }
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  componentWillMount() {
-    //an ajax call to check if session exist
-    
+  // componentWillMount() {
+  //   //an ajax call to check if session exist
+  //   // UserModel.getUser((data) => {
+  //   //   if (data.passport) {
+  //   //     this.setState({
+  //   //       signedIn: true,
+  //   //       user: data.passport.user
+  //   //     })
+  //   //   }
+  //   // })
+  //   //something like this
+  // }
+
+  componentDidMount() {
+    //import from ajax file cookie
+    /*
+    if (cookie.user) {
+      this.setState({
+        signedIn: true,
+        user: cookie.user
+      })
+
+    } 
+    */
+
+    //asyn ajax call that updates 
+    //the array of maps after the user id was 
+    //obtained from previous syn fall
+    /*
+    MapModel.getMap((maps)=>{
+      this.setState({
+        maps: maps
+      })
+    })
+    */
 
   }
 
@@ -52,7 +68,14 @@ class App extends React.Component {
       signedIn: true,
       user: userObj
     })
-    //send a post request to server and 
+    //send a post request to server inside of auth components and call this funciton to set state
+  }
+
+  handleLogout() {
+    this.setState({
+      signedIn: false,
+      user: {}
+    })
   }
 
 
@@ -62,9 +85,10 @@ class App extends React.Component {
       <div>
         <h1>Home</h1>
           <Switch>
-            <Route exact path="/" render={()=><Home auth="213"/>} />
-            <Route path="/canvas/:id" component={Canvas}/>
-            <Route path="/auth" component={Auth} />
+            <Route exact path="/" render={()=><Home maps={this.state.maps}/>} />
+            <Route path="/canvas/:id" render={()=><Canvas />} />
+            <Route path="/auth" render={()=><Auth updateUser={this.handleLogin}/>} />
+            <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
           </Switch>
 
         <footer>

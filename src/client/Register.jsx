@@ -8,7 +8,7 @@ import {
 
         // <Link to="/signup" component={signUp}</Link>
 
-class Auth extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,8 +16,8 @@ class Auth extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    console.log('registers props:', this.props)
     console.log('hi is it here', e.target.username.value, e.target.password.value)
-    console.log('auth props:', this.props);
     /*
     e.target.username.value 
     e.target.password.value
@@ -31,6 +31,7 @@ class Auth extends React.Component {
   
 
   render() {
+    // console.log(this)
     return (
       <div>
         <form onSubmit={this.handleSubmit}> 
@@ -39,11 +40,11 @@ class Auth extends React.Component {
           <input className="submit" type="submit" value="Log In"/>
         </form>
         <div>
-        Need to <Link to="/register">signed-up</Link>?
+        Want to <Link to="/auth">log-in</Link>?
         </div>
       </div>
     )
   }
 }
 
-export default withRouter(Auth);
+export default withRouter(Register);
