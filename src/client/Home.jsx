@@ -2,7 +2,8 @@ import React from 'react';
 import {
   BrowserRouter,
   Route,
-  Link
+  Link,
+  withRouter
 } from 'react-router-dom';
 // import signUp from './signUp.jsx';
 
@@ -30,6 +31,7 @@ class Home extends React.Component {
   
 
   render() {
+    window.myprops=this.props
     let mapsLinks = this.state.maps.map((map, i)=>{
       return (
         <li key={map.id}>
@@ -46,4 +48,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);
