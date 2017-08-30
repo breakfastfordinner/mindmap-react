@@ -28,8 +28,8 @@ class Register extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1 className="login"> Create An Account </h1>
+      <div className="auth">
+        <h1 className="register"> Create An Account </h1>
         <form onSubmit={this.handleSubmit}>
           <TextField className="username" name="username" type="text" hintText="username" /><br />
           <TextField className="password" name="password" type="text" hintText="password" /><br />

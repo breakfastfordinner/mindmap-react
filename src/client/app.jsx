@@ -5,6 +5,7 @@ import Home from './Home.jsx';
 import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
+import Nav from './Nav.jsx';
 
 
 import { Route, Link, Switch } from 'react-router-dom';
@@ -80,19 +81,13 @@ class App extends React.Component {
       <div>
        <MuiThemeProvider>
         <div>
-            <h1>Home</h1>
+            <Nav />
               <Switch>
                 <Route exact path="/" render={()=><Home maps={this.state.maps}/>} />
                 <Route path="/canvas/:id" render={()=><Canvas />} />
                 <Route path="/login" render={()=><Login updateUser={this.handleLogin}/>} />
                 <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
               </Switch>
-
-            <footer>
-                <Link to="/">Home </Link>
-                <Link to="/login">Login</Link>
-            </footer>
-
           </div>
         </MuiThemeProvider>
      </div>

@@ -1,26 +1,18 @@
 import React from 'react';
-import {
-  BrowserRouter,
-  Route,
-  Link,
-  withRouter
-} from 'react-router-dom';
-// import signUp from './signUp.jsx';
-
-        // <Link to="/signup" component={signUp}</Link>
+import { BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
 
 class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       maps: [{
-        id: '1234qwer', 
+        id: '1234qwer',
         name: 'Map1'
-      }, 
-      { 
+      },
+      {
         id: '5678asdf',
         name: 'Another Map'
-      }, 
+      },
       {
         id: '9999qqqq',
         name: 'test3'
@@ -28,7 +20,7 @@ class Home extends React.Component {
     }
   }
 
-  
+
 
   render() {
     window.myprops=this.props
@@ -40,7 +32,7 @@ class Home extends React.Component {
         )
     })
     return (
-      <div>
+      <div className="home">
         Click on the following to link to different maps:
         {mapsLinks}
       </div>

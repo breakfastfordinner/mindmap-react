@@ -1,12 +1,33 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
 body {
-  width: 960px;
+  width: 100%;
   margin: auto;
   font-family: 'Roboto';
 }
 
 h1 {
-  color: #2a2a66;
+  color: #FFC107;
 }
 
+
+.home {
+  padding: 60px 0 0 0;
+  width: 960px;
+  margin: 0 auto;
+}
+
+.auth {
+  padding: 60px 0 0 0;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.loginLink {
+  padding-top: 20px !important;
+}
+
+.navLink {
+  text-decoration: none;
+  font-color: white !important;
+}
