@@ -14,11 +14,11 @@ class Auth extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     // console.log('hi is it here', e.target.username.value, e.target.password.value)
     console.log('auth props:', this.props);
-    this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'login'});
+    await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'login'});
     this.props.history.push("/");
     // this.props.signedIn? this.props.history.push("/") : null;
     /*

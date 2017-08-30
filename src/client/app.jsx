@@ -11,7 +11,10 @@ import Cookies from 'universal-cookie';
 
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
+
 const cookies = new Cookies();
+// cookies.get('user')
+
 
 class App extends React.Component {
   constructor(props) {
@@ -61,9 +64,13 @@ class App extends React.Component {
       })
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
     */
     // console.log(this, 'when i clicked, did this happen?')
+    // */
+    // console.log(cookies.get('user'));
+    console.log(this, 'when i clicked, did this happen?')
     if (cookies.get('user')) {
       this.setState({
         signedIn: true,
