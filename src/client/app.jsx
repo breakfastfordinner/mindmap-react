@@ -6,9 +6,15 @@ import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
 import Nav from './Nav.jsx';
+import AuthModel from './actions/auth';
+import Cookies from 'universal-cookie';
+
+import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
 
-import { Route, Link, Switch } from 'react-router-dom';
+const cookies = new Cookies();
+// cookies.get('user')
+
 
 class App extends React.Component {
   constructor(props) {
@@ -16,11 +22,23 @@ class App extends React.Component {
     this.state = {
       signedIn: false,
       user: {},
-      maps: [],
+      maps: [{
+        id: '1234qwer', 
+        name: 'Map1'
+      }, 
+      { 
+        id: '5678asdf',
+        name: 'Another Map'
+      }, 
+      {
+        id: '9999qqqq',
+        name: 'test3'
+      }],
 
 
     }
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
   // componentWillMount() {
@@ -45,8 +63,21 @@ class App extends React.Component {
         user: cookie.user
       })
 
+
     }
     */
+    // console.log(this, 'when i clicked, did this happen?')
+    // */
+    // console.log(cookies.get('user'));
+    // console.log(this, 'when i clicked, did this happen?')
+    if (cookies.get('user')) {
+      this.setState({
+        signedIn: true,
+        user: cookies.get('user')
+      })
+    }
+    this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
+
 
     //asyn ajax call that updates
     //the array of maps after the user id was
@@ -61,36 +92,56 @@ class App extends React.Component {
 
   }
 
-  handleLogin(userObj) {
-    this.setState({
-      signedIn: true,
-      user: userObj
-    })
-    //send a post request to server inside of auth components and call this funciton to set state
+  async handleAuth(username, password, typeObj) {
+    //also send a axio request to the server to varify
+    const response = await AuthModel.authenticateUser(username, password, typeObj);
+    // console.log(cookies.get('user'));
+    // console.log(cookies)
+    if (response.status === 201) {
+      this.setState({
+        signedIn: true,
+        user: cookies.get('user')
+      })
+      this.props.history.push("/");
+      
+    } else {
+      alert('Something went wrong...');
+      console.log('something wrong')
+    }
+    // console.log(this.state.user)
+    // console.log(username, password, typeObj, 'check on data')
+    // console.log(this, 'this did invoked right??? why didnt this reredner????????')
   }
 
-  handleLogout() {
+  async handleLogout() {
+    await AuthModel.logOutUser();
     this.setState({
       signedIn: false,
       user: {}
     })
+    this.props.history.push("/login");
   }
 
   render() {
+    // console.log(this, 'here?')
+    // this.state.signedIn? this.props.history.push('/') : this.props.history.push('/auth');
+
     return (
       <div>
-       <MuiThemeProvider>
-        <div>
+      <button className="logout" onClick={this.handleLogout}>Log out</button>
+        <MuiThemeProvider>
+          <div>
             <Nav />
               <Switch>
-                <Route exact path="/" render={()=><Home maps={this.state.maps}/>} />
-                <Route path="/canvas/:id" render={()=><Canvas />} />
-                <Route path="/login" render={()=><Login updateUser={this.handleLogin}/>} />
-                <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
+                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} />
+                <Route path="/canvas/:id" render={()=><Canvas user={this.state.user}/>} />
+                <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn}/>} />
+                <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
               </Switch>
           </div>
         </MuiThemeProvider>
      </div>
+
 
 
     )
@@ -98,4 +149,4 @@ class App extends React.Component {
 }
 
 
-export default App;
+export default withRouter(App);

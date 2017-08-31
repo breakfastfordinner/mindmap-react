@@ -18,7 +18,6 @@ const styles = {
 const Nav = () => (
   <AppBar
     title={<NavLink activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>MindMap</span></NavLink>}
-    onTitleTouchTap={<NavLink to="/home"></NavLink>}
     iconElementLeft={<IconButton></IconButton>}
     iconElementRight={<FlatButton label="Login" containerElement={<Link to="/login"/>} />}
   />
