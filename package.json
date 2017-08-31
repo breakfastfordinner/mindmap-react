@@ -53,13 +53,17 @@
     "babel-eslint": "^7.2.3",
     "babel-polyfill": "^6.26.0",
     "babel-preset-node6": "^11.0.0",
+    "babel-preset-stage-2": "^6.24.1",
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "chai": "^4.1.1",
     "chai-http": "^3.0.0",
+    "clone": "^2.1.1",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
+    "d3": "3.5.17",
+    "deep-equal": "^1.0.1",
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.3",
     "material-ui": "^0.19.0",
@@ -68,6 +72,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^3.0.0",
     "passport-local": "^1.0.0",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-cookie": "^2.0.8",
     "react-d3-tree": "^1.4.0",
@@ -75,6 +80,8 @@
     "react-hot-loader": "next",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "universal-cookie": "^2.0.8"
+    "react-transition-group": "^2.2.0",
+    "universal-cookie": "^2.0.8",
+    "uuid": "^3.1.0"
   }
 }

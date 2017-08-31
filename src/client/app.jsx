@@ -6,6 +6,7 @@ import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
 import Nav from './Nav.jsx';
+import d3 from 'd3';
 
 
 import { Route, Link, Switch } from 'react-router-dom';
