@@ -63,8 +63,7 @@ class App extends React.Component {
         user: cookie.user
       })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     }
     */
     // console.log(this, 'when i clicked, did this happen?')
