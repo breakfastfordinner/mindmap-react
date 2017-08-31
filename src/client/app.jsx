@@ -37,7 +37,7 @@ class App extends React.Component {
 
 
     }
-    this.handleLogin = this.handleLogin.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -70,7 +70,7 @@ class App extends React.Component {
     // console.log(this, 'when i clicked, did this happen?')
     // */
     // console.log(cookies.get('user'));
-    console.log(this, 'when i clicked, did this happen?')
+    // console.log(this, 'when i clicked, did this happen?')
     if (cookies.get('user')) {
       this.setState({
         signedIn: true,
@@ -93,11 +93,11 @@ class App extends React.Component {
 
   }
 
-  async handleLogin(username, password, typeObj) {
+  async handleAuth(username, password, typeObj) {
     //also send a axio request to the server to varify
     const response = await AuthModel.authenticateUser(username, password, typeObj);
-    console.log(cookies.get('user'));
-    console.log(cookies)
+    // console.log(cookies.get('user'));
+    // console.log(cookies)
     if (response.status === 201) {
       this.setState({
         signedIn: true,
@@ -106,6 +106,7 @@ class App extends React.Component {
       this.props.history.push("/");
       
     } else {
+      alert('Something went wrong...');
       console.log('something wrong')
     }
     // console.log(this.state.user)
@@ -135,8 +136,8 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} />
                 <Route path="/canvas/:id" render={()=><Canvas user={this.state.user}/>} />
-                <Route path="/login" render={()=><Login updateUser={this.handleLogin} signedIn={this.state.signedIn}/>} />
-                <Route path="/register" render={()=><Register updateUser={this.handleLogin}/>} />
+                <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn}/>} />
+                <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
               </Switch>
           </div>
         </MuiThemeProvider>

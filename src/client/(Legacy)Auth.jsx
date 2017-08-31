@@ -4,31 +4,21 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-// import signUp from './signUp.jsx';
 
-        // <Link to="/signup" component={signUp}</Link>
 
 class Auth extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
-  async handleSubmit(e) {
+  async handleLogin(e) {
     e.preventDefault();
     // console.log('hi is it here', e.target.username.value, e.target.password.value)
-    console.log('auth props:', this.props);
-    await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'login'});
-    this.props.history.push("/");
+    // console.log('auth props:', this.props);
+    await this.props.handleAuth(e.target.username.value, e.target.password.value, {type: 'login'});
+    // this.props.history.push("/");
     // this.props.signedIn? this.props.history.push("/") : null;
-    /*
-    e.target.username.value 
-    e.target.password.value
-    */
-    /*
-    an ajax post call to retrieve user data
-    this.props.update
-    */
   }
 
   componentDidMount() {
@@ -40,7 +30,7 @@ class Auth extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}> 
+        <form onSubmit={this.handleLogin}> 
           <input className="username" name="username" type="text" placeholder="username" />
           <input className="password" name="password" type="text" placeholder="password" />
           <input className="submit" type="submit" value="Log In"/>

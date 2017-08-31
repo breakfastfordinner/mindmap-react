@@ -6,7 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   componentDidMount() {
@@ -14,11 +14,11 @@ class Login extends React.Component {
   }
 
 
-  async handleSubmit(e) {
+  async handleLogin(e) {
     e.preventDefault();
     // console.log('hi is it here', e.target.username.value, e.target.password.value)
     // console.log('auth props:', this.props);
-    await this.props.updateUser(e.target.username.value, e.target.password.value, {type: 'login'});
+    await this.props.handleAuth(e.target.username.value, e.target.password.value, {type: 'login'});
     /*
     e.target.username.value
     e.target.password.value
@@ -34,7 +34,7 @@ class Login extends React.Component {
     return (
       <div className="auth">
         <h1 className="login"> Welcome back! </h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleLogin}>
           <TextField className="username" name="username" type="text" hintText="username" /><br />
           <TextField className="password" name="password" type="text" hintText="password" /><br />
           <RaisedButton className="submit" label="Submit" type="submit" value="Log In"/>
