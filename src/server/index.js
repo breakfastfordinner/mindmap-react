@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
   res.send(renderApp(APP_NAME));
 });
 
+router(app);
+
 app.all('*', (req, res) => {
   res.redirect('/');
 });
@@ -38,4 +40,3 @@ app.listen(WEB_PORT, () => {
     '(development).\nKeep "yarn dev:wds" running in an other terminal'}.`);
 });
 
-router(app);

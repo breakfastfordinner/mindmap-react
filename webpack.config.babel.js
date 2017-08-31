@@ -42,7 +42,7 @@ export default {
     headers: {
       'Access-Control-Allow-Origin': '*'
     },
-    // historyApiFallback: true
+    historyApiFallback: true
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
