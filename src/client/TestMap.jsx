@@ -1,5 +1,5 @@
 import React from 'react';
-import Tree from 'react-d3-tree';
+import Tree from './tree/index.js';
 
 const myTreeData = [
   {
@@ -50,9 +50,9 @@ class TestMap extends React.Component {
   render() {
     return (
 
-      <div id="treeWrapper" style={{width: '1000px', height: '1000px'}}>
+      <div id="treeWrapper" style={{ width: '1000px', height: '1000px'}}>
 
-        <Tree data={myTreeData} />
+        <Tree data={ myTreeData } />
 
       </div>
     );
