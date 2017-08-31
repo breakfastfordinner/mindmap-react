@@ -9,15 +9,11 @@ import Nav from './Nav.jsx';
 import d3 from 'd3';
 
 import AuthModel from './actions/auth';
+import MapModel from './actions/maps';
 import Cookies from 'universal-cookie';
-
-
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
-
 const cookies = new Cookies();
-// cookies.get('user')
-
 
 class App extends React.Component {
   constructor(props) {
@@ -42,33 +38,13 @@ class App extends React.Component {
     }
     this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.updateMaps = this.updateMaps.bind(this);
   }
 
-  // componentWillMount() {
-  //   //an ajax call to check if session exist
-  //   // UserModel.getUser((data) => {
-  //   //   if (data.passport) {
-  //   //     this.setState({
-  //   //       signedIn: true,
-  //   //       user: data.passport.user
-  //   //     })
-  //   //   }
-  //   // })
-  //   //something like this
-  // }
 
   componentDidMount() {
-    //import from ajax file cookie
-    /*
-    if (cookie.user) {
-      this.setState({
-        signedIn: true,
-        user: cookie.user
-      })
 
 
-    }
-    */
     // console.log(this, 'when i clicked, did this happen?')
     // */
     // console.log(cookies.get('user'));
@@ -77,43 +53,26 @@ class App extends React.Component {
       this.setState({
         signedIn: true,
         user: cookies.get('user')
-      })
+      });
     }
+
     this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
 
-
-    //asyn ajax call that updates
-    //the array of maps after the user id was
-    //obtained from previous syn fall
-    /*
-    MapModel.getMap((maps)=>{
-      this.setState({
-        maps: maps
-      })
-    })
-    */
+    this.updateMaps;
 
   }
 
   async handleAuth(username, password, typeObj) {
-    //also send a axio request to the server to varify
     const response = await AuthModel.authenticateUser(username, password, typeObj);
-    // console.log(cookies.get('user'));
-    // console.log(cookies)
     if (response.status === 201) {
       this.setState({
         signedIn: true,
         user: cookies.get('user')
       })
       this.props.history.push("/");
-      
     } else {
       alert('Something went wrong...');
-      console.log('something wrong')
     }
-    // console.log(this.state.user)
-    // console.log(username, password, typeObj, 'check on data')
-    // console.log(this, 'this did invoked right??? why didnt this reredner????????')
   }
 
   async handleLogout() {
@@ -125,20 +84,25 @@ class App extends React.Component {
     this.props.history.push("/login");
   }
 
+  async updateMaps() {
+    // let getMapResponse = await MapModel.getMaps();
+    // this.setState({
+    //   maps:  getMapResponse.maps
+    // })
+  }
+
   render() {
-    // console.log(this, 'here?')
-    // this.state.signedIn? this.props.history.push('/') : this.props.history.push('/auth');
 
     return (
       <div>
       <button className="logout" onClick={this.handleLogout}>Log out</button>
         <MuiThemeProvider>
           <div>
-            <Nav />
+            <Nav signedIn={this.state.signedIn}/>
               <Switch>
-                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} />
+                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} updateMaps={this.updateMaps} />
                 <Route path="/canvas/:id" render={()=><Canvas user={this.state.user}/>} />
-                <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn}/>} />
+                <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
                 <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
               </Switch>
           </div>

@@ -15,13 +15,15 @@ const styles = {
   },
 };
 
-const Nav = () => (
+const Nav = ({signedIn}) => {
+  console.log(signedIn)
+  return (
   <AppBar
     title={<NavLink activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>MindMap</span></NavLink>}
     iconElementLeft={<IconButton></IconButton>}
     iconElementRight={<FlatButton label="Login" containerElement={<Link to="/login"/>} />}
   />
-);
+)};
 
 
 export default Nav;
