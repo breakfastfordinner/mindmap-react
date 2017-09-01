@@ -2,6 +2,17 @@ import React from 'react';
 import { BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
 import MapModel from './actions/maps';
 
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+
+
 class Home extends React.Component {
   constructor(props) {
     super(props)
@@ -21,7 +32,7 @@ class Home extends React.Component {
     this.setState({
       createToggle: !this.state.createToggle
     });
-  }
+  }s
 
   async createMap(e) {
     console.log('should handle create a map')
@@ -32,7 +43,7 @@ class Home extends React.Component {
     e.target.mapName.value = '';
 
     this.props.updateMaps();
-    
+
     */
   }
 
@@ -47,26 +58,53 @@ class Home extends React.Component {
   }
 
 
-  render() {
-    let mapsLinks = this.props.maps.map((map, i)=>{
-      return (
-        <li key={map.id}>
-          <Link to={`/canvas/${map.id}`}>{map.name}</Link>
-          <button className="destroyMap" onClick={()=>{this.destroyMap(map.id)}}>Delete This Map</button>
 
-        </li>
+  render() {
+
+    let mapsLinks = this.props.maps.map((map, i)=>{
+
+      const iconButtonElement = (
+        <IconButton
+          touch={true}
+          tooltip="more"
+          tooltipPosition="bottom-left"
+        >
+          <MoreVertIcon color={grey400} />
+        </IconButton>
+      );
+
+      const rightIconMenu = (
+        <IconMenu iconButtonElement={iconButtonElement}>
+          <MenuItem>Share</MenuItem>
+          <MenuItem onClick={()=> {this.destroyMap(map.id)}} >Edit</MenuItem>
+          <MenuItem onClick={()=> {this.destroyMap(map.id)}} >Delete</MenuItem>
+        </IconMenu>
+      );
+
+      return (
+        <div>
+          <ListItem key={map.id} rightIconButton={rightIconMenu} >
+            <Link to={`/canvas/${map.id}`}>{map.name}</Link>
+          </ListItem>
+          <Divider inset={true} />
+        </div>
         )
     })
+
+
     return (
       <div className="home">
       <button className="createMap" onClick={this.toggleCreateMapForm}>Create a new map</button>
-      { this.state.createToggle && 
-        <form onSubmit={this.createMap}> 
+      { this.state.createToggle &&
+        <form onSubmit={this.createMap}>
         <input className="mapNameField" name="mapName" type="text" placeholder="Name Your Map!" />
-        <input className="submit" type="submit" value="Create!" /> 
+        <input className="submit" type="submit" value="Create!" />
         </form>}
-        Click on the following to link to different maps:
-        {mapsLinks}
+        <List>
+          <Subheader>Your maps</Subheader>
+          {mapsLinks}
+        </List>
+
       </div>
     )
   }

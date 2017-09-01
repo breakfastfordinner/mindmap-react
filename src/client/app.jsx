@@ -22,13 +22,13 @@ class App extends React.Component {
       signedIn: false,
       user: {},
       maps: [{
-        id: '1234qwer', 
+        id: '1234qwer',
         name: 'Map1'
-      }, 
-      { 
+      },
+      {
         id: '5678asdf',
         name: 'Another Map'
-      }, 
+      },
       {
         id: '9999qqqq',
         name: 'test3'
@@ -95,10 +95,10 @@ class App extends React.Component {
 
     return (
       <div>
-      <button className="logout" onClick={this.handleLogout}>Log out</button>
         <MuiThemeProvider>
           <div>
             <Nav signedIn={this.state.signedIn}/>
+            <button className="logout" onClick={this.handleLogout}>Log out</button>
               <Switch>
                 <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} updateMaps={this.updateMaps} />
                 <Route path="/canvas/:id" render={()=><Canvas user={this.state.user}/>} />
@@ -108,8 +108,6 @@ class App extends React.Component {
           </div>
         </MuiThemeProvider>
      </div>
-
-
 
     )
   }
