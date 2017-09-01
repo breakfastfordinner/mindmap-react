@@ -11,15 +11,12 @@ class Canvas extends React.Component {
         map: { name: 'random', tree: {}},
         tree: [
           {
-            name: 'OMG this is rendering',
+            name: 'Parent 1st tier',
             attributes: {
-              // keyA: 'val A',
-              // keyB: 'val B',
-              // keyC: 'val C',
             },
             children: [
               {
-                name: 'Flavortown USA',
+                name: 'Child 2nd tier',
                 attributes: {
                   keyA: 'val A',
                   keyB: 'val B',
@@ -27,26 +24,26 @@ class Canvas extends React.Component {
                 },
                 children: [
                   {
-                    name: 'yesssss',
+                    name: '3rd tier',
                   },
                   {
-                    name: 'success',
+                    name: '3rd tier 2',
                   },
                 ],
               },
               {
-                name: 'imdabes',
+                name: 'Child2 2nd tier',
                 children: [
                   {
-                    name: 'son of imdabes',
+                    name: 'child2 3rd tier',
                     children: [
                       {
-                        name: 'more childs'
+                        name: 'child2 4th tier'
                       }
                     ],
                   },
                   {
-                    name: 'another child'
+                    name: 'child2 3rd tier 2'
                   }
                 ],
               },
@@ -62,7 +59,6 @@ class Canvas extends React.Component {
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
-    this.addNode = this.addNode.bind(this);
   }
 
   componentDidMount() {
@@ -98,7 +94,12 @@ class Canvas extends React.Component {
 
   async updateMap() {
     console.log('if you see this, means entire map view should be rerendered')
-     // MapModel.getMap(this.props.match.params.id)
+    let mapResponse = await MapModel.getMap(this.props.match.params.id);
+    // console.log(mapResponse)
+    this.setState({
+      map: mapResponse.map,
+      mapName: mapResponse.map.name
+    })
      //  setState of the map, mapname, tree
   }
 
@@ -107,20 +108,29 @@ class Canvas extends React.Component {
       console.log("nothing enter, dont fire request")
     } else {
       
-      /*
-      await MapModel.editMapName(this.props.match.params.id, mapName)
-      */
-      console.log('update name to: ', mapName)
-      this.setState({
-        mapName: mapName
-      })
+      
+      await MapModel.editMapName(this.props.match.params.id, mapName);
+      
+      // console.log('update name to: ', mapName)
+      // this.setState({
+      //   mapName: mapName
+      // })
       this.updateMap();
+      this.props.updateMaps();
     }
   }
 
-  addNode() {
-    
-  }
+  // addNode() {
+
+  // }
+
+  // deleteNode() {
+
+  // }
+
+  // editNode() {
+
+  // }
 
 
   render() {
@@ -135,7 +145,7 @@ class Canvas extends React.Component {
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
           </form>
         }
-        <TestMap tree={this.state.tree}></TestMap>
+        <TestMap tree={this.state.tree} updateMap={this.updateMap}></TestMap>
       </div>
       )
   }

@@ -24,6 +24,7 @@ const getMaps = async () => {
 
     const response = await axios(options);
 
+
     return response.data;
   } catch (error) {
     return error;

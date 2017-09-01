@@ -24,35 +24,34 @@ class Home extends React.Component {
   }
 
   async createMap(e) {
-    console.log('should handle create a map')
+    // console.log('should handle create a map', this.props)
     e.preventDefault();
-    /*
-    fire post to create a new Map
+    
+    // fire post to create a new Map
     await MapModel.createMap(e.target.mapName.value)
-    e.target.mapName.value = '';
 
     this.props.updateMaps();
+    e.target.mapName.value = '';
     
-    */
+    
   }
 
   async destroyMap(mapId) {
-    console.log('should handle delete a map', mapId)
-    /*
-    fire post to delete a Map
-    await MapModel.deleteMap(mapId);
-
+    // console.log('should handle delete a map', mapId)
+    
+    // fire post to delete a Map
+    await MapModel.destroyMap(mapId);
     this.props.updateMaps();
-    */
+    
   }
 
 
   render() {
     let mapsLinks = this.props.maps.map((map, i)=>{
       return (
-        <li key={map.id}>
-          <Link to={`/canvas/${map.id}`}>{map.name}</Link>
-          <button className="destroyMap" onClick={()=>{this.destroyMap(map.id)}}>Delete This Map</button>
+        <li key={map._id}>
+          <Link to={`/canvas/${map._id}`}>{map.name}</Link>
+          <button className="destroyMap" onClick={()=>{this.destroyMap(map._id)}}>Delete This Map</button>
 
         </li>
         )

@@ -58,7 +58,7 @@ class App extends React.Component {
     
     this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
 
-    this.updateMaps;
+    this.updateMaps();
   }
 
   async handleAuth(username, password, typeObj) {
@@ -84,10 +84,13 @@ class App extends React.Component {
   }
 
   async updateMaps() {
-    // let getMapResponse = await MapModel.getMaps();
-    // this.setState({
-    //   maps:  getMapResponse.maps
-    // })
+    // console.log(this.state.maps)
+    let getMapResponse = await MapModel.getMaps();
+    // console.log(getMapResponse)
+    this.setState({
+      maps: getMapResponse.maps
+    })
+    // console.log(this.state.maps)
   }
 
   render() {
@@ -99,8 +102,8 @@ class App extends React.Component {
           <div>
             <Nav signedIn={this.state.signedIn}/>
               <Switch>
-                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}/>} updateMaps={this.updateMaps} />
-                <Route path="/canvas/:id" render={()=><Canvas user={this.state.user}/>} />
+                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}  updateMaps={this.updateMaps}  />} />
+                <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
                 <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
                 <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
               </Switch>
