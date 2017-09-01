@@ -94,7 +94,12 @@ class Canvas extends React.Component {
 
   async updateMap() {
     console.log('if you see this, means entire map view should be rerendered')
-     // MapModel.getMap(this.props.match.params.id)
+    let mapResponse = await MapModel.getMap(this.props.match.params.id);
+    // console.log(mapResponse)
+    this.setState({
+      map: mapResponse.map,
+      mapName: mapResponse.map.name
+    })
      //  setState of the map, mapname, tree
   }
 
@@ -103,14 +108,15 @@ class Canvas extends React.Component {
       console.log("nothing enter, dont fire request")
     } else {
       
-      /*
-      await MapModel.editMapName(this.props.match.params.id, mapName)
-      */
-      console.log('update name to: ', mapName)
-      this.setState({
-        mapName: mapName
-      })
+      
+      await MapModel.editMapName(this.props.match.params.id, mapName);
+      
+      // console.log('update name to: ', mapName)
+      // this.setState({
+      //   mapName: mapName
+      // })
       this.updateMap();
+      this.props.updateMaps();
     }
   }
 
