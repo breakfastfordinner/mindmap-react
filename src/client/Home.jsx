@@ -26,24 +26,24 @@ class Home extends React.Component {
   async createMap(e) {
     console.log('should handle create a map')
     e.preventDefault();
-    /*
-    fire post to create a new Map
+    
+    // fire post to create a new Map
     await MapModel.createMap(e.target.mapName.value)
     e.target.mapName.value = '';
 
     this.props.updateMaps();
     
-    */
+    
   }
 
   async destroyMap(mapId) {
     console.log('should handle delete a map', mapId)
-    /*
-    fire post to delete a Map
-    await MapModel.deleteMap(mapId);
+    
+    // fire post to delete a Map
+    await MapModel.destroyMap(mapId);
 
     this.props.updateMaps();
-    */
+    
   }
 
 

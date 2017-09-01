@@ -58,7 +58,7 @@ class App extends React.Component {
     
     this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
 
-    this.updateMaps;
+    // this.updateMaps();
   }
 
   async handleAuth(username, password, typeObj) {
@@ -84,10 +84,13 @@ class App extends React.Component {
   }
 
   async updateMaps() {
-    // let getMapResponse = await MapModel.getMaps();
+    console.log(this.state.maps)
+    let getMapResponse = await MapModel.getMaps();
+    console.log(getMapResponse)
     // this.setState({
-    //   maps:  getMapResponse.maps
+    //   maps: getMapResponse.maps
     // })
+    console.log(this.state.maps)
   }
 
   render() {

@@ -59,7 +59,6 @@ class Canvas extends React.Component {
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
-    this.addNode = this.addNode.bind(this);
   }
 
   componentDidMount() {
@@ -115,17 +114,17 @@ class Canvas extends React.Component {
     }
   }
 
-  addNode() {
+  // addNode() {
 
-  }
+  // }
 
-  deleteNode() {
+  // deleteNode() {
 
-  }
+  // }
 
-  editNode() {
+  // editNode() {
 
-  }
+  // }
 
 
   render() {
@@ -140,7 +139,7 @@ class Canvas extends React.Component {
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
           </form>
         }
-        <TestMap tree={this.state.tree}></TestMap>
+        <TestMap tree={this.state.tree} updateMap={this.updateMap}></TestMap>
       </div>
       )
   }

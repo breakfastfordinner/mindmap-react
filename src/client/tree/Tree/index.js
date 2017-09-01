@@ -23,7 +23,7 @@ export default class Tree extends React.Component {
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
-    this.handleNodeToggle = this.handleNodeToggle.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnClickCb = this.handleOnClickCb.bind(this);
   }
 
@@ -190,12 +190,25 @@ export default class Tree extends React.Component {
    *
    * @return {void}
    */
-  handleNodeToggle(nodeId) {
-    console.log('what would happen? would this thing break?', nodeId)
+  handleOnClick(nodeId) {
+    // console.log('what would happen? would this thing break?', nodeId)
+    // this.handleOnClickCb();
 
-    // const data = clone(this.state.data);
-    // const matches = this.findNodesById(nodeId, data, []);
-    // const targetNode = matches[0];
+    const data = clone(this.state.data);
+    const matches = this.findNodesById(nodeId, data, []);
+    const targetNode = matches[0];
+
+    console.log(targetNode)
+    if (targetNode.children) {
+      targetNode.children.push({name: 'test', children: []});
+      console.log(targetNode, 'after')
+      console.log(data)
+    } else {
+      targetNode.children = [{name: 'test2222', children:[]}];
+      console.log(targetNode, 'after number 2');
+      console.log(data, 'did this update?')
+    }
+
 
     // if (this.props.collapsible) {
     //   targetNode._collapsed
@@ -216,6 +229,7 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClickCb(targetNode) {
+    console.log(targetNode)
     const { onClick } = this.props;
     if (onClick && typeof onClick === 'function') {
       onClick(clone(targetNode));
@@ -307,7 +321,7 @@ export default class Tree extends React.Component {
                 nodeData={nodeData}
                 name={nodeData.name}
                 attributes={nodeData.attributes}
-                onClick={this.handleNodeToggle}
+                onClick={this.handleOnClick}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
               />
