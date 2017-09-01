@@ -19,6 +19,7 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      // selectedNode: 
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
@@ -28,6 +29,7 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
+    console.log(this);
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
@@ -104,6 +106,8 @@ export default class Tree extends React.Component {
   assignInternalProperties(data) {
     return data.map((node) => {
       node.id = uuid.v4();
+      // console.log(node.id, 'each nodes id');
+      // console.log(node)
       node._collapsed = false;
       // if there are children, recursively assign properties to them too
       if (node.children && node.children.length > 0) {
@@ -187,18 +191,20 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleNodeToggle(nodeId) {
-    const data = clone(this.state.data);
-    const matches = this.findNodesById(nodeId, data, []);
-    const targetNode = matches[0];
+    console.log('what would happen? would this thing break?', nodeId)
 
-    if (this.props.collapsible) {
-      targetNode._collapsed
-        ? this.expandNode(targetNode)
-        : this.collapseNode(targetNode);
-      this.setState({ data }, () => this.handleOnClickCb(targetNode));
-    } else {
-      this.handleOnClickCb(targetNode);
-    }
+    // const data = clone(this.state.data);
+    // const matches = this.findNodesById(nodeId, data, []);
+    // const targetNode = matches[0];
+
+    // if (this.props.collapsible) {
+    //   targetNode._collapsed
+    //     ? this.expandNode(targetNode)
+    //     : this.collapseNode(targetNode);
+    //   this.setState({ data }, () => this.handleOnClickCb(targetNode));
+    // } else {
+    //   this.handleOnClickCb(targetNode);
+    // }
   }
 
 

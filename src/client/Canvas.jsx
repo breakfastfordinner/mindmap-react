@@ -11,15 +11,12 @@ class Canvas extends React.Component {
         map: { name: 'random', tree: {}},
         tree: [
           {
-            name: 'OMG this is rendering',
+            name: 'Parent 1st tier',
             attributes: {
-              // keyA: 'val A',
-              // keyB: 'val B',
-              // keyC: 'val C',
             },
             children: [
               {
-                name: 'Flavortown USA',
+                name: 'Child 2nd tier',
                 attributes: {
                   keyA: 'val A',
                   keyB: 'val B',
@@ -27,26 +24,26 @@ class Canvas extends React.Component {
                 },
                 children: [
                   {
-                    name: 'yesssss',
+                    name: '3rd tier',
                   },
                   {
-                    name: 'success',
+                    name: '3rd tier 2',
                   },
                 ],
               },
               {
-                name: 'imdabes',
+                name: 'Child2 2nd tier',
                 children: [
                   {
-                    name: 'son of imdabes',
+                    name: 'child2 3rd tier',
                     children: [
                       {
-                        name: 'more childs'
+                        name: 'child2 4th tier'
                       }
                     ],
                   },
                   {
-                    name: 'another child'
+                    name: 'child2 3rd tier 2'
                   }
                 ],
               },
@@ -119,7 +116,15 @@ class Canvas extends React.Component {
   }
 
   addNode() {
-    
+
+  }
+
+  deleteNode() {
+
+  }
+
+  editNode() {
+
   }
 
 
