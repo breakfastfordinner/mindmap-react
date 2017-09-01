@@ -21,16 +21,21 @@ const authenticateUser = async (username, password, { type }) => {
 
     return { status: 201 };
   } catch (error) {
-    return { status: ERROR_CODES[type], error };
+    return {
+      status: ERROR_CODES[type],
+      error,
+    };
   }
 };
 
 const logOutUser = () => {
   cookies.remove('user');
-  return { status: 204 };
+  return {
+    status: 204
+  };
 };
 
 module.exports = {
-  authenticateUser: authenticateUser,
-  logOutUser: logOutUser,
+  authenticateUser,
+  logOutUser,
 };
