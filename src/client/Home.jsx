@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Link, NavLink, withRouter } from 'react-router-dom';
 import MapModel from './actions/maps';
 
 import {List, ListItem} from 'material-ui/List';
@@ -12,6 +12,12 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+const styles = {
+  navlink: {
+    textDecoration: 'none',
+    color: '#212121'
+  },
+};
 
 class Home extends React.Component {
   constructor(props) {
@@ -76,7 +82,7 @@ class Home extends React.Component {
       const rightIconMenu = (
         <IconMenu iconButtonElement={iconButtonElement}>
           <MenuItem>Share</MenuItem>
-          <MenuItem onClick={()=> {this.destroyMap(map.id)}} >Edit</MenuItem>
+          <MenuItem onClick={()=> {this.destroyMap(map.id)}} ><NavLink style={styles.navlink} to={`/canvas/${map.id}`}>Edit</NavLink></MenuItem>
           <MenuItem onClick={()=> {this.destroyMap(map.id)}} >Delete</MenuItem>
         </IconMenu>
       );
@@ -84,7 +90,7 @@ class Home extends React.Component {
       return (
         <div>
           <ListItem key={map.id} rightIconButton={rightIconMenu} >
-            <Link to={`/canvas/${map.id}`}>{map.name}</Link>
+            <NavLink style={styles.navlink} to={`/canvas/${map.id}`}>{map.name}</NavLink>
           </ListItem>
           <Divider inset={true} />
         </div>
