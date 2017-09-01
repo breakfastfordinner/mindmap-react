@@ -55,11 +55,10 @@ class App extends React.Component {
         user: cookies.get('user')
       });
     }
-
+    
     this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
 
     this.updateMaps;
-
   }
 
   async handleAuth(username, password, typeObj) {
@@ -114,6 +113,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 export default withRouter(App);

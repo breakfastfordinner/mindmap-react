@@ -11,60 +11,62 @@ const setUserInfo = user => ({
   username: user.username,
 });
 
-module.exports = {
+const login = (req, res) => {
+  const userInfo = setUserInfo(req.user);
+  const apiToken = genToken(userInfo);
 
-  login: (req, res) => {
-    const userInfo = setUserInfo(req.user);
-    const apiToken = genToken(userInfo);
+  res.status(200).json({
+    auth_token: `JWT ${apiToken}`,
+    user: userInfo,
+  });
+};
 
-    res.status(200).json({
-      auth_token: `JWT ${apiToken}`,
-      user: userInfo,
+const register = (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username) {
+    return res.status(422).send({
+      error: 'You must provide a username.',
     });
-  },
+  }
 
-  register: (req, res, next) => {
-    const username = req.body.username;
-    const password = req.body.password;
+  if (!password) {
+    return res.status(422).send({
+      error: 'You must provide a password.',
+    });
+  }
 
-    if (!username) {
+  User.findOne({ username }, (err, existingUser) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (existingUser) {
       return res.status(422).send({
-        error: 'You must provide a username.',
+        error: 'That username is already taken.',
       });
     }
 
-    if (!password) {
-      return res.status(422).send({
-        error: 'You must provide a password.',
-      });
-    }
+    const user = new User({ username, password });
 
-    User.findOne({ username }, (err, existingUser) => {
+    user.save((err, userDoc) => {
       if (err) {
         return next(err);
       }
 
-      if (existingUser) {
-        return res.status(422).send({
-          error: 'That username is already taken.',
-        });
-      }
+      const userInfo = setUserInfo(userDoc);
+      const apiToken = genToken(userInfo);
 
-      const user = new User({ username, password });
-
-      user.save((err, userDoc) => {
-        if (err) {
-          return next(err);
-        }
-
-        const userInfo = setUserInfo(userDoc);
-        const apiToken = genToken(userInfo);
-
-        res.status(201).json({
-          auth_token: `JWT ${apiToken}`,
-          user: userInfo,
-        });
+      res.status(201).json({
+        auth_token: `JWT ${apiToken}`,
+        user: userInfo,
       });
     });
-  },
+  });
+};
+
+module.exports = {
+  login,
+  register,
 };
