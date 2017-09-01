@@ -12,7 +12,8 @@ const getMaps = async () => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
+      method: 'get',
+      baseURL: API,
       params: {
         user: cookie.user._id,
       },
@@ -21,7 +22,7 @@ const getMaps = async () => {
       },
     };
 
-    const response = await axios.get(options);
+    const response = await axios(options);
 
     return response.data;
   } catch (error) {
@@ -38,16 +39,15 @@ const getMap = async (id) => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
-      params: {
-        id,
-      },
+      method: 'get',
+      baseURL: API,
+      url: `${id}`,
       headers: {
         Authorization: cookie.auth_token,
       },
     };
 
-    const response = await axios.get(options);
+    const response = await axios(options);
 
     return response.data;
   } catch (error) {
@@ -63,7 +63,8 @@ const createMap = async (name) => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
+      method: 'post',
+      baseURL: API,
       url: '/create',
       headers: {
         Authorization: cookie.auth_token,
@@ -74,7 +75,7 @@ const createMap = async (name) => {
       },
     };
 
-    const response = await axios.post(options);
+    const response = await axios(options);
 
     return response.data;
   } catch (error) {
@@ -92,11 +93,9 @@ const editMap = async (id, tree) => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
-      url: '/edit',
-      params: {
-        id,
-      },
+      method: 'put',
+      baseURL: API,
+      url: `/edit/${id}`,
       headers: {
         Authorization: cookie.auth_token,
       },
@@ -105,7 +104,7 @@ const editMap = async (id, tree) => {
       },
     };
 
-    const response = await axios.put(options);
+    const response = await axios(options);
 
     return response.data;
   } catch (error) {
@@ -123,11 +122,9 @@ const editMapName = async (id, name) => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
-      url: 'edit/name',
-      params: {
-        id,
-      },
+      method: 'put',
+      baseURL: API,
+      url: `/edit/name/${id}`,
       headers: {
         Authorization: cookie.auth_token,
       },
@@ -136,7 +133,7 @@ const editMapName = async (id, name) => {
       },
     };
 
-    const response = await axios.put(options);
+    const response = await axios(options);
 
     return response.data;
   } catch (error) {
@@ -153,17 +150,15 @@ const destroyMap = async (id) => {
   try {
     const cookie = cookies.get('user');
     const options = {
-      baseUrl: API,
-      url: '/destroy',
-      params: {
-        id,
-      },
+      method: 'delete',
+      baseURL: API,
+      url: `/destroy/${id}`,
       headers: {
         Authorization: cookie.auth_token,
       },
     };
 
-    const response = await axios.delete(options);
+    const response = await axios(options);
 
     return response; // no data on this one?
   } catch (error) {
