@@ -17,7 +17,7 @@ const getMaps = async () => {
         user: cookie.user._id,
       },
       headers: {
-        'Authorization': cookie.auth_token,
+        Authorization: cookie.auth_token,
       },
     };
 
@@ -36,13 +36,14 @@ const getMaps = async () => {
  */
 const getMap = async (id) => {
   try {
+    const cookie = cookies.get('user');
     const options = {
       baseUrl: API,
       params: {
         id,
       },
       headers: {
-        'Authorization': cookie.auth_token,
+        Authorization: cookie.auth_token,
       },
     };
 
@@ -52,7 +53,7 @@ const getMap = async (id) => {
   } catch (error) {
     return error;
   }
-}
+};
 
 /**
  * Create a new, empty map.
@@ -65,7 +66,7 @@ const createMap = async (name) => {
       baseUrl: API,
       url: '/create',
       headers: {
-        'Authorization': cookie.auth_token,
+        Authorization: cookie.auth_token,
       },
       data: {
         user: cookie.user._id,
@@ -79,7 +80,7 @@ const createMap = async (name) => {
   } catch (error) {
     return error;
   }
-}
+};
 
 /**
  * Edit the map with the specified id.
@@ -97,7 +98,7 @@ const editMap = async (id, tree) => {
         id,
       },
       headers: {
-        'Authorization': cookie.auth_token,
+        Authorization: cookie.auth_token,
       },
       data: {
         tree,
@@ -127,8 +128,8 @@ const editMapName = async (id, name) => {
       params: {
         id,
       },
-      headers : {
-        'Authorization': cookie.auth_token,
+      headers: {
+        Authorization: cookie.auth_token,
       },
       data: {
         name,
@@ -158,7 +159,7 @@ const destroyMap = async (id) => {
         id,
       },
       headers: {
-        'Authorization': cookie.auth_token,
+        Authorization: cookie.auth_token,
       },
     };
 

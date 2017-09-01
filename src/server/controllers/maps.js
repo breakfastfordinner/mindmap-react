@@ -1,5 +1,5 @@
 const Map = require('../models/map');
-const User = require('../models/user');
+require('../models/user');
 
 /**
  * Retrieves all maps for the current user.
@@ -35,7 +35,7 @@ const getMap = async (req, res) => { // TESTED
     const map = await Map.findById(_id);
 
     if (!map) {
-      res.status(400).json({ error: `No map with id ${_id}`});
+      res.status(400).json({ error: `No map with id ${_id}` });
     } else {
       res.status(200).json({ map });
     }
@@ -90,7 +90,7 @@ const editMap = async (req, res) => { // TESTED
     const map = await Map.findByIdAndUpdate(...options);
 
     if (!map) {
-      res.status(400).json({ error: `Map ${_id} was not edited`});
+      res.status(400).json({ error: `Map ${_id} was not edited` });
     } else {
       res.status(200).json({ map });
     }
@@ -113,13 +113,13 @@ const editMapName = async (req, res) => { // TESTED
     const options = [
       _id,
       { name },
-      { new: true }
+      { new: true },
     ];
 
     const map = await Map.findByIdAndUpdate(...options);
 
     if (!map) {
-      res.status(400).json({ error: `Map ${_id} was not edited`});
+      res.status(400).json({ error: `Map ${_id} was not edited` });
     } else {
       res.status(200).json({ map });
     }
@@ -139,7 +139,7 @@ const destroyMap = async (req, res) => { // TESTED
     const map = await Map.findByIdAndRemove(_id);
 
     if (!map) {
-      res.status(400).json({ error: `Map ${_id} was not removed`});
+      res.status(400).json({ error: `Map ${_id} was not removed` });
     } else {
       res.status(200).json({ map });
     }
