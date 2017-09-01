@@ -31,6 +31,7 @@ const getMaps = async (req, res) => { // TESTED
 const getMap = async (req, res) => { // TESTED
   try {
     const _id = req.params.id;
+    console.log(_id);
 
     const map = await Map.findById(_id);
 
