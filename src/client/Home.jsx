@@ -39,14 +39,36 @@ class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.props.signedIn? null : this.props.history.push('/login');
-  }
+      this.props.signedIn? null : this.props.history.push('/login');
+    }
 
-  toggleCreateMapForm() {
-    this.setState({
-      createToggle: !this.state.createToggle
-    });
-  }
+    toggleCreateMapForm() {
+      this.setState({
+        createToggle: !this.state.createToggle
+      });
+    }
+
+    async createMap(e) {
+      // console.log('should handle create a map', this.props)
+      e.preventDefault();
+
+      // fire post to create a new Map
+      await MapModel.createMap(e.target.mapName.value)
+
+      this.props.updateMaps();
+      e.target.mapName.value = '';
+
+
+    }
+
+    async destroyMap(mapId) {
+     console.log('should handle delete a map', mapId)
+
+      // fire post to delete a Map
+      await MapModel.destroyMap(mapId);
+      //this.props.updateMaps();
+
+    }
 
   handleOpen(id) {
     this.setState({open: true});
@@ -56,30 +78,6 @@ class Home extends React.Component {
   handleClose() {
     this.setState({open: false});
   };
-
-  async createMap(e) {
-    console.log('should handle create a map')
-    e.preventDefault();
-    /*
-    fire post to create a new Map
-    await MapModel.createMap(e.target.mapName.value)
-    e.target.mapName.value = '';
-
-    this.props.updateMaps();
-
-    */
-  }
-
-  async destroyMap(mapId) {
-    console.log('should handle delete a map', mapId)
-    /*
-    fire post to delete a Map
-    await MapModel.deleteMap(mapId);
-
-    this.props.updateMaps();
-    */
-  }
-
 
 
 
@@ -108,8 +106,8 @@ class Home extends React.Component {
 
       return (
         <div>
-          <ListItem key={map.id} rightIconButton={rightIconMenu} >
-            <NavLink style={styles.navlink} to={`/canvas/${map.id}`}>{map.name}</NavLink>
+          <ListItem key={map._id} rightIconButton={rightIconMenu} >
+            <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
           </ListItem>
           <Divider inset={true} />
         </div>
