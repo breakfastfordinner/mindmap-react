@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
+const User = require('./user');
 
 const Schema = mongoose.Schema;
 
 const MapSchema = new Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
@@ -15,4 +16,4 @@ const MapSchema = new Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Maps', MapSchema);
+module.exports = mongoose.model('Map', MapSchema);
