@@ -4,7 +4,6 @@ import Auth from './Auth.jsx';
 import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 
-
 import {
   Route,
   Link,
@@ -47,11 +46,11 @@ class App extends React.Component {
         user: cookie.user
       })
 
-    } 
+    }
     */
 
-    //asyn ajax call that updates 
-    //the array of maps after the user id was 
+    //asyn ajax call that updates
+    //the array of maps after the user id was
     //obtained from previous syn fall
     /*
     MapModel.getMap((maps)=>{
