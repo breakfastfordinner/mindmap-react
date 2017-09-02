@@ -108,7 +108,7 @@ class Home extends React.Component {
         const rightIconMenu = (
           <IconMenu iconButtonElement={iconButtonElement}>
             <MenuItem>Share</MenuItem>
-            <MenuItem onClick={()=> {this.destroyMap(map._id)}} ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
+            <MenuItem ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
             <MenuItem onClick={()=> {this.handleOpen(map._id)}} >Delete</MenuItem>
           </IconMenu>
         );

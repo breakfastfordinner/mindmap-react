@@ -9,7 +9,7 @@ class TestMap extends React.Component {
   render() {
     return (
 
-      <div id="treeWrapper" style={{ width: '1000px', height: '1000px'}}>
+      <div id="treeWrapper" style={{ width: '100%', height: '1000px'}}>
 
         <Tree data={ this.props.tree } updateMap={ this.updateMap } />
 
