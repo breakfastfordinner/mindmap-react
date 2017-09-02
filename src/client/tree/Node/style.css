@@ -10,15 +10,18 @@
   fill: #E91E63;
   stroke: #E91E63;
   stroke-width: 5;
+  font: 14px 'Roboto';
 }
 
 .nodeNameBase {
   stroke: #212121;
   stroke-width: 0;
+  font: 14px 'Roboto';
 }
 
 .nodeAttributesBase {
   stroke: #FFEB3B;
   stroke-width: 0;
   font-size: smaller;
+  font: 14px 'Roboto';
 }
