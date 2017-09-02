@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
+import TextField from 'material-ui/TextField';
+
 
 const styles = {
   title: {
@@ -141,13 +143,13 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='mapTitle'>
         {//this.props.match.params.id
         }
         {!this.state.editNameToggle && <div onClick={this.toggleNameChange}> {this.state.mapName} </div>}
         {this.state.editNameToggle &&
-          <form style={styles.title} onSubmit={this.untoggleNameChange}>
-              <input className="mapNameUpdate" type="text" name="mapNameUpdate" placeholder={this.state.mapName} />
+          <form className='mapTitle' onSubmit={this.untoggleNameChange}>
+              <TextField className="mapNameUpdate" name="mapNameUpdate" placeholder={this.state.mapName} />
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
           </form>
         }

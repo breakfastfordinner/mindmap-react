@@ -3,6 +3,13 @@ import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-d
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+const styles = {
+  link: {
+    textDecoration: 'none',
+    color: '#FF9800'
+  }
+};
+
 class Register extends React.Component {
   constructor(props) {
     super(props);
@@ -48,10 +55,11 @@ class Register extends React.Component {
           value={this.state.password}/>
         <br />
         <RaisedButton
+          className='submitButton'
           label="Submit"
           primary={true}
           onClick={ this.handleRegister } />
-        <p> Already registered?<Link to="/login">Login</Link></p>
+        <p> Already registered?<Link style={styles.link} to="/login"> Login</Link></p>
       </div>
     )
   }

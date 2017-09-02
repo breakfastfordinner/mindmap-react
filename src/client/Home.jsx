@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link, NavLink, withRouter } from 'react-router-do
 import MapModel from './actions/maps';
 
 import Avatar from 'material-ui/Avatar';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -99,7 +100,7 @@ class Home extends React.Component {
           <IconButton
             touch={true}
             tooltip="more"
-            tooltipPosition="bottom-right"
+            tooltipPosition="center"
           >
             <MoreVertIcon color={grey400} />
           </IconButton>
@@ -115,10 +116,10 @@ class Home extends React.Component {
 
         return (
           <div key={i}>
+            <Divider />
             <ListItem rightIconButton={rightIconMenu} >
               <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
             </ListItem>
-            <Divider />
           </div>
         );
     })
@@ -128,7 +129,7 @@ class Home extends React.Component {
         <div className="home">
 
           <FlatButton label="New Map" primary={true} onClick={this.toggleCreateMapForm} />
-
+          <br />
           { this.state.createToggle &&
             <div>
               <TextField
@@ -153,12 +154,13 @@ class Home extends React.Component {
             onRequestClose={this.handleClose}>
             Your map will be gone forever!
           </Dialog>
-
-          <List>
-            <Subheader>Your maps</Subheader>
-            {mapsLinks}
-          </List>
-
+          <Card>
+            <List>
+              <Subheader>Your maps</Subheader>
+              <br/>
+              {mapsLinks}
+            </List>
+          </Card>
         </div>
       </div>
     )

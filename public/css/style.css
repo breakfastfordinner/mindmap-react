@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Architects+Daughter|Damion|Economica|Sacramento');
 
 body {
   width: 100%;
   margin: auto;
   font-family: 'Roboto';
+  color: #546E7A;
 }
 
 h1 {
-  color: #FFC107;
+  color: #546E7A;
+  font-weight: 400;
 }
 
 
@@ -30,4 +33,17 @@ h1 {
 .navLink {
   text-decoration: none;
   font-color: white !important;
+}
+
+.submitButton {
+  margin: 20px 0px 10px 0px;
+}
+
+.logo {
+  font-family: 'Economica';
+  font-size: 1.25em;
+}
+
+.mapTitle {
+  padding: 20px;
 }
