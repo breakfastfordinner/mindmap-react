@@ -22,13 +22,13 @@ class App extends React.Component {
       signedIn: false,
       user: {},
       maps: [{
-        id: '1234qwer', 
+        id: '1234qwer',
         name: 'Map1'
-      }, 
-      { 
+      },
+      {
         id: '5678asdf',
         name: 'Another Map'
-      }, 
+      },
       {
         id: '9999qqqq',
         name: 'test3'
@@ -44,21 +44,16 @@ class App extends React.Component {
 
   componentDidMount() {
 
-
-    // console.log(this, 'when i clicked, did this happen?')
-    // */
-    // console.log(cookies.get('user'));
-    // console.log(this, 'when i clicked, did this happen?')
     if (cookies.get('user')) {
       this.setState({
         signedIn: true,
         user: cookies.get('user')
       });
-    }
-    
-    this.state.signedIn? this.props.history.push('/') : this.props.history.push('/login');
 
-    this.updateMaps();
+      this.updateMaps();
+    } else {
+      this.props.history.push('/login');
+    }
   }
 
   async handleAuth(username, password, typeObj) {
@@ -69,6 +64,7 @@ class App extends React.Component {
         user: cookies.get('user')
       })
       this.props.history.push("/");
+      this.updateMaps();
     } else {
       alert('Something went wrong...');
     }
@@ -86,32 +82,28 @@ class App extends React.Component {
   async updateMaps() {
     // console.log(this.state.maps)
     let getMapResponse = await MapModel.getMaps();
-    // console.log(getMapResponse)
+
     this.setState({
       maps: getMapResponse.maps
     })
-    // console.log(this.state.maps)
   }
 
   render() {
 
     return (
       <div>
-      <button className="logout" onClick={this.handleLogout}>Log out</button>
         <MuiThemeProvider>
           <div>
-            <Nav signedIn={this.state.signedIn}/>
-              <Switch>
-                <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}  updateMaps={this.updateMaps}  />} />
-                <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
-                <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
-                <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
-              </Switch>
+            <Nav signedIn={this.state.signedIn} logout={this.handleLogout} />
+            <Switch>
+              <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn} updateMaps={this.updateMaps}  />} />
+              <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
+              <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
+              <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
+            </Switch>
           </div>
         </MuiThemeProvider>
      </div>
-
-
 
     )
   }
