@@ -3,6 +3,12 @@ import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
 
+const styles = {
+  title: {
+    padding: '20px 20px',
+  }
+};
+
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -48,7 +54,7 @@ class Canvas extends React.Component {
                 ],
               },
             ],
-          }, 
+          },
         ],
         mapName: 'random',
         editNameToggle: false,
@@ -64,7 +70,7 @@ class Canvas extends React.Component {
   componentDidMount() {
 
     this.updateMap();
-    /*ajax call that 
+    /*ajax call that
       input = map id = {this.props.match.params.id} + user token
       output = map object || callback that has map object
       set the state of map to that map object
@@ -90,7 +96,7 @@ class Canvas extends React.Component {
       editNameToggle: false
     })
   }
-  
+
 
   async updateMap() {
     console.log('if you see this, means entire map view should be rerendered')
@@ -107,10 +113,10 @@ class Canvas extends React.Component {
     if (mapName === "") {
       console.log("nothing enter, dont fire request")
     } else {
-      
-      
+
+
       await MapModel.editMapName(this.props.match.params.id, mapName);
-      
+
       // console.log('update name to: ', mapName)
       // this.setState({
       //   mapName: mapName
@@ -136,11 +142,11 @@ class Canvas extends React.Component {
   render() {
     return (
       <div>
-        The map being rendered is:
-        {this.props.match.params.id}
+        {//this.props.match.params.id
+        }
         {!this.state.editNameToggle && <div onClick={this.toggleNameChange}> {this.state.mapName} </div>}
-        {this.state.editNameToggle && 
-          <form onSubmit={this.untoggleNameChange}>
+        {this.state.editNameToggle &&
+          <form style={styles.title} onSubmit={this.untoggleNameChange}>
               <input className="mapNameUpdate" type="text" name="mapNameUpdate" placeholder={this.state.mapName} />
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
           </form>
