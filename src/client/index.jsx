@@ -11,11 +11,11 @@ import { BrowserRouter } from 'react-router-dom';
 const rootEl = document.querySelector(APP_CONTAINER_SELECTOR);
 
 const wrapApp = AppComponent =>
-  <BrowserRouter>
-    <AppContainer>
+  <AppContainer>
+    <BrowserRouter>
       <AppComponent />
-   </AppContainer>
-  </BrowserRouter>;
+    </BrowserRouter>
+ </AppContainer>;
 
 ReactDOM.render(wrapApp(App), rootEl);
 

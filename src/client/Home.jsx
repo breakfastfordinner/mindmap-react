@@ -16,12 +16,14 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
+import TextField from 'material-ui/TextField';
 
 const styles = {
   navlink: {
     textDecoration: 'none',
     color: '#212121'
   },
+
 };
 
 class Home extends React.Component {
@@ -30,11 +32,13 @@ class Home extends React.Component {
     this.state = {
       createToggle: false,
       open: false,
-      selectedId: ''
-    }
+      selectedId: '',
+      value: ''
+    };
     this.createMap = this.createMap.bind(this);
     this.destroyMap = this.destroyMap.bind(this);
     this.toggleCreateMapForm = this.toggleCreateMapForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
@@ -42,7 +46,6 @@ class Home extends React.Component {
 
   componentWillMount() {
     this.props.signedIn? null : this.props.history.push('/login');
-    console.log(this.props)
   }
 
   toggleCreateMapForm() {
@@ -51,18 +54,13 @@ class Home extends React.Component {
     });
   }
 
-  async createMap(e) {
-    // console.log('should handle create a map', this.props)
-    e.preventDefault();
-
-    // fire post to create a new Map
-    await MapModel.createMap(e.target.mapName.value)
+  async createMap() {
+    await MapModel.createMap(this.state.value)
 
     this.props.updateMaps();
-    e.target.mapName.value = 'null';
 
-
-  }
+    this.setState({ value: '' })
+  };
 
 
 
@@ -73,31 +71,31 @@ class Home extends React.Component {
     await MapModel.destroyMap(mapId);
     this.props.updateMaps();
     this.setState({open: false});
+  };
+
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+    });
   }
 
   handleOpen(mapId) {
-    console.log('id', mapId)
     this.setState({open: true});
     this.setState({selectedId: mapId});
-
-    console.log('props', this.state)
   };
 
   handleClose() {
     this.setState({open: false});
   };
 
-
-
-
   render() {
-    let mapsLinks = this.props.maps.map((map, i) =>{
+    let mapsLinks = this.props.maps.map((map, i) => {
 
         const iconButtonElement = (
           <IconButton
             touch={true}
             tooltip="more"
-            tooltipPosition="bottom-left"
+            tooltipPosition="bottom-right"
           >
             <MoreVertIcon color={grey400} />
           </IconButton>
@@ -107,56 +105,58 @@ class Home extends React.Component {
           <IconMenu iconButtonElement={iconButtonElement}>
             <MenuItem>Share</MenuItem>
             <MenuItem onClick={()=> {this.destroyMap(map._id)}} ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
-            <MenuItem onClick={()=> {console.log('inside menuitem', map._id); this.handleOpen(map._id)}} >Delete</MenuItem>
+            <MenuItem onClick={()=> {this.handleOpen(map._id)}} >Delete</MenuItem>
           </IconMenu>
         );
 
         return (
-          <div>
-            <ListItem key={map._id} rightIconButton={rightIconMenu} >
+          <div key={i}>
+            <ListItem rightIconButton={rightIconMenu} >
               <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
             </ListItem>
-            <Divider inset={true} />
+            <Divider />
           </div>
         );
     })
 
-      return (
-        <div>
-          <div className="home">
+    return (
+      <div>
+        <div className="home">
 
-             <FloatingActionButton >
-                   <ContentAdd />
-            </FloatingActionButton>
+          <FlatButton label="New Map" primary={true} onClick={this.toggleCreateMapForm} />
 
-            <button className="createMap" onClick={this.toggleCreateMapForm}>Create a new map</button>
-              { this.state.createToggle &&
-              <form onSubmit={this.createMap}>
-                <input className="mapNameField" name="mapName" type="text" placeholder="Name Your Map!" />
-                <input className="submit" type="submit" value="Create!" />
-              </form>}
+          { this.state.createToggle &&
+            <div>
+              <TextField
+                hintText='Name your map...'
+                value={ this.state.value }
+                onChange={ this.handleChange } />
+              <FloatingActionButton onClick={this.createMap} mini={true}>
+                <ContentAdd />
+              </FloatingActionButton>
+            </div>
+          }
 
-              <Dialog
-                title="Delete this map?"
-                actions={[
-                  <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
-                  <FlatButton label="Delete" secondary={true} keyboardFocused={true} onClick={()=> {this.destroyMap(this.state.selectedId)}} />,
-                ]}
-                modal={false}
-                open={this.state.open}
-                onRequestClose={this.handleClose}
-              >
-                Your map will be gone forever!
-              </Dialog>
+          <Dialog
+            title="Delete this map?"
+            actions={[
+              <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
+              <FlatButton label="Delete" secondary={true} keyboardFocused={true} onClick={()=> {this.destroyMap(this.state.selectedId)}} />,
+            ]}
+            modal={false}
+            open={this.state.open}
+            onRequestClose={this.handleClose}>
+            Your map will be gone forever!
+          </Dialog>
 
-              <List>
-                <Subheader>Your maps</Subheader>
-                {mapsLinks}
-              </List>
+          <List>
+            <Subheader>Your maps</Subheader>
+            {mapsLinks}
+          </List>
 
-          </div>
         </div>
-      )
+      </div>
+    )
   }
 }
 
