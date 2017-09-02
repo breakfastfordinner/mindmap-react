@@ -15,13 +15,27 @@ const styles = {
   },
 };
 
-const Nav = () => (
-  <AppBar
-    title={<NavLink activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>MindMap</span></NavLink>}
-    iconElementLeft={<IconButton></IconButton>}
-    iconElementRight={<FlatButton label="Login" containerElement={<Link to="/login"/>} />}
-  />
-);
+
+const Nav = ({signedIn}) => {
+  // console.log(signedIn)
+  if (!signedIn) {
+    return (
+      <AppBar
+        title={<NavLink activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>MindMap</span></NavLink>}
+        iconElementLeft={<IconButton></IconButton>}
+        iconElementRight={<FlatButton label="Login" containerElement={<Link to="/login"/>} />}
+      />
+    )
+  } else {
+    return (
+      <AppBar
+      title={<NavLink activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>MindMap</span></NavLink>}
+      iconElementLeft={<IconButton></IconButton>}
+      />
+    )
+  }
+};
+
 
 
 export default Nav;

@@ -19,15 +19,17 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      // selectedNode: 
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
-    this.handleNodeToggle = this.handleNodeToggle.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnClickCb = this.handleOnClickCb.bind(this);
   }
 
 
   componentDidMount() {
+    console.log(this);
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
@@ -104,6 +106,8 @@ export default class Tree extends React.Component {
   assignInternalProperties(data) {
     return data.map((node) => {
       node.id = uuid.v4();
+      // console.log(node.id, 'each nodes id');
+      // console.log(node)
       node._collapsed = false;
       // if there are children, recursively assign properties to them too
       if (node.children && node.children.length > 0) {
@@ -186,19 +190,34 @@ export default class Tree extends React.Component {
    *
    * @return {void}
    */
-  handleNodeToggle(nodeId) {
+  handleOnClick(nodeId) {
+    // console.log('what would happen? would this thing break?', nodeId)
+    // this.handleOnClickCb();
+
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
 
-    if (this.props.collapsible) {
-      targetNode._collapsed
-        ? this.expandNode(targetNode)
-        : this.collapseNode(targetNode);
-      this.setState({ data }, () => this.handleOnClickCb(targetNode));
+    console.log(targetNode)
+    if (targetNode.children) {
+      targetNode.children.push({name: 'test', children: []});
+      console.log(targetNode, 'after')
+      console.log(data)
     } else {
-      this.handleOnClickCb(targetNode);
+      targetNode.children = [{name: 'test2222', children:[]}];
+      console.log(targetNode, 'after number 2');
+      console.log(data, 'did this update?')
     }
+
+
+    // if (this.props.collapsible) {
+    //   targetNode._collapsed
+    //     ? this.expandNode(targetNode)
+    //     : this.collapseNode(targetNode);
+    //   this.setState({ data }, () => this.handleOnClickCb(targetNode));
+    // } else {
+    //   this.handleOnClickCb(targetNode);
+    // }
   }
 
 
@@ -210,6 +229,7 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClickCb(targetNode) {
+    console.log(targetNode)
     const { onClick } = this.props;
     if (onClick && typeof onClick === 'function') {
       onClick(clone(targetNode));
@@ -301,7 +321,7 @@ export default class Tree extends React.Component {
                 nodeData={nodeData}
                 name={nodeData.name}
                 attributes={nodeData.attributes}
-                onClick={this.handleNodeToggle}
+                onClick={this.handleOnClick}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
               />

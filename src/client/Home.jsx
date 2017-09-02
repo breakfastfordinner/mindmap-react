@@ -30,6 +30,7 @@ class Home extends React.Component {
     this.state = {
       createToggle: false,
       open: false,
+      selectedId: ''
     }
     this.createMap = this.createMap.bind(this);
     this.destroyMap = this.destroyMap.bind(this);
@@ -38,41 +39,48 @@ class Home extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
+
   componentWillMount() {
-      this.props.signedIn? null : this.props.history.push('/login');
-    }
+    this.props.signedIn? null : this.props.history.push('/login');
+    console.log(this.props)
+  }
 
-    toggleCreateMapForm() {
-      this.setState({
-        createToggle: !this.state.createToggle
-      });
-    }
+  toggleCreateMapForm() {
+    this.setState({
+      createToggle: !this.state.createToggle
+    });
+  }
 
-    async createMap(e) {
-      // console.log('should handle create a map', this.props)
-      e.preventDefault();
+  async createMap(e) {
+    // console.log('should handle create a map', this.props)
+    e.preventDefault();
 
-      // fire post to create a new Map
-      await MapModel.createMap(e.target.mapName.value)
+    // fire post to create a new Map
+    await MapModel.createMap(e.target.mapName.value)
 
-      this.props.updateMaps();
-      e.target.mapName.value = '';
+    this.props.updateMaps();
+    e.target.mapName.value = 'null';
 
 
-    }
+  }
 
-    async destroyMap(mapId) {
-     console.log('should handle delete a map', mapId)
 
-      // fire post to delete a Map
-      await MapModel.destroyMap(mapId);
-      //this.props.updateMaps();
 
-    }
+  async destroyMap(mapId) {
+    // console.log('should handle delete a map', mapId)
 
-  handleOpen(id) {
+    // fire post to delete a Map
+    await MapModel.destroyMap(mapId);
+    this.props.updateMaps();
+    this.setState({open: false});
+  }
+
+  handleOpen(mapId) {
+    console.log('id', mapId)
     this.setState({open: true});
-    this.id = id;
+    this.setState({selectedId: mapId});
+
+    console.log('props', this.state)
   };
 
   handleClose() {
@@ -83,72 +91,72 @@ class Home extends React.Component {
 
 
   render() {
+    let mapsLinks = this.props.maps.map((map, i) =>{
 
-    let mapsLinks = this.props.maps.map((map, i)=>{
+        const iconButtonElement = (
+          <IconButton
+            touch={true}
+            tooltip="more"
+            tooltipPosition="bottom-left"
+          >
+            <MoreVertIcon color={grey400} />
+          </IconButton>
+        )
 
-      const iconButtonElement = (
-        <IconButton
-          touch={true}
-          tooltip="more"
-          tooltipPosition="bottom-left"
-        >
-          <MoreVertIcon color={grey400} />
-        </IconButton>
-      );
+        const rightIconMenu = (
+          <IconMenu iconButtonElement={iconButtonElement}>
+            <MenuItem>Share</MenuItem>
+            <MenuItem onClick={()=> {this.destroyMap(map._id)}} ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
+            <MenuItem onClick={()=> {console.log('inside menuitem', map._id); this.handleOpen(map._id)}} >Delete</MenuItem>
+          </IconMenu>
+        );
 
-      const rightIconMenu = (
-        <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem>Share</MenuItem>
-          <MenuItem onClick={()=> {this.destroyMap(map.id)}} ><NavLink style={styles.navlink} to={`/canvas/${map.id}`}>Edit</NavLink></MenuItem>
-          <MenuItem onClick={()=> {this.handleOpen(map.id)}} >Delete</MenuItem>
-        </IconMenu>
-      );
+        return (
+          <div>
+            <ListItem key={map._id} rightIconButton={rightIconMenu} >
+              <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
+            </ListItem>
+            <Divider inset={true} />
+          </div>
+        );
+    })
 
       return (
         <div>
-          <ListItem key={map._id} rightIconButton={rightIconMenu} >
-            <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
-          </ListItem>
-          <Divider inset={true} />
+          <div className="home">
+
+             <FloatingActionButton >
+                   <ContentAdd />
+            </FloatingActionButton>
+
+            <button className="createMap" onClick={this.toggleCreateMapForm}>Create a new map</button>
+              { this.state.createToggle &&
+              <form onSubmit={this.createMap}>
+                <input className="mapNameField" name="mapName" type="text" placeholder="Name Your Map!" />
+                <input className="submit" type="submit" value="Create!" />
+              </form>}
+
+              <Dialog
+                title="Delete this map?"
+                actions={[
+                  <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
+                  <FlatButton label="Delete" secondary={true} keyboardFocused={true} onClick={()=> {this.destroyMap(this.state.selectedId)}} />,
+                ]}
+                modal={false}
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+              >
+                Your map will be gone forever!
+              </Dialog>
+
+              <List>
+                <Subheader>Your maps</Subheader>
+                {mapsLinks}
+              </List>
+
+          </div>
         </div>
-        )
-    })
-
-
-    return (
-      <div className="home">
-
-         <FloatingActionButton >
-               <ContentAdd />
-        </FloatingActionButton>
-
-        <button className="createMap" onClick={this.toggleCreateMapForm}>Create a new map</button>
-        { this.state.createToggle &&
-          <form onSubmit={this.createMap}>
-          <input className="mapNameField" name="mapName" type="text" placeholder="Name Your Map!" />
-          <input className="submit" type="submit" value="Create!" />
-          </form>}
-
-          <Dialog
-            title="Delete your map?"
-            actions={[
-              <FlatButton label="Cancel" primary={true} onClick={this.handleClose} />,
-              <FlatButton label="Delete" secondary={true} keyboardFocused={true} onClick={()=> {this.destroyMap(this.id)}} />,
-            ]}
-            modal={false}
-            open={this.state.open}
-            onRequestClose={this.handleClose}
-          >
-            Your map will be gone forever!
-          </Dialog>
-
-          <List>
-            <Subheader>Your maps</Subheader>
-            {mapsLinks}
-          </List>
-
-        </div>
-    )
+      )
   }
 }
 

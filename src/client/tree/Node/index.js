@@ -26,6 +26,7 @@ export default class Node extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this)
     const { x, y } = this.props.nodeData;
     const transform = this.setTransformOrientation(x, y);
 
