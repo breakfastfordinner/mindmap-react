@@ -23,6 +23,10 @@ const styles = {
     textDecoration: 'none',
     color: '#212121'
   },
+  newmap: {
+    paddingLeft: '20px',
+    marginRight: '30px'
+  }
 
 };
 
@@ -128,6 +132,7 @@ class Home extends React.Component {
           { this.state.createToggle &&
             <div>
               <TextField
+                style={styles.newmap}
                 hintText='Name your map...'
                 value={ this.state.value }
                 onChange={ this.handleChange } />
