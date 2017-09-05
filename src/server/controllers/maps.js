@@ -57,7 +57,7 @@ const createMap = async (req, res) => { // TESTED
     const options = {
       user,
       name,
-      tree: { node: 'Root node' },
+      tree: [{ name: 'Place holder', children: [] }],
     };
 
     const map = await Map.create(options);
@@ -71,13 +71,13 @@ const createMap = async (req, res) => { // TESTED
     res.status(500).json({ error });
   }
 };
-
 /**
  * Edit the map with the specified id.
  * Expects to receive a map id string in the request parameters.
  * @return {Promise} A Promise that resolves in the edited map.
  */
 const editMap = async (req, res) => { // TESTED
+  // console.log('=============', req.body.tree, '=====================')
   try {
     const _id = req.params.id;
     const tree = req.body.tree;
