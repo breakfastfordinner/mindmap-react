@@ -100,7 +100,7 @@ class Home extends React.Component {
           <IconButton
             touch={true}
             tooltip="more"
-            tooltipPosition="center"
+            tooltipPosition="bottom-right"
           >
             <MoreVertIcon color={grey400} />
           </IconButton>

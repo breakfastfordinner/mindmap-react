@@ -13,7 +13,7 @@ const styles = {
 
 const Nav = ({ signedIn, logout}) => (
   <AppBar
-    title={<NavLink className='logo' activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>Dendrogramarama</span></NavLink>}
+    title={<NavLink className='logo' activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}>Mindflare</span></NavLink>}
     iconElementLeft={<IconButton></IconButton>}
     iconElementRight={ signedIn ? <FlatButton label="logout" onClick={ () => logout() } /> : <FlatButton label="Login" containerElement={<Link to="/login"/>} />} />
 );
