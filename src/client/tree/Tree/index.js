@@ -336,7 +336,7 @@ export default class Tree extends React.Component {
 Tree.defaultProps = {
   onClick: undefined,
   orientation: 'horizontal',
-  translate: { x: 200, y: 375 },
+  translate: { x: 350, y: 375 },
   pathFunc: 'elbow',
   transitionDuration: 500,
   depthFactor: undefined,

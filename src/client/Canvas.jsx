@@ -2,13 +2,28 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
+
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import Divider from 'material-ui/Divider';
+import Drawer from 'material-ui/Drawer';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+
 
 
 const styles = {
   title: {
     padding: '20px 20px',
-  }
+  },
+  drawerButton: {
+    padding: '0 20px',
+    marginTop: '20px',
+  },
+  display: 'inline-block',
+  margin: '16px 32px 16px 0',
 };
 
 
@@ -60,6 +75,7 @@ class Canvas extends React.Component {
         ],
         mapName: 'random',
         editNameToggle: false,
+        open: false
 
 
     }
@@ -67,6 +83,7 @@ class Canvas extends React.Component {
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentDidMount() {
@@ -99,6 +116,10 @@ class Canvas extends React.Component {
     })
   }
 
+
+  handleToggle() {
+    this.setState({open: !this.state.open})
+  }
 
   async updateMap() {
     console.log('if you see this, means entire map view should be rerendered')
@@ -143,17 +164,69 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div className='mapTitle'>
+      <div >
         {//this.props.match.params.id
         }
-        {!this.state.editNameToggle && <div onClick={this.toggleNameChange}> {this.state.mapName} </div>}
-        {this.state.editNameToggle &&
-          <form className='mapTitle' onSubmit={this.untoggleNameChange}>
-              <TextField className="mapNameUpdate" name="mapNameUpdate" placeholder={this.state.mapName} />
-              <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
-          </form>
-        }
+        <div className='mapTitle'>
+
+          {!this.state.editNameToggle && <div onClick={this.toggleNameChange}> {this.state.mapName} </div>}
+          {this.state.editNameToggle &&
+            <form className='mapTitle' onSubmit={this.untoggleNameChange}>
+                <TextField className="mapNameUpdate" name="mapNameUpdate" placeholder={this.state.mapName} />
+                <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
+            </form>
+          }
+
+          <RaisedButton
+            style={styles.drawerButton}
+            label="Show Tools"
+            onClick={this.handleToggle}
+          />
+        </div>
+
+        <Drawer zDepth={1} open={this.state.open}>
+          <MenuItem
+            primaryText="Layout"
+            rightIcon={<ArrowDropRight />}
+            menuItems={[
+              <MenuItem primaryText="Default" insetChildren={true} checked={true}/>,
+              <MenuItem primaryText="Cool Color Combo"  insetChildren={true}/>,
+              <MenuItem primaryText="Sweet Color Scheme" insetChildren={true}/>,
+              <MenuItem primaryText="XKCD" insetChildren={true}/>,
+            ]}
+          />
+
+          <MenuItem
+            primaryText="Orientation"
+            rightIcon={<ArrowDropRight />}
+            menuItems={[
+              <MenuItem primaryText="Horizontal" checked={true} insetChildren={true}/>,
+              <MenuItem primaryText="Vertical" insetChildren={true}/>,
+            ]}
+          />
+          <MenuItem
+            primaryText="Node Shape"
+            rightIcon={<ArrowDropRight />}
+            menuItems={[
+              <MenuItem primaryText="Circle" insetChildren={true} checked={true}/>,
+              <MenuItem primaryText="Triangle" insetChildren={true}/>,
+              <MenuItem primaryText="Rectangle" insetChildren={true}/>,
+              <MenuItem primaryText="Star" insetChildren={true}/>,
+            ]}
+          />
+
+          <Divider />
+          <MenuItem primaryText="More options" />
+          <MenuItem primaryText="Even more options" />
+          <Divider />
+          <MenuItem primaryText="Share" />
+        </Drawer>
+
+
         <TestMap tree={this.state.tree} updateMap={this.updateMap}></TestMap>
+
+
+
       </div>
       )
   }
