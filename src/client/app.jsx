@@ -96,10 +96,10 @@ class App extends React.Component {
           <div>
             <Nav signedIn={this.state.signedIn} logout={this.handleLogout} />
             <Switch>
-              <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn} updateMaps={this.updateMaps}  />} />
               <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
               <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
               <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
+              <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}  updateMaps={this.updateMaps}  />} />
             </Switch>
           </div>
         </MuiThemeProvider>

@@ -12,45 +12,103 @@ import Node from '../Node';
 import Link from '../Link';
 import './style.css';
 
+import MapModel from '../../actions/maps';
+
+const TreeObject = function(name, id){
+  this.name = name;
+  this.id = id;
+  this.children = [];
+};
+
+// TreeObject.prototype.addChild = function(child){
+//   this.children.push(child);
+//   // return the new child node for convenience
+//   return child;
+// };
+
+// TreeObject.prototype.removeChild = function(child){
+//   var index = this.children.indexOf(child);
+//   if(index !== -1){
+//     // remove the child
+//     this.children.splice(index,1);
+//   }else{
+//     throw new Error("That node is not an immediate child of this tree");
+//   }
+// };
+
+
 export default class Tree extends React.Component {
 
   constructor(props) {
+    // console.log(props)
     super(props);
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
       // selectedNode:
+      // sendData: []
+      // sendData: this.createLocalSendData(clone(this.state.data))
+      // selectedNode: 
+
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnClickCb = this.handleOnClickCb.bind(this);
+    this.addNode = this.addNode.bind(this);
+    this.removeNode = this.removeNode.bind(this);
+    this.editNode = this.editNode.bind(this);
+    this.resetSendData = this.resetSendData.bind(this);
+    this.createLocalSendData = this.createLocalSendData.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.editMapHelper = this.editMapHelper.bind(this);
   }
 
 
   componentDidMount() {
-    console.log(this);
+    console.log('tree got rendered: ', this);
+    // this.setState({
+    //   sendData: this.createLocalSendData(clone(this.state.data[0]))
+    // }, ()=>{ console.log(this.state.senData, 'check on sendData condition'); })
+    // this.resetSendData();
+    // console.log(this.state.senData, 'check on sendData condition');
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
+    // console.log('XXXXXhow many times did this render?XXXXX', this.state.data)
   }
 
 
   componentWillReceiveProps(nextProps) {
     // Clone new data & assign internal properties
-    if (!deepEqual(this.props.data, nextProps.data)) {
-      this.setState({
-        data: this.assignInternalProperties(clone(nextProps.data)),
-      });
-    }
+    // console.log('console outside')
+    // console.log('current: ', this.props.data, 'next: ', nextProps.data, 'XXXXXhow many times did this render?XXXXX')
+    // if (!deepEqual(this.props.data, nextProps.data)) {
+    // console.log(nextProps, 'whats this?')
+    this.setState({
+      data: this.assignInternalProperties(clone(nextProps.data)),
+      // sendData: this.createLocalSendData(clone(this.state.data[0]))
+    }, ()=> {this.resetSendData()});
+    
 
     // If zoom-specific props change -> rebind listener with new values
     if (!deepEqual(this.props.translate, nextProps.translate)
     || !deepEqual(this.props.scaleExtent, nextProps.scaleExtent)) {
+      // console.log('ran this one?')
       this.bindZoomListener(nextProps);
     }
   }
 
+  resetSendData() {
+    // console.log('how many times?', this.state.data[0])
+    // console.log('inside of resetSendData: ', this.state.data[0])
+    // console.log('what happen after createLocalSendData:', this.createLocalSendData(clone(this.state.data[0])))
+    return this.createLocalSendData(clone(this.state.data[0]))
+    // this.setState({
+    //   sendData: this.createLocalSendData(clone(this.state.data[0]))
+    // })
+  }
 
   /**
    * setInitialTreeDepth - Description
@@ -105,6 +163,7 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
+      // console.log('each node in assignedInternalProps:', node)
       node.id = uuid.v4();
       // console.log(node.id, 'each nodes id');
       // console.log(node)
@@ -198,16 +257,13 @@ export default class Tree extends React.Component {
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
 
-    console.log(targetNode)
-    if (targetNode.children) {
-      targetNode.children.push({name: 'test', children: []});
-      console.log(targetNode, 'after')
-      console.log(data)
-    } else {
-      targetNode.children = [{name: 'test2222', children:[]}];
-      console.log(targetNode, 'after number 2');
-      console.log(data, 'did this update?')
-    }
+    this.addNode(targetNode, data);
+    // console.log(targetNode)
+
+    // setTimeout(()=>{console.log('tree props', this.props)}, 1000);
+    // await MapModel.editMap(this.props.mapId, data);
+    // this.props.updateMap();
+
 
 
     // if (this.props.collapsible) {
@@ -219,6 +275,128 @@ export default class Tree extends React.Component {
     //   this.handleOnClickCb(targetNode);
     // }
   }
+
+  async editMapHelper() {
+    await MapModel.editMap(this.props.mapId, this.resetSendData());
+    this.props.updateMap();
+  }
+  
+  handleRightClick(nodeId) {
+    const data = clone(this.state.data);
+    // const matches = this.findNodesById(nodeId, data, []);
+    // const targetNode = matches[0];
+
+    // this.removeNode(nodeId, data[0]);
+    this.setState({
+        data: this.assignInternalProperties(this.removeNode(nodeId, data[0]))
+      }, async ()=>{
+        await MapModel.editMap(this.props.mapId, this.resetSendData());
+        this.props.updateMap();
+      })
+  }
+
+  handleTextChange(nodeId) {
+    const data = clone(this.state.data);
+    this.setState({
+      data: this.assignInternalProperties(this.editNode(nodeId, data[0]))
+    }, this.editMapHelper)
+
+  }
+
+
+  createLocalSendData(data) {
+    // console.log(data, '========')
+    let newData = new TreeObject(data.name, data.id);
+    let inner = function(data, newData) {
+      if (data.children === undefined) {
+        return;
+      }
+      for (let i = 0; i < data.children.length; i++) {
+        // console.log('=========', data.children[i].id, '========')
+        if (data.children[i].id) {
+          newData.children.push(new TreeObject(data.children[i].name, data.children[i].id)); 
+        } else {
+          newData.children.push(new TreeObject(data.children[i].name));
+        }
+        inner(data.children[i], newData.children[i]);
+      }
+    }
+    inner(data, newData);
+    // console.log(newData, '----didthiscomeoutright')
+    return [newData];
+  }
+
+  addNode(targetNode, data) {
+    if (targetNode.children) {
+      console.log('whats the targetNode:', targetNode)
+      targetNode.children.push({name: 'new node', children: []});
+
+      // console.log('target node=========',targetNode)
+      // console.log('tree data====', data)
+      // console.log('sendData state: ', this.state.sendData)
+      // console.log('data state: ', this.state.data)
+      this.setState({
+        data: this.assignInternalProperties(clone(data))
+      }, this.editMapHelper)
+    } else {
+      targetNode.children = [{name: 'new node', children:[]}];
+      // console.log('targetNode.children: ', targetNode.children)
+      // console.log('targetnode :', targetNode);
+      // console.log('tree data', data);
+      // console.log('data state in node has no children: ', this.state.data)
+      this.setState({
+        data: this.assignInternalProperties(clone(data))
+      }, this.editMapHelper)
+    }
+  }
+
+  removeNode(nodeId, data) {
+    if (data.id === nodeId) {
+      console.log('can not remove original node')
+      return [data];
+    }
+    console.log(data.id, '???')
+    if (data.children) {   
+      for (let i = 0; i < data.children.length; i++ ) {
+        if (data.children[i].id === nodeId) {
+          data.children.splice(i, 1);
+          return [data]
+        }
+        this.removeNode(nodeId, data.children[i])
+      }
+    }
+    return [data];
+
+  }
+
+  editNode(nodeId) {
+
+
+  }
+
+
+  // strippingData(data) {
+  //   let Tree = function(value) {
+  //     this.value = value;
+  //     this.children = [];
+  //   }
+  //   newData = [];
+  //   newTree = {};
+    
+  //   let recursion = function(data, newTree) {
+  //     newTree.name = data.name;
+  //     newTree.children = [];
+  //     for (let child of data.children) {
+  //       newTree.children.push({})
+  //       recursion(child, newTree.children)
+  //     }
+
+  //   }
+  //   recursion(data, newTree);
+  //   newData.push(newTree);
+
+  //   return newData;
+  // }
 
 
   /**
@@ -279,6 +457,7 @@ export default class Tree extends React.Component {
     }
 
     return { nodes, links };
+
   }
 
   render() {
@@ -293,26 +472,27 @@ export default class Tree extends React.Component {
       styles,
     } = this.props;
 
+
     return (
       <div className={`rd3t-tree-container ${zoomable ? 'rd3t-grabbable' : undefined}`}>
         <svg className="rd3t-svg" width="100%" height="100%">
-          <TransitionGroup
-            component="g"
+          <g
             className="rd3t-g"
             transform={`translate(${translate.x},${translate.y})`}
           >
-            {links.map((linkData) =>
-              <Link
-                key={uuid.v4()}
-                orientation={orientation}
-                pathFunc={pathFunc}
-                linkData={linkData}
-                transitionDuration={transitionDuration}
-                styles={styles.links}
-              />
-            )}
-
-            {nodes.map((nodeData) =>
+          {links.map((linkData) =>
+            <Link
+              key={uuid.v4()}
+              orientation={orientation}
+              pathFunc={pathFunc}
+              linkData={linkData}
+              transitionDuration={transitionDuration}
+              styles={styles.links}
+            />
+          )}
+          {nodes.map((nodeData) => {
+            // console.log("nodeData:", nodeData)
+            return (
               <Node
                 key={nodeData.id}
                 orientation={orientation}
@@ -322,11 +502,15 @@ export default class Tree extends React.Component {
                 name={nodeData.name}
                 attributes={nodeData.attributes}
                 onClick={this.handleOnClick}
+                onRightClick={this.handleRightClick}
+                onTextClick={this.handleTextClick}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
               />
-            )}
-          </TransitionGroup>
+            )
+          })}
+          </g>
+          
         </svg>
       </div>
     );
@@ -338,6 +522,8 @@ Tree.defaultProps = {
   orientation: 'horizontal',
   translate: { x: 200, y: 375 },
   pathFunc: 'elbow',
+  // translate: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+  // pathFunc: 'diagonal',
   transitionDuration: 500,
   depthFactor: undefined,
   collapsible: true,
