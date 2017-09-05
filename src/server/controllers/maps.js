@@ -57,7 +57,7 @@ const createMap = async (req, res) => { // TESTED
     const options = {
       user,
       name,
-      tree: [{ name: 'Place holder', children: [] } ],
+      tree: [{ name: 'Place holder', children: [] }],
     };
 
     const map = await Map.create(options);
