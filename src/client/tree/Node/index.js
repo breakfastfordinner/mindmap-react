@@ -20,13 +20,16 @@ export default class Node extends React.Component {
       initialStyle: {
         opacity: 0,
       },
+      textFormToggle: false
     };
 
     this.handleClick = this.handleClick.bind(this);
+    this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleTextClick = this.handleTextClick.bind(this);
   }
 
   componentDidMount() {
-    console.log(this)
+    // console.log(this)
     const { x, y } = this.props.nodeData;
     const transform = this.setTransformOrientation(x, y);
 
@@ -58,6 +61,13 @@ export default class Node extends React.Component {
   handleClick() {
     this.props.onClick(this.props.nodeData.id);
   }
+  handleRightClick() {
+    console.log('would this work???? right click', this.props.nodeData.id)
+    this.props.onRightClick(this.props.nodeData.id);
+  }
+  handleTextClick() {
+    console.log('clicked on txt?', this.props.nodeData.id)
+  }
 
   componentWillLeave(done) {
     const { parent } = this.props.nodeData;
@@ -71,30 +81,46 @@ export default class Node extends React.Component {
   render() {
     const { nodeData, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
+    let form = ()=> {
+        console.log('ran???=====')
+      return (
+        <form>
+          <input className="nodeNameUpdate" type="text" name="nodeNameUpdate" placeholder={this.props.name} />
+          <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
+        </form>
+      )}
+
     return (
+
       <g
         id={nodeData.id}
         ref={(n) => { this.node = n; }}
         style={this.state.initialStyle}
         className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
         transform={this.state.transform}
-        onClick={this.handleClick}
+        // onClick={this.handleClick}
+        onContextMenu={this.handleRightClick}
       >
-        <text
+         
+
+
+        <circle
+          r={this.props.circleRadius}
+          style={nodeStyle.circle}
+          onClick={this.handleClick}
+        >
+        </circle>
+         <text
           className="nodeNameBase"
           textAnchor={this.props.textAnchor}
           style={nodeStyle.name}
           x="10"
           y="-10"
           dy=".35em"
+          onClick={this.handleTextClick}
         >
           {this.props.name}
         </text>
-
-        <circle
-          r={this.props.circleRadius}
-          style={nodeStyle.circle}
-        />
 
         <text
           className="nodeAttributesBase"

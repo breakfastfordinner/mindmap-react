@@ -94,6 +94,7 @@ class Home extends React.Component {
   };
 
   render() {
+
     let mapsLinks = this.props.maps.map((map, i) => {
 
         const iconButtonElement = (
@@ -104,6 +105,7 @@ class Home extends React.Component {
           >
             <MoreVertIcon color={grey400} />
           </IconButton>
+
         )
 
         const rightIconMenu = (
