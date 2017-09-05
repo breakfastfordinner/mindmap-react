@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link, NavLink, withRouter } from 'react-router-do
 import MapModel from './actions/maps';
 
 import Avatar from 'material-ui/Avatar';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -23,6 +24,10 @@ const styles = {
     textDecoration: 'none',
     color: '#212121'
   },
+  newmap: {
+    paddingLeft: '20px',
+    marginRight: '30px'
+  }
 
 };
 
@@ -95,7 +100,7 @@ class Home extends React.Component {
           <IconButton
             touch={true}
             tooltip="more"
-            tooltipPosition="bottom-right"
+            tooltipPosition="center"
           >
             <MoreVertIcon color={grey400} />
           </IconButton>
@@ -104,17 +109,17 @@ class Home extends React.Component {
         const rightIconMenu = (
           <IconMenu iconButtonElement={iconButtonElement}>
             <MenuItem>Share</MenuItem>
-            <MenuItem onClick={()=> {this.destroyMap(map._id)}} ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
+            <MenuItem ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
             <MenuItem onClick={()=> {this.handleOpen(map._id)}} >Delete</MenuItem>
           </IconMenu>
         );
 
         return (
           <div key={i}>
+            <Divider />
             <ListItem rightIconButton={rightIconMenu} >
               <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
             </ListItem>
-            <Divider />
           </div>
         );
     })
@@ -124,10 +129,11 @@ class Home extends React.Component {
         <div className="home">
 
           <FlatButton label="New Map" primary={true} onClick={this.toggleCreateMapForm} />
-
+          <br />
           { this.state.createToggle &&
             <div>
               <TextField
+                style={styles.newmap}
                 hintText='Name your map...'
                 value={ this.state.value }
                 onChange={ this.handleChange } />
@@ -148,12 +154,13 @@ class Home extends React.Component {
             onRequestClose={this.handleClose}>
             Your map will be gone forever!
           </Dialog>
-
-          <List>
-            <Subheader>Your maps</Subheader>
-            {mapsLinks}
-          </List>
-
+          <Card>
+            <List>
+              <Subheader>Your maps</Subheader>
+              <br/>
+              {mapsLinks}
+            </List>
+          </Card>
         </div>
       </div>
     )

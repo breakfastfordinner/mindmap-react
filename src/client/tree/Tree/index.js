@@ -19,7 +19,7 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
-      // selectedNode: 
+      // selectedNode:
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
@@ -336,17 +336,17 @@ export default class Tree extends React.Component {
 Tree.defaultProps = {
   onClick: undefined,
   orientation: 'horizontal',
-  translate: { x: 0, y: 0 },
-  pathFunc: 'diagonal',
+  translate: { x: 200, y: 375 },
+  pathFunc: 'elbow',
   transitionDuration: 500,
   depthFactor: undefined,
   collapsible: true,
-  initialDepth: undefined,
+  initialDepth: 150,
   zoomable: true,
   scaleExtent: { min: 0.1, max: 1 },
-  nodeSize: { x: 140, y: 140 },
+  nodeSize: { x: 150, y: 150 },
   separation: { siblings: 1, nonSiblings: 2 },
-  circleRadius: 10,
+  circleRadius: 7,
   styles: {},
 };
 

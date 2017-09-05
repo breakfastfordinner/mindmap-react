@@ -1,24 +1,27 @@
 .nodeBase {
   cursor: pointer;
-  fill: #777;
-  stroke: #000;
-  stroke-width: 2;
+  fill: #03A9F4;
+  stroke: #03A9F4;
+  stroke-width: 5;
 }
 
 .leafNodeBase {
   cursor: pointer;
-  fill: transparent;
-  stroke: #000;
-  stroke-width: 2;
+  fill: #E91E63;
+  stroke: #E91E63;
+  stroke-width: 5;
+  font: 14px 'Roboto';
 }
 
 .nodeNameBase {
-  stroke: #000;
-  stroke-width: 1;
+  stroke: #212121;
+  stroke-width: 0;
+  font: 14px 'Roboto';
 }
 
 .nodeAttributesBase {
-  stroke: #777;
-  stroke-width: 1;
+  stroke: #FFEB3B;
+  stroke-width: 0;
   font-size: smaller;
+  font: 14px 'Roboto';
 }

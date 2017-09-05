@@ -3,6 +3,13 @@ import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-d
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
+const styles = {
+  link: {
+    textDecoration: 'none',
+    color: '#FF9800'
+  }
+};
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -48,10 +55,11 @@ class Login extends React.Component {
           value={this.state.password}/>
         <br />
         <RaisedButton
+          className='submitButton'
           label="Submit"
           primary={true}
           onClick={ this.handleLogin } />
-        <p> Need an account? <Link to="/register">Sign Up</Link></p>
+        <p> Need an account? <Link style={styles.link} to="/register">Sign Up</Link></p>
       </div>
     )
   }
