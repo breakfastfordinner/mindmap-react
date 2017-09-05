@@ -71,7 +71,7 @@ const createMap = async (req, res) => { // TESTED
     res.status(500).json({ error });
   }
 };
-
+//something
 /**
  * Edit the map with the specified id.
  * Expects to receive a map id string in the request parameters.
