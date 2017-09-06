@@ -13,6 +13,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import NodeNameModal from './NodeNameModal.jsx'
 
 
 
@@ -28,49 +29,6 @@ const styles = {
   margin: '16px 32px 16px 0',
 };
 
-
-// [
-//           {
-//             name: 'Parent 1st tier',
-//             attributes: {
-//             },
-//             children: [
-//               {
-//                 name: 'Child 2nd tier',
-//                 attributes: {
-//                   keyA: 'val A',
-//                   keyB: 'val B',
-//                   keyC: 'val C',
-//                 },
-//                 children: [
-//                   {
-//                     name: '3rd tier',
-//                   },
-//                   {
-//                     name: '3rd tier 2',
-//                   },
-//                 ],
-//               },
-//               {
-//                 name: 'Child2 2nd tier',
-//                 children: [
-//                   {
-//                     name: 'child2 3rd tier',
-//                     children: [
-//                       {
-//                         name: 'child2 4th tier'
-//                       }
-//                     ],
-//                   },
-//                   {
-//                     name: 'child2 3rd tier 2'
-//                   }
-//                 ],
-//               },
-//             ],
-//           },
-//         ]
-
 class Canvas extends React.Component {
   constructor(props) {
     super(props)
@@ -80,47 +38,58 @@ class Canvas extends React.Component {
         mapName: 'random',
         editNameToggle: false,
         toggleNodeNameChange: false,
+        selectedNodeId: '',
         open: false
-    }
+      }
+
     this.updateMap = this.updateMap.bind(this);
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
+    this.toggleOnNodeNameModal = this.toggleOnNodeNameModal.bind(this);
+    this.toggleOffNodeNameModal = this.toggleOffNodeNameModal.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
   }
 
 
-  componentWillReceiveProps() {
-    this.updateMap();
-  }
+  // componentWillReceiveProps() {
+  //   this.updateMap();
+  // }
+  // shouldComponentUpdate(nextProp, nextState) {
+  //   console.log('inside of should compupdate:', nextProp);
+  //   console.log('inside of should update, nextSTATE:', nextState)
+  //   console.log('will this rerender?', !nextState.toggleNodeNameChange)
+  //   return !nextState.toggleNodeNameChange;
+  // }
+
 
   componentDidMount() {
-
     this.updateMap();
-    /*ajax call that
-      input = map id = {this.props.match.params.id} + user token
-      output = map object || callback that has map object
-      set the state of map to that map object
-      MapModel.getMap(this.props.match.params.id)
-      setState of the map
-    */
-
   }
 
-   toggleNodeNameChange() {
+  toggleOnNodeNameModal(nodeId) {
+    this.setState({
+      toggleNodeNameChange: true,
+      selectedNodeId: nodeId
+    })
+  }
 
-   }
+  toggleOffNodeNameModal() {
+    this.setState({
+      toggleNodeNameChange: false
+    })
+  }
 
-   toggleNameChange() {
-     this.setState({
-       editNameToggle: !this.state.editNameToggle
-     })
-   }
+  toggleNameChange() {
+    this.setState({
+      editNameToggle: !this.state.editNameToggle
+    })
+  }
+
 
   untoggleNameChange(e) {
     e.preventDefault();
     this.updateMapName(e.target.mapNameUpdate.value);
-    // console.log('no')
     e.target.mapNameUpdate.value = '';
     this.setState({
       editNameToggle: false
@@ -133,34 +102,19 @@ class Canvas extends React.Component {
   }
 
   async updateMap() {
-    // console.log('if you see this, means entire map view should be rerendered')
     let mapResponse = await MapModel.getMap(this.props.match.params.id);
-    //do something to prevent a problem where there's no tree retrieved from database
-    //if all noedes are removed?
     this.setState({
       map: mapResponse.map,
       mapName: mapResponse.map.name,
       tree: mapResponse.map.tree
     })
-
-     //  setState of the map, mapname, tree
-     // console.log(this.state.tree, 'fkdopsakf======check on this')
   }
-
-
 
   async updateMapName(mapName) {
     if (mapName === "") {
       console.log("nothing enter, dont fire request")
     } else {
-
-
       await MapModel.editMapName(this.props.match.params.id, mapName);
-
-      // console.log('update name to: ', mapName)
-      // this.setState({
-      //   mapName: mapName
-      // })
 
       this.updateMap();
       this.props.updateMaps();
@@ -171,7 +125,7 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div >
+      <div>
         {//this.props.match.params.id
         }
         <div className='mapTitle'>
@@ -189,8 +143,6 @@ class Canvas extends React.Component {
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
             </form>
           }
-
-
 
         </div>
 
@@ -232,14 +184,25 @@ class Canvas extends React.Component {
           <MenuItem primaryText="Share" />
         </Drawer>
 
+        { this.state.toggleNodeNameChange &&
+        <NodeNameModal
+        nodeId={this.state.selectedNodeId}
+        mapId={this.props.match.params.id}
+        tree={this.state.tree}
+        updateMap={this.updateMap}
+        toggleOffNodeNameModal={this.toggleOffNodeNameModal} />
+        }
 
-         <TestMap tree={this.state.tree} updateMap={this.updateMap} mapId={this.props.match.params.id}></TestMap>
+        <TestMap
+        tree={this.state.tree}
+        updateMap={this.updateMap}
+        mapId={this.props.match.params.id}
+        toggleOnNodeNameModal={this.toggleOnNodeNameModal}
+        toggleNodeNameChange={this.state.toggleNodeNameChange}/>
 
-
-
-      </div>
+        </div>
       )
-  }
+    }
 
 }
 
