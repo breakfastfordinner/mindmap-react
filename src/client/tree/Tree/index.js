@@ -45,69 +45,47 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
-      // selectedNode:
-      // sendData: []
-      // sendData: this.createLocalSendData(clone(this.state.data))
-      // selectedNode: 
-
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
     this.handleOnClickCb = this.handleOnClickCb.bind(this);
     this.addNode = this.addNode.bind(this);
     this.removeNode = this.removeNode.bind(this);
-    this.editNode = this.editNode.bind(this);
     this.resetSendData = this.resetSendData.bind(this);
     this.createLocalSendData = this.createLocalSendData.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
-    this.handleTextChange = this.handleTextChange.bind(this);
     this.editMapHelper = this.editMapHelper.bind(this);
   }
 
 
   componentDidMount() {
-    console.log('tree got rendered: ', this);
-    // this.setState({
-    //   sendData: this.createLocalSendData(clone(this.state.data[0]))
-    // }, ()=>{ console.log(this.state.senData, 'check on sendData condition'); })
-    // this.resetSendData();
-    // console.log(this.state.senData, 'check on sendData condition');
+    // console.log('tree got rendered: ', this);
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
-    // console.log('XXXXXhow many times did this render?XXXXX', this.state.data)
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !nextProps.toggleNodeNameChange;
+  }
 
   componentWillReceiveProps(nextProps) {
-    // Clone new data & assign internal properties
-    // console.log('console outside')
-    // console.log('current: ', this.props.data, 'next: ', nextProps.data, 'XXXXXhow many times did this render?XXXXX')
     // if (!deepEqual(this.props.data, nextProps.data)) {
-    // console.log(nextProps, 'whats this?')
     this.setState({
       data: this.assignInternalProperties(clone(nextProps.data)),
-      // sendData: this.createLocalSendData(clone(this.state.data[0]))
     }, ()=> {this.resetSendData()});
     
 
     // If zoom-specific props change -> rebind listener with new values
     if (!deepEqual(this.props.translate, nextProps.translate)
     || !deepEqual(this.props.scaleExtent, nextProps.scaleExtent)) {
-      // console.log('ran this one?')
       this.bindZoomListener(nextProps);
     }
   }
 
   resetSendData() {
-    // console.log('how many times?', this.state.data[0])
-    // console.log('inside of resetSendData: ', this.state.data[0])
-    // console.log('what happen after createLocalSendData:', this.createLocalSendData(clone(this.state.data[0])))
     return this.createLocalSendData(clone(this.state.data[0]))
-    // this.setState({
-    //   sendData: this.createLocalSendData(clone(this.state.data[0]))
-    // })
   }
 
   /**
@@ -163,10 +141,9 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
-      // console.log('each node in assignedInternalProps:', node)
-      node.id = uuid.v4();
-      // console.log(node.id, 'each nodes id');
-      // console.log(node)
+      if(!node.id) {
+        node.id = uuid.v4();
+      }
       node._collapsed = false;
       // if there are children, recursively assign properties to them too
       if (node.children && node.children.length > 0) {
@@ -250,20 +227,12 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClick(nodeId) {
-    // console.log('what would happen? would this thing break?', nodeId)
     // this.handleOnClickCb();
 
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
-
     this.addNode(targetNode, data);
-    // console.log(targetNode)
-
-    // setTimeout(()=>{console.log('tree props', this.props)}, 1000);
-    // await MapModel.editMap(this.props.mapId, data);
-    // this.props.updateMap();
-
 
 
     // if (this.props.collapsible) {
@@ -283,10 +252,6 @@ export default class Tree extends React.Component {
   
   handleRightClick(nodeId) {
     const data = clone(this.state.data);
-    // const matches = this.findNodesById(nodeId, data, []);
-    // const targetNode = matches[0];
-
-    // this.removeNode(nodeId, data[0]);
     this.setState({
         data: this.assignInternalProperties(this.removeNode(nodeId, data[0]))
       }, async ()=>{
@@ -295,24 +260,13 @@ export default class Tree extends React.Component {
       })
   }
 
-  handleTextChange(nodeId) {
-    const data = clone(this.state.data);
-    this.setState({
-      data: this.assignInternalProperties(this.editNode(nodeId, data[0]))
-    }, this.editMapHelper)
-
-  }
-
-
   createLocalSendData(data) {
-    // console.log(data, '========')
     let newData = new TreeObject(data.name, data.id);
     let inner = function(data, newData) {
       if (data.children === undefined) {
         return;
       }
       for (let i = 0; i < data.children.length; i++) {
-        // console.log('=========', data.children[i].id, '========')
         if (data.children[i].id) {
           newData.children.push(new TreeObject(data.children[i].name, data.children[i].id)); 
         } else {
@@ -322,28 +276,17 @@ export default class Tree extends React.Component {
       }
     }
     inner(data, newData);
-    // console.log(newData, '----didthiscomeoutright')
     return [newData];
   }
 
   addNode(targetNode, data) {
     if (targetNode.children) {
-      console.log('whats the targetNode:', targetNode)
       targetNode.children.push({name: 'new node', children: []});
-
-      // console.log('target node=========',targetNode)
-      // console.log('tree data====', data)
-      // console.log('sendData state: ', this.state.sendData)
-      // console.log('data state: ', this.state.data)
       this.setState({
         data: this.assignInternalProperties(clone(data))
       }, this.editMapHelper)
     } else {
       targetNode.children = [{name: 'new node', children:[]}];
-      // console.log('targetNode.children: ', targetNode.children)
-      // console.log('targetnode :', targetNode);
-      // console.log('tree data', data);
-      // console.log('data state in node has no children: ', this.state.data)
       this.setState({
         data: this.assignInternalProperties(clone(data))
       }, this.editMapHelper)
@@ -355,7 +298,6 @@ export default class Tree extends React.Component {
       console.log('can not remove original node')
       return [data];
     }
-    console.log(data.id, '???')
     if (data.children) {   
       for (let i = 0; i < data.children.length; i++ ) {
         if (data.children[i].id === nodeId) {
@@ -366,38 +308,7 @@ export default class Tree extends React.Component {
       }
     }
     return [data];
-
   }
-
-  editNode(nodeId) {
-
-
-  }
-
-
-  // strippingData(data) {
-  //   let Tree = function(value) {
-  //     this.value = value;
-  //     this.children = [];
-  //   }
-  //   newData = [];
-  //   newTree = {};
-    
-  //   let recursion = function(data, newTree) {
-  //     newTree.name = data.name;
-  //     newTree.children = [];
-  //     for (let child of data.children) {
-  //       newTree.children.push({})
-  //       recursion(child, newTree.children)
-  //     }
-
-  //   }
-  //   recursion(data, newTree);
-  //   newData.push(newTree);
-
-  //   return newData;
-  // }
-
 
   /**
    * handleOnClickCb - Handles the user-defined `onClick` function
@@ -491,7 +402,6 @@ export default class Tree extends React.Component {
             />
           )}
           {nodes.map((nodeData) => {
-            // console.log("nodeData:", nodeData)
             return (
               <Node
                 key={nodeData.id}
@@ -501,11 +411,12 @@ export default class Tree extends React.Component {
                 nodeData={nodeData}
                 name={nodeData.name}
                 attributes={nodeData.attributes}
+                circleRadius={circleRadius}
+                styles={styles.nodes}
                 onClick={this.handleOnClick}
                 onRightClick={this.handleRightClick}
                 onTextClick={this.handleTextClick}
-                circleRadius={circleRadius}
-                styles={styles.nodes}
+                toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
               />
             )
           })}

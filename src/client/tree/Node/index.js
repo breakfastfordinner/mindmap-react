@@ -62,11 +62,12 @@ export default class Node extends React.Component {
     this.props.onClick(this.props.nodeData.id);
   }
   handleRightClick() {
-    console.log('would this work???? right click', this.props.nodeData.id)
+    // console.log('would this work???? right click', this.props.nodeData.id)
     this.props.onRightClick(this.props.nodeData.id);
   }
   handleTextClick() {
-    console.log('clicked on txt?', this.props.nodeData.id)
+    // console.log('clicked on txt?', this.props.nodeData.id)
+    this.props.toggleOnNodeNameModal(this.props.nodeData.id);
   }
 
   componentWillLeave(done) {
@@ -82,7 +83,7 @@ export default class Node extends React.Component {
     const { nodeData, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
     let form = ()=> {
-        console.log('ran???=====')
+        // console.log('ran???=====')
       return (
         <form>
           <input className="nodeNameUpdate" type="text" name="nodeNameUpdate" placeholder={this.props.name} />
