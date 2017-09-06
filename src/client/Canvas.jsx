@@ -4,8 +4,10 @@ import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
+import IconButton from 'material-ui/IconButton';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -174,19 +176,22 @@ class Canvas extends React.Component {
         }
         <div className='mapTitle'>
 
-          {!this.state.editNameToggle && <div onClick={this.toggleNameChange}> {this.state.mapName} </div>}
+          <div>
+            <IconButton onClick={this.handleToggle} ><ModeEdit /></IconButton>
+            {!this.state.editNameToggle &&
+            <span onClick={this.toggleNameChange}> {this.state.mapName}
+            </span>
+          }
+          </div>
           {this.state.editNameToggle &&
-            <form className='mapTitle' onSubmit={this.untoggleNameChange}>
-                <TextField className="mapNameUpdate" name="mapNameUpdate" placeholder={this.state.mapName} />
-                <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
+            <form onSubmit={this.untoggleNameChange}>
+              <TextField name="mapNameUpdate" placeholder={this.state.mapName} />
+              <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
             </form>
           }
 
-          <RaisedButton
-            style={styles.drawerButton}
-            label="Show Tools"
-            onClick={this.handleToggle}
-          />
+
+
         </div>
 
         <Drawer zDepth={1} open={this.state.open}>

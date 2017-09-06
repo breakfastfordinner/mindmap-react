@@ -531,7 +531,7 @@ Tree.defaultProps = {
   zoomable: true,
   scaleExtent: { min: 0.1, max: 1 },
   nodeSize: { x: 150, y: 150 },
-  separation: { siblings: 1, nonSiblings: 2 },
+  separation: { siblings: .5, nonSiblings: 1 },
   circleRadius: 7,
   styles: {},
 };
