@@ -61,7 +61,7 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
-    console.log('tree got rendered: ', this);
+    //console.log('tree got rendered: ', this);
 
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
@@ -439,7 +439,7 @@ export default class Tree extends React.Component {
 
 Tree.defaultProps = {
   onClick: undefined,
-  orientation: 'horizontal',
+  //orientation: 'horizontal',
   translate: { x: 350, y: 375 },
   pathFunc: 'elbow',
   // translate: { x: window.innerWidth / 2, y: window.innerHeight / 2 },

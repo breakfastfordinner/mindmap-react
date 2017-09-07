@@ -40,7 +40,8 @@ class Canvas extends React.Component {
         editNameToggle: false,
         toggleNodeNameChange: false,
         selectedNodeId: '',
-        open: false
+        open: false,
+        orientation: 'horizontal'
       }
 
     this.updateMap = this.updateMap.bind(this);
@@ -50,6 +51,8 @@ class Canvas extends React.Component {
     this.toggleOnNodeNameModal = this.toggleOnNodeNameModal.bind(this);
     this.toggleOffNodeNameModal = this.toggleOffNodeNameModal.bind(this);
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.selectHorizontal = this.selectHorizontal.bind(this);
+    this.selectVertical = this.selectVertical.bind(this);
   }
 
 
@@ -66,7 +69,6 @@ class Canvas extends React.Component {
 
   componentDidMount() {
     this.updateMap();
-
   }
 
   toggleOnNodeNameModal(nodeId) {
@@ -97,13 +99,23 @@ class Canvas extends React.Component {
       editNameToggle: false
     })
 
-    console.log(this.state)
+    //console.log(this.state)
   }
 
 
   handleDrawerToggle() {
     this.setState({open: !this.state.open})
     //console.log(this.state.open)
+  }
+
+  selectHorizontal() {
+    this.setState({orientation: 'horizontal'});
+    this.updateMap();
+  }
+
+  selectVertical() {
+    this.setState({orientation: 'vertical'});
+    this.updateMap();
   }
 
   async updateMap() {
@@ -152,23 +164,31 @@ class Canvas extends React.Component {
         </div>
 
 
-        <ToolDrawer open={this.state.open} />
+        <ToolDrawer
+          open={this.state.open}
+          orientation={this.state.orientation}
+          selectHorizontal={this.selectHorizontal}
+          selectVertical={this.selectVertical}
+        />
 
         { this.state.toggleNodeNameChange &&
-        <NodeNameModal
-          nodeId={this.state.selectedNodeId}
-          mapId={this.props.match.params.id}
-          tree={this.state.tree}
-          updateMap={this.updateMap}
-          toggleOffNodeNameModal={this.toggleOffNodeNameModal} />
+          <NodeNameModal
+            nodeId={this.state.selectedNodeId}
+            mapId={this.props.match.params.id}
+            tree={this.state.tree}
+            updateMap={this.updateMap}
+            toggleOffNodeNameModal={this.toggleOffNodeNameModal}
+          />
         }
 
         <TestMap
-          tree={this.state.tree}
-          updateMap={this.updateMap}
           mapId={this.props.match.params.id}
+          orientation={this.state.orientation}
+          updateMap={this.updateMap}
           toggleOnNodeNameModal={this.toggleOnNodeNameModal}
-          toggleNodeNameChange={this.state.toggleNodeNameChange}/>
+          toggleNodeNameChange={this.state.toggleNodeNameChange}
+          tree={this.state.tree}
+        />
 
         </div>
       )

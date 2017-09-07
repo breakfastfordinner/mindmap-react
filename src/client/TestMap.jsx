@@ -9,6 +9,8 @@ class TestMap extends React.Component {
     }
   }
 
+
+
   componentWillReceiveProps(nextProps) {
     // console.log('in testMap', nextProps)
     this.setState({
@@ -25,6 +27,7 @@ class TestMap extends React.Component {
         data={ this.state.data }
         updateMap={ this.props.updateMap }
         mapId={this.props.mapId}
+        orientation={this.props.orientation}
         toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
         toggleNodeNameChange={this.props.toggleNodeNameChange}/>
       </div>
