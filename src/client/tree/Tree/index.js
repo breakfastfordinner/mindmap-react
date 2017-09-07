@@ -45,6 +45,7 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+
     };
     this.findNodesById = this.findNodesById.bind(this);
     this.collapseNode = this.collapseNode.bind(this);
@@ -60,7 +61,8 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
-    // console.log('tree got rendered: ', this);
+    console.log('tree got rendered: ', this);
+
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
@@ -75,11 +77,11 @@ export default class Tree extends React.Component {
     this.setState({
       data: this.assignInternalProperties(clone(nextProps.data)),
     }, ()=> {this.resetSendData()});
-    
 
     // If zoom-specific props change -> rebind listener with new values
     if (!deepEqual(this.props.translate, nextProps.translate)
     || !deepEqual(this.props.scaleExtent, nextProps.scaleExtent)) {
+      // console.log('ran this one?')
       this.bindZoomListener(nextProps);
     }
   }
@@ -144,6 +146,7 @@ export default class Tree extends React.Component {
       if(!node.id) {
         node.id = uuid.v4();
       }
+
       node._collapsed = false;
       // if there are children, recursively assign properties to them too
       if (node.children && node.children.length > 0) {
@@ -232,8 +235,8 @@ export default class Tree extends React.Component {
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
-    this.addNode(targetNode, data);
 
+    this.addNode(targetNode, data);
 
     // if (this.props.collapsible) {
     //   targetNode._collapsed
@@ -249,9 +252,11 @@ export default class Tree extends React.Component {
     await MapModel.editMap(this.props.mapId, this.resetSendData());
     this.props.updateMap();
   }
-  
+
+
   handleRightClick(nodeId) {
     const data = clone(this.state.data);
+
     this.setState({
         data: this.assignInternalProperties(this.removeNode(nodeId, data[0]))
       }, async ()=>{
@@ -260,7 +265,9 @@ export default class Tree extends React.Component {
       })
   }
 
+
   createLocalSendData(data) {
+
     let newData = new TreeObject(data.name, data.id);
     let inner = function(data, newData) {
       if (data.children === undefined) {
@@ -268,7 +275,7 @@ export default class Tree extends React.Component {
       }
       for (let i = 0; i < data.children.length; i++) {
         if (data.children[i].id) {
-          newData.children.push(new TreeObject(data.children[i].name, data.children[i].id)); 
+          newData.children.push(new TreeObject(data.children[i].name, data.children[i].id));
         } else {
           newData.children.push(new TreeObject(data.children[i].name));
         }
@@ -276,6 +283,7 @@ export default class Tree extends React.Component {
       }
     }
     inner(data, newData);
+
     return [newData];
   }
 
@@ -298,7 +306,7 @@ export default class Tree extends React.Component {
       console.log('can not remove original node')
       return [data];
     }
-    if (data.children) {   
+    if (data.children) {
       for (let i = 0; i < data.children.length; i++ ) {
         if (data.children[i].id === nodeId) {
           data.children.splice(i, 1);
@@ -309,6 +317,7 @@ export default class Tree extends React.Component {
     }
     return [data];
   }
+
 
   /**
    * handleOnClickCb - Handles the user-defined `onClick` function
@@ -402,6 +411,7 @@ export default class Tree extends React.Component {
             />
           )}
           {nodes.map((nodeData) => {
+
             return (
               <Node
                 key={nodeData.id}
@@ -421,7 +431,6 @@ export default class Tree extends React.Component {
             )
           })}
           </g>
-          
         </svg>
       </div>
     );
@@ -431,7 +440,7 @@ export default class Tree extends React.Component {
 Tree.defaultProps = {
   onClick: undefined,
   orientation: 'horizontal',
-  translate: { x: 200, y: 375 },
+  translate: { x: 350, y: 375 },
   pathFunc: 'elbow',
   // translate: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
   // pathFunc: 'diagonal',
@@ -442,7 +451,7 @@ Tree.defaultProps = {
   zoomable: true,
   scaleExtent: { min: 0.1, max: 1 },
   nodeSize: { x: 150, y: 150 },
-  separation: { siblings: 1, nonSiblings: 2 },
+  separation: { siblings: .5, nonSiblings: 1 },
   circleRadius: 7,
   styles: {},
 };

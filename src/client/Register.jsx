@@ -49,7 +49,7 @@ class Register extends React.Component {
         <br />
         <TextField
           name="password"
-          type="text"
+          type="password"
           hintText="password"
           onChange={this.handleChange}
           value={this.state.password}/>

@@ -170,6 +170,7 @@ const destroyMap = async (id) => {
   }
 };
 
+
 module.exports = {
   getMaps,
   getMap,

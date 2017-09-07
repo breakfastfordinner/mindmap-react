@@ -21,14 +21,12 @@ class TestMap extends React.Component {
     return (
 
       <div id="treeWrapper" style={{ width: '100%', height: '1000px'}}>
-
-        <Tree 
-        data={ this.state.data } 
-        updateMap={ this.props.updateMap } 
-        mapId={this.props.mapId} 
-        toggleOnNodeNameModal={this.props.toggleOnNodeNameModal} 
+        <Tree
+        data={ this.state.data }
+        updateMap={ this.props.updateMap }
+        mapId={this.props.mapId}
+        toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
         toggleNodeNameChange={this.props.toggleNodeNameChange}/>
-
       </div>
     );
   }

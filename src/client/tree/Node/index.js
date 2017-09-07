@@ -83,6 +83,7 @@ export default class Node extends React.Component {
     const { nodeData, styles } = this.props;
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
     let form = ()=> {
+
         // console.log('ran???=====')
       return (
         <form>
@@ -102,8 +103,6 @@ export default class Node extends React.Component {
         // onClick={this.handleClick}
         onContextMenu={this.handleRightClick}
       >
-         
-
 
         <circle
           r={this.props.circleRadius}
