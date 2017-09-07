@@ -7,6 +7,7 @@ import webpack from 'webpack'
 
 export default {
   entry: [
+    'babel-polyfill',
     'react-hot-loader/patch',
     './src/client',
   ],
@@ -19,18 +20,8 @@ export default {
     rules: [
       { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.(png|ico|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
-    ],
-    loaders: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          loader: 'babel-loader',
-          query: {
-            presets:[ 'es2015', 'react', 'stage-2' ]
-          }
-        }
-      ]
+      { test: /\.(png|ico|woff|woff2|eot|ttf|svg)$/, use: 'url-loader?limit=100000' }
+    ]
   },
   devtool: isProd ? false : 'source-map',
   resolve: {
