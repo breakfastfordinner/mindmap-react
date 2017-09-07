@@ -42,7 +42,7 @@ class Canvas extends React.Component {
         selectedNodeId: '',
         open: false,
         orientation: 'horizontal',
-        pathFunc: 'straight'
+        pathFunc: 'diagonal'
       }
 
     this.updateMap = this.updateMap.bind(this);
