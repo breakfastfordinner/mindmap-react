@@ -28,6 +28,7 @@ class TestMap extends React.Component {
         updateMap={ this.props.updateMap }
         mapId={this.props.mapId}
         orientation={this.props.orientation}
+        pathFunc={this.props.pathFunc}
         toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
         toggleNodeNameChange={this.props.toggleNodeNameChange}/>
       </div>

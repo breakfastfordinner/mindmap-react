@@ -44,6 +44,15 @@ class ToolDrawer extends React.Component {
             ]}
           />
           <MenuItem
+            primaryText="Line Style"
+            rightIcon={<ArrowDropRight />}
+            menuItems={[
+              <MenuItem primaryText="Diagonal" onClick={this.props.selectDiagonal} insetChildren={true}/>,
+              <MenuItem primaryText="Elbow" onClick={this.props.selectElbow} insetChildren={true}/>,
+              <MenuItem primaryText="Straight" onClick={this.props.selectStraight} insetChildren={true}/>,
+            ]}
+          />
+          <MenuItem
             primaryText="Node Shape"
             rightIcon={<ArrowDropRight />}
             menuItems={[

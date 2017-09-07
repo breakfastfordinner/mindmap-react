@@ -41,7 +41,8 @@ class Canvas extends React.Component {
         toggleNodeNameChange: false,
         selectedNodeId: '',
         open: false,
-        orientation: 'horizontal'
+        orientation: 'horizontal',
+        pathFunc: 'straight'
       }
 
     this.updateMap = this.updateMap.bind(this);
@@ -53,6 +54,9 @@ class Canvas extends React.Component {
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
     this.selectHorizontal = this.selectHorizontal.bind(this);
     this.selectVertical = this.selectVertical.bind(this);
+    this.selectDiagonal = this.selectDiagonal.bind(this);
+    this.selectStraight = this.selectStraight.bind(this);
+    this.selectElbow = this.selectElbow.bind(this);
   }
 
 
@@ -69,6 +73,7 @@ class Canvas extends React.Component {
 
   componentDidMount() {
     this.updateMap();
+    console.log(this.state)
   }
 
   toggleOnNodeNameModal(nodeId) {
@@ -98,14 +103,11 @@ class Canvas extends React.Component {
     this.setState({
       editNameToggle: false
     })
-
-    //console.log(this.state)
   }
 
 
   handleDrawerToggle() {
     this.setState({open: !this.state.open})
-    //console.log(this.state.open)
   }
 
   selectHorizontal() {
@@ -115,6 +117,21 @@ class Canvas extends React.Component {
 
   selectVertical() {
     this.setState({orientation: 'vertical'});
+    this.updateMap();
+  }
+
+  selectDiagonal() {
+    this.setState({pathFunc: 'diagonal'});
+    this.updateMap();
+  }
+
+  selectElbow() {
+    this.setState({pathFunc: 'elbow'});
+    this.updateMap();
+  }
+
+  selectStraight() {
+    this.setState({pathFunc: 'straight'});
     this.updateMap();
   }
 
@@ -167,8 +184,12 @@ class Canvas extends React.Component {
         <ToolDrawer
           open={this.state.open}
           orientation={this.state.orientation}
+          pathFunc={this.state.pathFunc}
           selectHorizontal={this.selectHorizontal}
           selectVertical={this.selectVertical}
+          selectDiagonal={this.selectDiagonal}
+          selectElbow={this.selectElbow}
+          selectStraight={this.selectStraight}
         />
 
         { this.state.toggleNodeNameChange &&
@@ -184,6 +205,7 @@ class Canvas extends React.Component {
         <TestMap
           mapId={this.props.match.params.id}
           orientation={this.state.orientation}
+          pathFunc={this.state.pathFunc}
           updateMap={this.updateMap}
           toggleOnNodeNameModal={this.toggleOnNodeNameModal}
           toggleNodeNameChange={this.state.toggleNodeNameChange}
