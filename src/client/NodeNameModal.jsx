@@ -38,7 +38,7 @@ class NodeNameModal extends React.Component {
     for (let child of tree.children) {
       this.editNode(nodeId, child, text)
     }
-    return [tree]; 
+    return [tree];
   }
 
   render() {

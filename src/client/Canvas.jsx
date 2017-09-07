@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
+import NodeNameModal from './NodeNameModal.jsx'
+import ToolDrawer from './ToolDrawer.jsx'
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -13,7 +15,6 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-import NodeNameModal from './NodeNameModal.jsx'
 
 
 
@@ -48,7 +49,7 @@ class Canvas extends React.Component {
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
     this.toggleOnNodeNameModal = this.toggleOnNodeNameModal.bind(this);
     this.toggleOffNodeNameModal = this.toggleOffNodeNameModal.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }
 
 
@@ -65,6 +66,7 @@ class Canvas extends React.Component {
 
   componentDidMount() {
     this.updateMap();
+
   }
 
   toggleOnNodeNameModal(nodeId) {
@@ -94,11 +96,14 @@ class Canvas extends React.Component {
     this.setState({
       editNameToggle: false
     })
+
+    console.log(this.state)
   }
 
 
-  handleToggle() {
+  handleDrawerToggle() {
     this.setState({open: !this.state.open})
+    //console.log(this.state.open)
   }
 
   async updateMap() {
@@ -131,7 +136,7 @@ class Canvas extends React.Component {
         <div className='mapTitle'>
 
           <div>
-            <IconButton onClick={this.handleToggle} ><ModeEdit /></IconButton>
+            <IconButton onClick={this.handleDrawerToggle} ><ModeEdit /></IconButton>
             {!this.state.editNameToggle &&
             <span onClick={this.toggleNameChange}> {this.state.mapName}
             </span>
@@ -146,59 +151,24 @@ class Canvas extends React.Component {
 
         </div>
 
-        <Drawer zDepth={1} open={this.state.open}>
-          <MenuItem
-            primaryText="Layout"
-            rightIcon={<ArrowDropRight />}
-            menuItems={[
-              <MenuItem primaryText="Default" insetChildren={true} checked={true}/>,
-              <MenuItem primaryText="Cool Color Combo"  insetChildren={true}/>,
-              <MenuItem primaryText="Sweet Color Scheme" insetChildren={true}/>,
-              <MenuItem primaryText="XKCD" insetChildren={true}/>,
-            ]}
-          />
 
-          <MenuItem
-            primaryText="Orientation"
-            rightIcon={<ArrowDropRight />}
-            menuItems={[
-              <MenuItem primaryText="Horizontal" checked={true} insetChildren={true}/>,
-              <MenuItem primaryText="Vertical" insetChildren={true}/>,
-            ]}
-          />
-          <MenuItem
-            primaryText="Node Shape"
-            rightIcon={<ArrowDropRight />}
-            menuItems={[
-              <MenuItem primaryText="Circle" insetChildren={true} checked={true}/>,
-              <MenuItem primaryText="Triangle" insetChildren={true}/>,
-              <MenuItem primaryText="Rectangle" insetChildren={true}/>,
-              <MenuItem primaryText="Star" insetChildren={true}/>,
-            ]}
-          />
-
-          <Divider />
-          <MenuItem primaryText="More options" />
-          <MenuItem primaryText="Even more options" />
-          <Divider />
-          <MenuItem primaryText="Share" />
-        </Drawer>
+        <ToolDrawer open={this.state.open} />
 
         { this.state.toggleNodeNameChange &&
         <NodeNameModal
-        nodeId={this.state.selectedNodeId}
-        mapId={this.props.match.params.id}
-        tree={this.state.tree}
-        updateMap={this.updateMap}
-        toggleOffNodeNameModal={this.toggleOffNodeNameModal} />
+          nodeId={this.state.selectedNodeId}
+          mapId={this.props.match.params.id}
+          tree={this.state.tree}
+          updateMap={this.updateMap}
+          toggleOffNodeNameModal={this.toggleOffNodeNameModal} />
         }
 
         <TestMap
-        tree={this.state.tree}
-        updateMap={this.updateMap}
-        mapId={this.props.match.params.id}
-        toggleOnNodeNameModal={this.toggleOnNodeNameModal}
-        toggleNodeNameChange={this.state.toggleNodeNameChange}/>
+          tree={this.state.tree}
+          updateMap={this.updateMap}
+          mapId={this.props.match.params.id}
+          toggleOnNodeNameModal={this.toggleOnNodeNameModal}
+          toggleNodeNameChange={this.state.toggleNodeNameChange}/>
 
         </div>
       )
