@@ -10,6 +10,7 @@ import './style.css';
 export default class Node extends React.Component {
 
   constructor(props) {
+    // console.log('the props in node:', props)
     super(props);
     const { parent } = props.nodeData;
     const originX = parent ? parent.x : 0;
@@ -26,6 +27,7 @@ export default class Node extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleTextClick = this.handleTextClick.bind(this);
+    // window = this.setTransformOrientation    
   }
 
   componentDidMount() {
@@ -70,6 +72,7 @@ export default class Node extends React.Component {
     this.props.toggleOnNodeNameModal(this.props.nodeData.id);
   }
 
+
   componentWillLeave(done) {
     const { parent } = this.props.nodeData;
     const originX = parent ? parent.x : 0;
@@ -81,17 +84,10 @@ export default class Node extends React.Component {
 
   render() {
     const { nodeData, styles } = this.props;
+
+
     const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
-    let form = ()=> {
-
-        // console.log('ran???=====')
-      return (
-        <form>
-          <input className="nodeNameUpdate" type="text" name="nodeNameUpdate" placeholder={this.props.name} />
-          <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
-        </form>
-      )}
-
+    // console.log(nodeStyle, '====')
     return (
 
       <g
@@ -102,13 +98,14 @@ export default class Node extends React.Component {
         transform={this.state.transform}
         // onClick={this.handleClick}
         onContextMenu={this.handleRightClick}
+        onDrag={this.test}
       >
 
 
         <circle
           r={this.props.circleRadius}
           style={nodeStyle.circle}
-          onClick={this.handleClick}
+          onDoubleClick={this.handleClick}
         >
         </circle>
          <text

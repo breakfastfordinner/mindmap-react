@@ -171,7 +171,6 @@ class Canvas extends React.Component {
   }
 
 
-
   render() {
     return (
       <div>
@@ -243,6 +242,7 @@ class Canvas extends React.Component {
         />
 
         </div>
+
       )
     }
 
