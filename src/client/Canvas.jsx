@@ -32,8 +32,10 @@ const styles = {
     left: 'auto',
     position: 'fixed',
   },
-  display: 'inline-block',
-  margin: '16px 32px 16px 0',
+  editButton: {
+    height: '15px',
+    width: 'auto',
+  }
 };
 
 
@@ -44,7 +46,7 @@ class Canvas extends React.Component {
       this.state = {
         map: { name: 'random', tree: {}},
         tree: [{name: 'startup', children: [ {name: '2nd', children: [] } ]}],
-        mapName: 'random',
+        mapName: '',
         editNameToggle: false,
         toggleNodeNameChange: false,
         selectedNodeId: '',
@@ -65,6 +67,8 @@ class Canvas extends React.Component {
     this.selectDiagonal = this.selectDiagonal.bind(this);
     this.selectStraight = this.selectStraight.bind(this);
     this.selectElbow = this.selectElbow.bind(this);
+
+    this.updateMap();
   }
 
 
@@ -174,18 +178,22 @@ class Canvas extends React.Component {
         }
         <div className='mapTitle'>
 
-          <div>
-            {!this.state.editNameToggle &&
-            <span onClick={this.toggleNameChange}> {this.state.mapName}
-            </span>
+          {//!this.state.editNameToggle &&
+            //<span onClick={this.toggleNameChange}> {this.state.mapName} <ModeEdit style={styles.editButton} /></span>
           }
-          </div>
-          {this.state.editNameToggle &&
             <form onSubmit={this.untoggleNameChange}>
-              <TextField name="mapNameUpdate" placeholder={this.state.mapName} />
+              <TextField
+                name="mapNameUpdate"
+                defaultValue={this.state.mapName}
+                //hintText={this.state.mapName}
+                placeholder={this.state.mapName}
+                underlineShow={false}
+                inputStyle={{ textAlign: 'center' }}
+                //hintStyle={{ width: '600px', textAlign: 'center' }}
+                style={{ width: '600px' }}
+              />
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
             </form>
-          }
 
         </div>
 
