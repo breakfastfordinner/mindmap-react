@@ -7,9 +7,11 @@ import ToolDrawer from './ToolDrawer.jsx'
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import Settings from 'material-ui/svg-icons/action/settings';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -23,12 +25,18 @@ const styles = {
     padding: '20px 20px',
   },
   drawerButton: {
-    padding: '0 20px',
-    marginTop: '20px',
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
   },
   display: 'inline-block',
   margin: '16px 32px 16px 0',
 };
+
+
 
 class Canvas extends React.Component {
   constructor(props) {
@@ -167,7 +175,6 @@ class Canvas extends React.Component {
         <div className='mapTitle'>
 
           <div>
-            <IconButton onClick={this.handleDrawerToggle} ><ModeEdit /></IconButton>
             {!this.state.editNameToggle &&
             <span onClick={this.toggleNameChange}> {this.state.mapName}
             </span>
@@ -182,6 +189,11 @@ class Canvas extends React.Component {
 
         </div>
 
+        <FloatingActionButton
+          style={styles.drawerButton}
+          onClick={this.handleDrawerToggle}>
+          <Settings />
+        </FloatingActionButton>
 
         <ToolDrawer
           open={this.state.open}
