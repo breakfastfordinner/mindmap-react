@@ -73,7 +73,9 @@ class Canvas extends React.Component {
 
   componentDidMount() {
     this.updateMap();
-    console.log(this.state)
+
+    //prevent chrome's default menu on right click
+    document.addEventListener('contextmenu', event => event.preventDefault());
   }
 
   toggleOnNodeNameModal(nodeId) {
