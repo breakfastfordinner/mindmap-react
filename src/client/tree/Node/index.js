@@ -104,6 +104,7 @@ export default class Node extends React.Component {
         onContextMenu={this.handleRightClick}
       >
 
+
         <circle
           r={this.props.circleRadius}
           style={nodeStyle.circle}

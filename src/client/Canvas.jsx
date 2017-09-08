@@ -17,6 +17,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+import ReactTooltip from 'react-tooltip';
 
 
 
@@ -176,13 +177,17 @@ class Canvas extends React.Component {
       <div>
         {//this.props.match.params.id
         }
+
+
         <div className='mapTitle'>
 
           {//!this.state.editNameToggle &&
             //<span onClick={this.toggleNameChange}> {this.state.mapName} <ModeEdit style={styles.editButton} /></span>
           }
+
             <form onSubmit={this.untoggleNameChange}>
               <TextField
+                data-tip="Click to edit"
                 name="mapNameUpdate"
                 defaultValue={this.state.mapName}
                 //hintText={this.state.mapName}
@@ -194,16 +199,19 @@ class Canvas extends React.Component {
               />
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
             </form>
-
         </div>
+
+        <ReactTooltip place="right" />
 
         <FloatingActionButton
           style={styles.drawerButton}
-          onClick={this.handleDrawerToggle}>
+          onClick={this.handleDrawerToggle}
+          data-tip="Settings"
+          >
+
           <Settings />
         </FloatingActionButton>
-
-        <ToolDrawer
+          <ToolDrawer
           open={this.state.open}
           orientation={this.state.orientation}
           pathFunc={this.state.pathFunc}

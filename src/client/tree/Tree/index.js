@@ -7,6 +7,8 @@ import { layout, select, behavior, event } from 'd3';
 import clone from 'clone';
 import deepEqual from 'deep-equal';
 import uuid from 'uuid';
+import ReactTooltip from 'react-tooltip';
+
 
 import Node from '../Node';
 import Link from '../Link';
@@ -395,10 +397,16 @@ export default class Tree extends React.Component {
 
     return (
       <div className={`rd3t-tree-container ${zoomable ? 'rd3t-grabbable' : undefined}`}>
+        <ReactTooltip place="top" id='node'>
+          <p>Double Click to Add</p>
+          <p>Right Click to Delete</p>
+        </ReactTooltip>
+
         <svg className="rd3t-svg" width="100%" height="100%">
           <g
             className="rd3t-g"
             transform={`translate(${translate.x},${translate.y})`}
+            data-tip data-for='node'
           >
           {links.map((linkData) =>
             <Link
@@ -413,6 +421,7 @@ export default class Tree extends React.Component {
           {nodes.map((nodeData) => {
 
             return (
+
               <Node
                 key={nodeData.id}
                 orientation={orientation}
@@ -427,7 +436,9 @@ export default class Tree extends React.Component {
                 onRightClick={this.handleRightClick}
                 onTextClick={this.handleTextClick}
                 toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
-              />
+              >
+              </Node>
+
             )
           })}
           </g>
