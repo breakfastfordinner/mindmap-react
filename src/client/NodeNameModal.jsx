@@ -47,6 +47,9 @@ class NodeNameModal extends React.Component {
     // if (this.props)
     //   return null
 
+    const dialog = {
+      width: '480px',
+    };
 
     return (
       <div>
@@ -55,6 +58,7 @@ class NodeNameModal extends React.Component {
           title="Edit node title"
           modal={false}
           onRequestClose={this.closeModal}
+          contentStyle={dialog}
         >
 
         <form className='nodeNameForm' onSubmit={this.handleOnNodeNameSubmit}>
