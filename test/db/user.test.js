@@ -3,7 +3,7 @@ const User = require('../../src/server/models/user.js');
 
 mongoose.connect('mongodb://localhost/test');
 
-describe('User', () => {
+describe('User', async () => {
   afterAll(() => {
     mongoose.connection.db.dropDatabase();
   });

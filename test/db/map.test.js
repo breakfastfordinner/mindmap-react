@@ -4,7 +4,7 @@ const User = require('../../src/server/models/user.js');
 
 mongoose.connect('mongodb://localhost/test');
 
-describe('Map', () => {
+describe('Map', async () => {
 
   beforeAll(async () => {
     await mongoose.connection.collections['users'].remove();
