@@ -23,7 +23,10 @@ class ToolDrawer extends React.Component {
   render() {
     return (
       <div>
-        <Drawer zDepth={1} open={this.props.open}>
+        <Drawer
+          open={this.props.open}
+          onRequestChange={(open) => this.setState({open: !this.props.open})}
+        >
           <MenuItem
             primaryText="Layout"
             rightIcon={<ArrowDropRight />}
