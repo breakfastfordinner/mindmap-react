@@ -12,6 +12,7 @@ describe('Map', async () => {
 
   afterAll(() => {
     mongoose.connection.db.dropDatabase();
+    mongoose.connection.close();
   });
 
   test('create a new map', async () => {

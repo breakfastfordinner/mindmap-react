@@ -6,6 +6,7 @@ mongoose.connect('mongodb://localhost/test');
 describe('User', async () => {
   afterAll(() => {
     mongoose.connection.db.dropDatabase();
+    mongoose.connection.close();
   });
 
   test('create a new user', async () => {
