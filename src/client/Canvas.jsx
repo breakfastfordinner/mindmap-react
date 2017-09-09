@@ -53,7 +53,8 @@ class Canvas extends React.Component {
         selectedNodeId: '',
         open: false,
         orientation: 'horizontal',
-        pathFunc: 'diagonal'
+        pathFunc: 'diagonal',
+        theme: 'default'
       }
 
     this.updateMap = this.updateMap.bind(this);
@@ -63,6 +64,10 @@ class Canvas extends React.Component {
     this.toggleOnNodeNameModal = this.toggleOnNodeNameModal.bind(this);
     this.toggleOffNodeNameModal = this.toggleOffNodeNameModal.bind(this);
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.selectDefaultTheme = this.selectDefaultTheme.bind(this);
+    this.selectPiedPiperTheme = this.selectPiedPiperTheme.bind(this);
+    this.selectLifeAquaticTheme = this.selectLifeAquaticTheme.bind(this);
+    this.selectRoseTheme = this.selectRoseTheme.bind(this);
     this.selectHorizontal = this.selectHorizontal.bind(this);
     this.selectVertical = this.selectVertical.bind(this);
     this.selectDiagonal = this.selectDiagonal.bind(this);
@@ -123,6 +128,28 @@ class Canvas extends React.Component {
 
   handleDrawerToggle() {
     this.setState({open: !this.state.open})
+  }
+
+  selectDefaultTheme() {
+    this.setState({theme: 'default'});
+    console.log('selected default!', )
+    this.updateMap();
+  }
+
+  selectPiedPiperTheme() {
+    this.setState({theme: 'piedpiper'});
+    console.log('selected piedpiper!', )
+    this.updateMap();
+  }
+  selectLifeAquaticTheme() {
+    this.setState({theme: 'lifeaquatic'});
+    console.log('selected lifeaquatic!', )
+    this.updateMap();
+  }
+  selectRoseTheme() {
+    this.setState({theme: 'rose'});
+    console.log('selected rose!', )
+    this.updateMap();
   }
 
   selectHorizontal() {
@@ -213,6 +240,7 @@ class Canvas extends React.Component {
         </FloatingActionButton>
           <ToolDrawer
           open={this.state.open}
+          theme={this.state.theme}
           orientation={this.state.orientation}
           pathFunc={this.state.pathFunc}
           selectHorizontal={this.selectHorizontal}
@@ -220,6 +248,10 @@ class Canvas extends React.Component {
           selectDiagonal={this.selectDiagonal}
           selectElbow={this.selectElbow}
           selectStraight={this.selectStraight}
+          selectDefaultTheme={this.selectDefaultTheme}
+          selectPiedPiperTheme={this.selectPiedPiperTheme}
+          selectLifeAquaticTheme={this.selectLifeAquaticTheme}
+          selectRoseTheme={this.selectRoseTheme}
         />
 
         { this.state.toggleNodeNameChange &&
@@ -235,6 +267,7 @@ class Canvas extends React.Component {
         <TestMap
           mapId={this.props.match.params.id}
           orientation={this.state.orientation}
+          theme={this.state.theme}
           pathFunc={this.state.pathFunc}
           updateMap={this.updateMap}
           toggleOnNodeNameModal={this.toggleOnNodeNameModal}

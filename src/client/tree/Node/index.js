@@ -29,7 +29,7 @@ export default class Node extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this)
+    console.log('rendering theme', this.props.theme)
     const { x, y } = this.props.nodeData;
     const transform = this.setTransformOrientation(x, y);
 
@@ -50,11 +50,22 @@ export default class Node extends React.Component {
   applyTransform(transform, opacity = 1, done = () => {}) {
     const { transitionDuration } = this.props;
 
+    // Drag nodes
+    // const drag = d3.behavior.drag()
+    //     .on("drag", dragmove);
+
+    // function dragmove(d) {
+    //   var x = d3.event.x;
+    //   var y = d3.event.y;
+    //   d3.select(this.node).attr("transform", "translate(" + x + "," + y + ")");
+    // }
+
     select(this.node)
     .transition()
     .duration(transitionDuration)
     .attr('transform', transform)
     .style('opacity', opacity)
+    //.call(drag)
     .each('end', done);
   }
 
@@ -92,13 +103,69 @@ export default class Node extends React.Component {
         </form>
       )}
 
+    let nodeColor = '#0CCE6B'
+
+    if (this.props.theme === 'default') {
+      //default theme
+      if (this.props.depth === 0){
+        nodeColor = '#540D6E'
+      } else if (this.props.depth === 1){
+        nodeColor = '#0CCE6B'
+      } else if (this.props.depth === 2){
+        nodeColor = '#DCED31'
+      } else if (this.props.depth === 3){
+        nodeColor = '#EF2D56'
+      } else {
+        nodeColor =  '#ED7D3A'
+      }
+    } else if (this.props.theme === 'piedpiper') {
+        //pied piper
+        if (this.props.depth === 0){
+          nodeColor = '#182F08'
+        } else if (this.props.depth === 1){
+          nodeColor = '#2E5016'
+        } else if (this.props.depth === 2){
+          nodeColor = '#5C9E2C'
+        } else if (this.props.depth === 3){
+          nodeColor = '#8FD260'
+        } else {
+          nodeColor =  '#B7FF80'
+        }
+    } else if (this.props.theme === 'lifeaquatic') {
+        //life aquatic
+        if (this.props.depth === 0){
+          nodeColor = '#C4CFD0'
+        } else if (this.props.depth === 1){
+          nodeColor = '#F24D29'
+        } else if (this.props.depth === 2){
+          nodeColor = '#E5C4A1'
+        } else if (this.props.depth === 3){
+          nodeColor = '#1C366B'
+        } else {
+          nodeColor =  '#1DACE8'
+        }
+    } else if (this.props.theme === 'rose') {
+        //rose
+        if (this.props.depth === 0){
+          nodeColor = '#C52233'
+        } else if (this.props.depth === 1){
+          nodeColor = '#A51C30sz'
+        } else if (this.props.depth === 2){
+          nodeColor = '#A7333F'
+        } else if (this.props.depth === 3){
+          nodeColor = '#74121D'
+        } else {
+          nodeColor =  '#580C1F'
+        }
+    }
+
     return (
 
       <g
         id={nodeData.id}
         ref={(n) => { this.node = n; }}
-        style={this.state.initialStyle}
-        className={nodeData._children ? 'nodeBase' : 'leafNodeBase'}
+        style={{fill: `${nodeColor}`}}
+        className="nodeBase"
         transform={this.state.transform}
         // onClick={this.handleClick}
         onContextMenu={this.handleRightClick}

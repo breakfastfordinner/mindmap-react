@@ -11,7 +11,7 @@ class ToolDrawer extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('tool drawer props', this.props)
+     console.log('tool drawer props', this.props)
     // console.log('tool drawer this', this)
     // console.log('orientation props', this.props.orientation);
   }
@@ -28,13 +28,13 @@ class ToolDrawer extends React.Component {
           onRequestChange={(open) => this.setState({open: !this.props.open})}
         >
           <MenuItem
-            primaryText="Layout"
+            primaryText="Color Scheme"
             rightIcon={<ArrowDropRight />}
             menuItems={[
-              <MenuItem primaryText="Default" insetChildren={true} />,
-              <MenuItem primaryText="Cool Color Combo"  insetChildren={true}/>,
-              <MenuItem primaryText="Sweet Color Scheme" insetChildren={true}/>,
-              <MenuItem primaryText="XKCD" insetChildren={true}/>,
+              <MenuItem primaryText="Default" onClick={this.props.selectDefaultTheme} insetChildren={true} />,
+              <MenuItem primaryText="Pied Piper"  onClick={this.props.selectPiedPiperTheme} insetChildren={true}/>,
+              <MenuItem primaryText="Life Aquatic" onClick={this.props.selectLifeAquaticTheme} insetChildren={true}/>,
+              <MenuItem primaryText="Rose" onClick={this.props.selectRoseTheme} insetChildren={true}/>,
             ]}
           />
 

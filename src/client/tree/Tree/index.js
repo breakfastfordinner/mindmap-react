@@ -22,23 +22,6 @@ const TreeObject = function(name, id){
   this.children = [];
 };
 
-// TreeObject.prototype.addChild = function(child){
-//   this.children.push(child);
-//   // return the new child node for convenience
-//   return child;
-// };
-
-// TreeObject.prototype.removeChild = function(child){
-//   var index = this.children.indexOf(child);
-//   if(index !== -1){
-//     // remove the child
-//     this.children.splice(index,1);
-//   }else{
-//     throw new Error("That node is not an immediate child of this tree");
-//   }
-// };
-
-
 export default class Tree extends React.Component {
 
   constructor(props) {
@@ -47,6 +30,7 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      depth: 0
 
     };
     this.findNodesById = this.findNodesById.bind(this);
@@ -63,7 +47,7 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
-    //console.log('tree got rendered: ', this);
+    //console.log('tree state: ', this.state);
 
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
@@ -103,6 +87,7 @@ export default class Tree extends React.Component {
   setInitialTreeDepth(nodeSet, initialDepth) {
     nodeSet.forEach((n) => {
       n._collapsed = n.depth >= initialDepth;
+      this.setState({ value: '' })
     });
   }
 
@@ -178,6 +163,7 @@ export default class Tree extends React.Component {
     hits = hits.concat(nodeSet.filter((node) => node.id === nodeId));
 
     nodeSet.forEach((node) => {
+      //this.setState({ depth: node.depth })
       if (node._children && node._children.length > 0) {
         hits = this.findNodesById(nodeId, node._children, hits);
         return hits;
@@ -290,6 +276,8 @@ export default class Tree extends React.Component {
   }
 
   addNode(targetNode, data) {
+      //console.log('depth', targetNode.depth)
+      this.setState({ depth: targetNode.depth })
     if (targetNode.children) {
       targetNode.children.push({name: 'new node', children: []});
       this.setState({
@@ -329,7 +317,7 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClickCb(targetNode) {
-    console.log(targetNode)
+    console.log('handleOnClickCb', targetNode)
     const { onClick } = this.props;
     if (onClick && typeof onClick === 'function') {
       onClick(clone(targetNode));
@@ -429,9 +417,11 @@ export default class Tree extends React.Component {
                 textAnchor="start"
                 nodeData={nodeData}
                 name={nodeData.name}
+                depth={ this.state.depth}
                 attributes={nodeData.attributes}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
+                theme={this.props.theme}
                 onClick={this.handleOnClick}
                 onRightClick={this.handleRightClick}
                 onTextClick={this.handleTextClick}

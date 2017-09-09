@@ -5,7 +5,7 @@ class TestMap extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: props.tree
+      data: props.tree,
     }
   }
 
@@ -26,6 +26,7 @@ class TestMap extends React.Component {
         <Tree
         data={ this.state.data }
         updateMap={ this.props.updateMap }
+        theme={this.props.theme}
         mapId={this.props.mapId}
         orientation={this.props.orientation}
         pathFunc={this.props.pathFunc}
