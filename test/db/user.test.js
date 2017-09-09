@@ -4,7 +4,6 @@ const User = require('../../src/server/models/user.js');
 mongoose.connect('mongodb://localhost/test');
 
 describe('User', () => {
-
   afterAll(() => {
     mongoose.connection.db.dropDatabase();
   });

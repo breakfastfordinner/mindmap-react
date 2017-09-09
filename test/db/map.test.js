@@ -6,6 +6,10 @@ mongoose.connect('mongodb://localhost/test');
 
 describe('Map', () => {
 
+  beforeAll(async () => {
+    await User.remove({});
+  });
+
   afterAll(() => {
     mongoose.connection.db.dropDatabase();
   });
