@@ -19,8 +19,8 @@ describe('Map', async () => {
     expect.assertions(3);
 
     const userOptions = {
-      username: 'Arteezy',
-      password: 'prteezy',
+      username: 'Artseezy',
+      password: 'prtseezy',
     };
     const userResponse = await User.create(userOptions);
 
@@ -41,7 +41,7 @@ describe('Map', async () => {
   test('retrieve maps by user', async () => {
     expect.assertions(3);
 
-    const user = await User.findOne({ username: 'Arteezy' });
+    const user = await User.findOne({ username: 'Artseezy' });
     const response = await Map.findOne({ user: user._id });
 
     expect(response.user).toEqual(user._id);
@@ -52,7 +52,7 @@ describe('Map', async () => {
   test('retrieve map by id', async () => {
     expect.assertions(2);
 
-    const user = await User.findOne({ username: 'Arteezy' });
+    const user = await User.findOne({ username: 'Artseezy' });
     const mapOptions = {
       user: user._id,
       name: 'Test Map Two',
