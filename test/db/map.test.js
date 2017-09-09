@@ -53,7 +53,7 @@ describe('Map', () => {
       name: 'Test Map Two',
       tree: {
         eg: 'bleed blue',
-      },
+      }
     };
 
     const map = await Map.create(mapOptions);
