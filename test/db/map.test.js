@@ -10,9 +10,9 @@ describe('Map', async () => {
     await mongoose.connection.collections['users'].remove();
   });
 
-  afterAll(async () => {
+  afterAll(async (done) => {
     await mongoose.connection.db.dropDatabase();
-    await mongoose.connection.close();
+    await mongoose.connection.close(done);
   });
 
   test('create a new map', async () => {

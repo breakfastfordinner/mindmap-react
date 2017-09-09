@@ -4,9 +4,9 @@ const User = require('../../src/server/models/user.js');
 mongoose.connect('mongodb://localhost/test');
 
 describe('User', async () => {
-  afterAll(async () => {
+  afterAll(async (done) => {
     await mongoose.connection.db.dropDatabase();
-    await mongoose.connection.close();
+    await mongoose.connection.close(done);
   });
 
   test('create a new user', async () => {
