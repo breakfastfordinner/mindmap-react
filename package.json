@@ -2,6 +2,9 @@
   "name": "reactmindmap",
   "version": "1.0.0",
   "main": "index.js",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "author": "Ashley Woodall, Joshua Nance, Lina Yang",
   "license": "MIT",
   "scripts": {
@@ -12,7 +15,7 @@
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "eslint src",
+    "test": "jest test/*/*test.js --forceExit && eslint src",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
@@ -23,8 +26,6 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "chai": "^4.1.1",
-    "chai-http": "^3.0.0",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.5",
@@ -35,6 +36,7 @@
     "eslint-plugin-react": "^7.1.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "husky": "^0.14.3",
+    "jest": "^21.0.2",
     "mocha": "^3.5.0",
     "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
@@ -59,8 +61,6 @@
     "bcrypt": "^1.0.3",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
-    "chai": "^4.1.1",
-    "chai-http": "^3.0.0",
     "clone": "^2.1.1",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
