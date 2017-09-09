@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/test');
 describe('Map', () => {
 
   beforeAll(async () => {
-    await User.remove({});
+    await mongoose.connection.collections['users'].remove();
   });
 
   afterAll(() => {
