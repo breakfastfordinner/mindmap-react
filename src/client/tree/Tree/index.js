@@ -42,7 +42,7 @@ const TreeObject = function(name, id){
 export default class Tree extends React.Component {
 
   constructor(props) {
-    // console.log(props)
+    console.log(props)
     super(props);
     this.state = {
       initialRender: true,
@@ -63,8 +63,6 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
-    //console.log('tree got rendered: ', this);
-
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
@@ -117,7 +115,9 @@ export default class Tree extends React.Component {
   bindZoomListener(props) {
     const { zoomable, scaleExtent, translate } = props;
     const svg = select('.rd3t-svg');
+    // console.log('tell me what this is',svg)
     const g = select('.rd3t-g');
+    console.log('whats this:', g)
 
     if (zoomable) {
       svg.call(behavior.zoom()
