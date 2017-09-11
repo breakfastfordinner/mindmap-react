@@ -18,8 +18,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
+import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 
 const styles = {
   title: {
@@ -85,7 +86,12 @@ class Canvas extends React.Component {
 
 
   componentDidMount() {
-    this.updateMap();
+    if (cookies.get('user')) {
+      this.updateMap();
+    } else {
+      this.props.history.push('/login');
+    }
+    // this.updateMap();
 
     //prevent chrome's default menu on right click
     document.addEventListener('contextmenu', event => event.preventDefault());
