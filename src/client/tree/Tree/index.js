@@ -22,31 +22,14 @@ const TreeObject = function(name, id){
   this.children = [];
 };
 
-// TreeObject.prototype.addChild = function(child){
-//   this.children.push(child);
-//   // return the new child node for convenience
-//   return child;
-// };
-
-// TreeObject.prototype.removeChild = function(child){
-//   var index = this.children.indexOf(child);
-//   if(index !== -1){
-//     // remove the child
-//     this.children.splice(index,1);
-//   }else{
-//     throw new Error("That node is not an immediate child of this tree");
-//   }
-// };
-
-
 export default class Tree extends React.Component {
 
   constructor(props) {
-    console.log(props)
     super(props);
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      depth: 0
 
     };
     this.findNodesById = this.findNodesById.bind(this);
@@ -63,6 +46,8 @@ export default class Tree extends React.Component {
 
 
   componentDidMount() {
+    //console.log('tree state: ', this.state);
+
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
@@ -101,6 +86,7 @@ export default class Tree extends React.Component {
   setInitialTreeDepth(nodeSet, initialDepth) {
     nodeSet.forEach((n) => {
       n._collapsed = n.depth >= initialDepth;
+      this.setState({ value: '' })
     });
   }
 
@@ -115,9 +101,7 @@ export default class Tree extends React.Component {
   bindZoomListener(props) {
     const { zoomable, scaleExtent, translate } = props;
     const svg = select('.rd3t-svg');
-    // console.log('tell me what this is',svg)
     const g = select('.rd3t-g');
-    console.log('whats this:', g)
 
     if (zoomable) {
       svg.call(behavior.zoom()
@@ -145,6 +129,10 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
+      if (!node.depth){
+        node.depth = node.depth;
+      }
+
       if(!node.id) {
         node.id = uuid.v4();
       }
@@ -155,6 +143,8 @@ export default class Tree extends React.Component {
         node.children = this.assignInternalProperties(node.children);
         node._children = node.children;
       }
+
+      //this.setState({ depth: node.depth })
       return node;
     });
   }
@@ -171,6 +161,7 @@ export default class Tree extends React.Component {
    */
    // TODO Refactor this into a more readable/reasonable recursive depth-first walk.
   findNodesById(nodeId, nodeSet, hits) {
+
     if (hits.length > 0) {
       return hits;
     }
@@ -178,6 +169,7 @@ export default class Tree extends React.Component {
     hits = hits.concat(nodeSet.filter((node) => node.id === nodeId));
 
     nodeSet.forEach((node) => {
+      //this.setState({ depth: node.depth })
       if (node._children && node._children.length > 0) {
         hits = this.findNodesById(nodeId, node._children, hits);
         return hits;
@@ -240,6 +232,7 @@ export default class Tree extends React.Component {
 
     this.addNode(targetNode, data);
 
+
     // if (this.props.collapsible) {
     //   targetNode._collapsed
     //     ? this.expandNode(targetNode)
@@ -290,6 +283,7 @@ export default class Tree extends React.Component {
   }
 
   addNode(targetNode, data) {
+      this.setState({ depth: targetNode.depth })
     if (targetNode.children) {
       targetNode.children.push({name: 'new node', children: []});
       this.setState({
@@ -329,7 +323,7 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClickCb(targetNode) {
-    console.log(targetNode)
+    console.log('handleOnClickCb', targetNode)
     const { onClick } = this.props;
     if (onClick && typeof onClick === 'function') {
       onClick(clone(targetNode));
@@ -353,6 +347,7 @@ export default class Tree extends React.Component {
       nodeSize,
       orientation,
     } = this.props;
+
 
     const tree = layout.tree()
       .nodeSize(orientation === 'horizontal' ?
@@ -429,9 +424,11 @@ export default class Tree extends React.Component {
                 textAnchor="start"
                 nodeData={nodeData}
                 name={nodeData.name}
+                depth={this.state.depth}
                 attributes={nodeData.attributes}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
+                theme={this.props.theme}
                 onClick={this.handleOnClick}
                 onRightClick={this.handleRightClick}
                 onTextClick={this.handleTextClick}

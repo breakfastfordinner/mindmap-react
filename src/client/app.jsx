@@ -23,7 +23,7 @@ class App extends React.Component {
       user: {},
       maps: [{
         id: '1234qwer',
-        name: 'You shouldnt be seeing this'
+        name: 'Loading...'
       }],
 
 
@@ -72,10 +72,9 @@ class App extends React.Component {
 
   async updateMaps() {
     let getMapResponse = await MapModel.getMaps();
-    console.log(getMapResponse)
     if (!getMapResponse.maps) {
       this.handleLogout();
-    } else {    
+    } else {
       this.setState({
         maps: getMapResponse.maps
       })
