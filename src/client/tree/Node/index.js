@@ -29,7 +29,7 @@ export default class Node extends React.Component {
   }
 
   componentDidMount() {
-    console.log('rendering theme', this.props.theme)
+    //console.log('rendering theme', this.props.theme)
     const { x, y } = this.props.nodeData;
     const transform = this.setTransformOrientation(x, y);
 
@@ -149,7 +149,7 @@ export default class Node extends React.Component {
         if (this.props.depth === 0){
           nodeColor = '#C52233'
         } else if (this.props.depth === 1){
-          nodeColor = '#A51C30sz'
+          nodeColor = '#A51C30'
         } else if (this.props.depth === 2){
           nodeColor = '#A7333F'
         } else if (this.props.depth === 3){

@@ -132,23 +132,19 @@ class Canvas extends React.Component {
 
   selectDefaultTheme() {
     this.setState({theme: 'default'});
-    console.log('selected default!', )
     this.updateMap();
   }
 
   selectPiedPiperTheme() {
     this.setState({theme: 'piedpiper'});
-    console.log('selected piedpiper!', )
     this.updateMap();
   }
   selectLifeAquaticTheme() {
     this.setState({theme: 'lifeaquatic'});
-    console.log('selected lifeaquatic!', )
     this.updateMap();
   }
   selectRoseTheme() {
     this.setState({theme: 'rose'});
-    console.log('selected rose!', )
     this.updateMap();
   }
 

@@ -130,6 +130,10 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
+      if (!node.depth){
+        node.depth = node.depth;
+      }
+
       if(!node.id) {
         node.id = uuid.v4();
       }
@@ -156,6 +160,7 @@ export default class Tree extends React.Component {
    */
    // TODO Refactor this into a more readable/reasonable recursive depth-first walk.
   findNodesById(nodeId, nodeSet, hits) {
+
     if (hits.length > 0) {
       return hits;
     }
@@ -276,7 +281,6 @@ export default class Tree extends React.Component {
   }
 
   addNode(targetNode, data) {
-      //console.log('depth', targetNode.depth)
       this.setState({ depth: targetNode.depth })
     if (targetNode.children) {
       targetNode.children.push({name: 'new node', children: []});
@@ -341,6 +345,7 @@ export default class Tree extends React.Component {
       nodeSize,
       orientation,
     } = this.props;
+
 
     const tree = layout.tree()
       .nodeSize(orientation === 'horizontal' ?
@@ -417,7 +422,7 @@ export default class Tree extends React.Component {
                 textAnchor="start"
                 nodeData={nodeData}
                 name={nodeData.name}
-                depth={ this.state.depth}
+                depth={this.state.depth}
                 attributes={nodeData.attributes}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
