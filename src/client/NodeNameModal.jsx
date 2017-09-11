@@ -4,6 +4,40 @@ import MapModel from './actions/maps';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+/*
+    let modalStyle = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      zIndex: '9999',
+      background: '#fff',
+      borderRadius: '10px',
+
+    }
+
+    let backdropStyle = {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      top: '0px',
+      left: '0px',
+      zIndex: '9998',
+      background: 'rgba(0, 0, 0, 0.3)'
+    }
+
+    return (
+      <div>
+        <div style={modalStyle}>
+        <button onClick={this.closeModal}>X</button>
+        Update your node:
+        <form className='nodeNameForm' onSubmit={this.handleOnNodeNameSubmit}>
+          <TextField className="nodeNameUpdate" name="nodeNameUpdate" placeholder="enter new name" />
+          <input type="submit"/>
+        </form>
+        </div>
+        <div style={backdropStyle} />
+*/
 
 class NodeNameModal extends React.Component {
   constructor(props) {
@@ -47,6 +81,7 @@ class NodeNameModal extends React.Component {
     // if (this.props)
     //   return null
 
+
     const dialog = {
       width: '480px',
     };
@@ -67,17 +102,15 @@ class NodeNameModal extends React.Component {
           <FlatButton onClick={this.closeModal} secondary={true} >Cancel</FlatButton>
         </form>
         </Dialog>
+
+
+
       </div>
     )
   }
 
-  // close(e) {
-  //   e.preventDefault()
-
-  //   if (this.props.onClose) {
-  //     this.props.onClose()
-  //   }
-  // }
+   
 }
+
 
 export default NodeNameModal;

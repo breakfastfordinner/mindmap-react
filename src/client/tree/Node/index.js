@@ -10,6 +10,7 @@ import './style.css';
 export default class Node extends React.Component {
 
   constructor(props) {
+    // console.log('the props in node:', props)
     super(props);
     const { parent } = props.nodeData;
     const originX = parent ? parent.x : 0;
@@ -26,6 +27,7 @@ export default class Node extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleTextClick = this.handleTextClick.bind(this);
+    // window = this.setTransformOrientation
   }
 
   componentDidMount() {
@@ -73,13 +75,12 @@ export default class Node extends React.Component {
     this.props.onClick(this.props.nodeData.id);
   }
   handleRightClick() {
-    // console.log('would this work???? right click', this.props.nodeData.id)
     this.props.onRightClick(this.props.nodeData.id);
   }
   handleTextClick() {
-    // console.log('clicked on txt?', this.props.nodeData.id)
     this.props.toggleOnNodeNameModal(this.props.nodeData.id);
   }
+
 
   componentWillLeave(done) {
     const { parent } = this.props.nodeData;
@@ -92,16 +93,6 @@ export default class Node extends React.Component {
 
   render() {
     const { nodeData, styles } = this.props;
-    const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
-    let form = ()=> {
-
-        // console.log('ran???=====')
-      return (
-        <form>
-          <input className="nodeNameUpdate" type="text" name="nodeNameUpdate" placeholder={this.props.name} />
-          <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
-        </form>
-      )}
 
     let nodeColor = '#0CCE6B'
 
@@ -144,20 +135,23 @@ export default class Node extends React.Component {
         } else {
           nodeColor =  '#1DACE8'
         }
-    } else if (this.props.theme === 'rose') {
-        //rose
+    } else if (this.props.theme === 'flame') {
+        //flame
         if (this.props.depth === 0){
-          nodeColor = '#C52233'
+          nodeColor = '#421201'
         } else if (this.props.depth === 1){
-          nodeColor = '#A51C30'
+          nodeColor = '#6B1808'
         } else if (this.props.depth === 2){
-          nodeColor = '#A7333F'
+          nodeColor = '#B5210E'
         } else if (this.props.depth === 3){
-          nodeColor = '#74121D'
+          nodeColor = '#D33E08'
         } else {
-          nodeColor =  '#580C1F'
+          nodeColor =  '#F6AA1C'
         }
     }
+
+    const nodeStyle = nodeData._children ? { ...styles.node } : { ...styles.leafNode };
+    // console.log(nodeStyle, '====')
 
     return (
 
@@ -169,13 +163,14 @@ export default class Node extends React.Component {
         transform={this.state.transform}
         // onClick={this.handleClick}
         onContextMenu={this.handleRightClick}
+        onDrag={this.test}
       >
 
 
         <circle
           r={this.props.circleRadius}
           style={nodeStyle.circle}
-          onClick={this.handleClick}
+          onDoubleClick={this.handleClick}
         >
         </circle>
          <text

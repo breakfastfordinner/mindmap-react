@@ -25,7 +25,6 @@ const TreeObject = function(name, id){
 export default class Tree extends React.Component {
 
   constructor(props) {
-    // console.log(props)
     super(props);
     this.state = {
       initialRender: true,
@@ -144,6 +143,8 @@ export default class Tree extends React.Component {
         node.children = this.assignInternalProperties(node.children);
         node._children = node.children;
       }
+
+      //this.setState({ depth: node.depth })
       return node;
     });
   }
@@ -230,6 +231,7 @@ export default class Tree extends React.Component {
     const targetNode = matches[0];
 
     this.addNode(targetNode, data);
+
 
     // if (this.props.collapsible) {
     //   targetNode._collapsed

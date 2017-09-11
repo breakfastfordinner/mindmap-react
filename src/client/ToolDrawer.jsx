@@ -34,7 +34,7 @@ class ToolDrawer extends React.Component {
               <MenuItem primaryText="Default" onClick={this.props.selectDefaultTheme} insetChildren={true} />,
               <MenuItem primaryText="Pied Piper"  onClick={this.props.selectPiedPiperTheme} insetChildren={true}/>,
               <MenuItem primaryText="Life Aquatic" onClick={this.props.selectLifeAquaticTheme} insetChildren={true}/>,
-              <MenuItem primaryText="Rose" onClick={this.props.selectRoseTheme} insetChildren={true}/>,
+              <MenuItem primaryText="Flame" onClick={this.props.selectFlameTheme} insetChildren={true}/>,
             ]}
           />
 

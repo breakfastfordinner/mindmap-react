@@ -91,7 +91,6 @@ const createMap = async (name) => {
  * @return {Promise} A Promise that resolves in the edited map.
  */
 const editMap = async (id, tree) => {
-  // console.log('beginning of editmap: ', tree, id)
   try {
     const cookie = cookies.get('user');
     const options = {
@@ -107,11 +106,9 @@ const editMap = async (id, tree) => {
     };
 
     const response = await axios(options);
-    // console.log('here???', response.data)
 
     return response.data;
   } catch (error) {
-    // console.log('here?==============', error)
     return error;
   }
 };

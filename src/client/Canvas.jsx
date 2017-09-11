@@ -18,8 +18,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
+import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 
 const styles = {
   title: {
@@ -37,6 +38,7 @@ const styles = {
     height: '15px',
     width: 'auto',
   }
+
 };
 
 
@@ -67,7 +69,7 @@ class Canvas extends React.Component {
     this.selectDefaultTheme = this.selectDefaultTheme.bind(this);
     this.selectPiedPiperTheme = this.selectPiedPiperTheme.bind(this);
     this.selectLifeAquaticTheme = this.selectLifeAquaticTheme.bind(this);
-    this.selectRoseTheme = this.selectRoseTheme.bind(this);
+    this.selectFlameTheme = this.selectFlameTheme.bind(this);
     this.selectHorizontal = this.selectHorizontal.bind(this);
     this.selectVertical = this.selectVertical.bind(this);
     this.selectDiagonal = this.selectDiagonal.bind(this);
@@ -90,7 +92,12 @@ class Canvas extends React.Component {
 
 
   componentDidMount() {
-    this.updateMap();
+    if (cookies.get('user')) {
+      this.updateMap();
+    } else {
+      this.props.history.push('/login');
+    }
+    // this.updateMap();
 
     //prevent chrome's default menu on right click
     document.addEventListener('contextmenu', event => event.preventDefault());
@@ -143,8 +150,8 @@ class Canvas extends React.Component {
     this.setState({theme: 'lifeaquatic'});
     this.updateMap();
   }
-  selectRoseTheme() {
-    this.setState({theme: 'rose'});
+  selectFlameTheme() {
+    this.setState({theme: 'flame'});
     this.updateMap();
   }
 
@@ -192,7 +199,6 @@ class Canvas extends React.Component {
       this.props.updateMaps();
     }
   }
-
 
 
   render() {
@@ -247,7 +253,7 @@ class Canvas extends React.Component {
           selectDefaultTheme={this.selectDefaultTheme}
           selectPiedPiperTheme={this.selectPiedPiperTheme}
           selectLifeAquaticTheme={this.selectLifeAquaticTheme}
-          selectRoseTheme={this.selectRoseTheme}
+          selectFlameTheme={this.selectFlameTheme}
         />
 
         { this.state.toggleNodeNameChange &&
@@ -272,6 +278,7 @@ class Canvas extends React.Component {
         />
 
         </div>
+
       )
     }
 

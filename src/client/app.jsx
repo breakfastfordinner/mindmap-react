@@ -23,15 +23,7 @@ class App extends React.Component {
       user: {},
       maps: [{
         id: '1234qwer',
-        name: 'Map1'
-      },
-      {
-        id: '5678asdf',
-        name: 'Another Map'
-      },
-      {
-        id: '9999qqqq',
-        name: 'test3'
+        name: 'Loading...'
       }],
 
 
@@ -43,7 +35,6 @@ class App extends React.Component {
 
 
   componentDidMount() {
-
     if (cookies.get('user')) {
       this.setState({
         signedIn: true,
@@ -80,12 +71,15 @@ class App extends React.Component {
   }
 
   async updateMaps() {
-    // console.log(this.state.maps)
     let getMapResponse = await MapModel.getMaps();
+    if (!getMapResponse.maps) {
+      this.handleLogout();
+    } else {
+      this.setState({
+        maps: getMapResponse.maps
+      })
+    }
 
-    this.setState({
-      maps: getMapResponse.maps
-    })
   }
 
   render() {
