@@ -31,7 +31,6 @@ export default class Node extends React.Component {
   }
 
   componentDidMount() {
-    //console.log('rendering theme', this.props.theme)
     const { x, y } = this.props.nodeData;
     const transform = this.setTransformOrientation(x, y);
 
@@ -78,6 +77,7 @@ export default class Node extends React.Component {
     this.props.onRightClick(this.props.nodeData.id);
   }
   handleTextClick() {
+    // console.log('here????', this.props.nodeData.id);
     this.props.toggleOnNodeNameModal(this.props.nodeData.id);
   }
 
