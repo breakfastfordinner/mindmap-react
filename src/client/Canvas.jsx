@@ -48,7 +48,7 @@ class Canvas extends React.Component {
     super(props)
       this.state = {
         map: { name: 'random', tree: {}},
-        tree: [{name: 'startup', children: [ {name: '2nd', children: [] } ]}],
+        tree: [{ name: 'Place Holder', children:[]}],
         mapName: '',
         editNameToggle: false,
         toggleNodeNameChange: false,
@@ -191,7 +191,7 @@ class Canvas extends React.Component {
 
   async updateMapName(mapName) {
     if (mapName === "") {
-      console.log("nothing enter, dont fire request")
+      console.log("nothing enter, dont fire request");
     } else {
       await MapModel.editMapName(this.props.match.params.id, mapName);
 
