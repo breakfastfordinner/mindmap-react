@@ -2,9 +2,9 @@
 [![Coverage Status](https://img.shields.io/coveralls/GITHUB-USERNAME/GITHUB-REPO.svg?style=flat-square)](https://coveralls.io/github/breakfastfordinner/mindmap-react?branch=master)
 
 
-# mindvue
+# MindFlare
 
-> A mindmap using React and D3.js
+> A productivity application using React and D3.js to render a visual tree of your thought processes
 
 ## Team
 
@@ -24,15 +24,15 @@
 
 ## Usage
 
-Add `/node_modules/` and `/coverage/` to your `.gitignore`.
+Add `/node_modules/` to your `.gitignore`.
 
 ## Requirements
 
-- React
-- Webpack
-- Babel
-- Express
-- Node.js
+- [React](https://facebook.github.io/react/)
+- [Webpack](https://webpack.js.org/)
+- [Babel](https://babeljs.io/)
+- [Express](https://expressjs.com/)
+- [Node.js](https://nodejs.org/)
 
 ## Development/Build Setup
 
@@ -51,6 +51,12 @@ yarn test
 
 # build for production with minification
 yarn prod:build
+
+# start production application using pm2
+yarn prod:start
+
+# stop production pm2
+yarn prod:stop
 ```
 
 
