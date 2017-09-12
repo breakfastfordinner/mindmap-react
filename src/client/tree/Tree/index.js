@@ -8,6 +8,8 @@ import clone from 'clone';
 import deepEqual from 'deep-equal';
 import uuid from 'uuid';
 import ReactTooltip from 'react-tooltip';
+import Snackbar from 'material-ui/Snackbar';
+
 
 
 import Node from '../Node';
@@ -29,6 +31,8 @@ export default class Tree extends React.Component {
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      message: 'Node deleted',
+      open: false,
       depth: 0
 
     };
@@ -41,6 +45,7 @@ export default class Tree extends React.Component {
     this.createLocalSendData = this.createLocalSendData.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
     this.editMapHelper = this.editMapHelper.bind(this);
   }
 
@@ -260,6 +265,12 @@ export default class Tree extends React.Component {
       })
   }
 
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  };
+
 
   createLocalSendData(data) {
 
@@ -299,7 +310,10 @@ export default class Tree extends React.Component {
 
   removeNode(nodeId, data) {
     if (data.id === nodeId) {
-      console.log('can not remove original node')
+      this.setState({
+        open: true,
+        message: 'Cannot remove root node'
+      });
       return [data];
     }
     if (data.children) {
@@ -308,7 +322,12 @@ export default class Tree extends React.Component {
           data.children.splice(i, 1);
           return [data]
         }
+        //console.log(data.children[i].name)
         this.removeNode(nodeId, data.children[i])
+        this.setState({
+          open: true,
+          message: 'Node removed'
+        });
       }
     }
     return [data];
@@ -440,6 +459,16 @@ export default class Tree extends React.Component {
           })}
           </g>
         </svg>
+
+        <Snackbar
+          open={this.state.open}
+          message={this.state.message}
+          autoHideDuration={1500}
+          onActionTouchTap={this.handleActionTouchTap}
+          onRequestClose={this.handleRequestClose}
+          action={'okay'}
+        />
+
       </div>
     );
   }
