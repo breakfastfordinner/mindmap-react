@@ -51,7 +51,7 @@ export default class Tree extends React.Component {
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
-    this.editMapHelper();
+    // this.editMapHelper();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -130,7 +130,7 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
-      console.log('why do they remake id', node,'node.id:', node.id, '??', node.name, '..', node.depth)
+      // console.log('why do they remake id', node,'node.id:', node.id, '??', node.name, '..', node.depth)
       if (!node.depth){
         node.depth = node.depth;
       }
