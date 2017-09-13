@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
-// import NodeNameModal from './NodeNameModal.jsx'
 import ToolDrawer from './ToolDrawer.jsx'
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -75,8 +74,8 @@ class View extends React.Component {
 
 
   componentDidMount() {
-    
     this.updateMap();
+    console.log('fjdiosafjdsajfldsjafldj was this rendered?', this.state.map)
 
     //prevent chrome's default menu on right click
     // document.addEventListener('contextmenu', event => event.preventDefault());
@@ -125,7 +124,7 @@ class View extends React.Component {
   // }
 
   async updateMap() {
-    let mapResponse = await MapModel.getSharedMap(this.props.match.params.id);
+    let mapResponse = await MapModel.getViewMap(this.props.match.params.id);
     this.setState({
       map: mapResponse.map,
       mapName: mapResponse.map.name,

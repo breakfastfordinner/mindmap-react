@@ -56,6 +56,21 @@ const getMap = async (id) => {
   }
 };
 
+const getViewMap = async (id) => {
+  try {
+    const options = {
+      baseURL: API,
+      url: `/view/${id}`,
+    };
+
+    const response = await axios(options);
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 /**
  * Create a new, empty map.
  * @return {Promise} A Promise that resolves in the created map.
@@ -175,4 +190,5 @@ module.exports = {
   editMap,
   editMapName,
   destroyMap,
+  getViewMap,
 };

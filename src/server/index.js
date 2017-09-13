@@ -30,7 +30,6 @@ app.get('/');
 router(app);
 
 app.all('*', (req, res) => {
-
   res.send(renderApp(APP_NAME));
 });
 

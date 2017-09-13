@@ -91,7 +91,7 @@ class Canvas extends React.Component {
     this.selectElbow = this.selectElbow.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
 
-    this.updateMap();
+    // this.updateMap();
   }
 
 

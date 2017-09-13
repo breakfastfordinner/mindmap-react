@@ -5,6 +5,7 @@ import Home from './Home.jsx';
 import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
+import View from './View.jsx';
 import Nav from './Nav.jsx';
 import d3 from 'd3';
 
@@ -38,16 +39,17 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    if (cookies.get('user')) {
-      this.setState({
-        signedIn: true,
-        user: cookies.get('user')
-      });
+    this.updateMaps();
+    // if (cookies.get('user')) {
+    //   this.setState({
+    //     signedIn: true,
+    //     user: cookies.get('user')
+    //   });
 
-      this.updateMaps();
-    } else {
-      this.props.history.push('/login');
-    }
+    //   this.updateMaps();
+    // } else {
+    //   this.props.history.push('/login');
+    // }
   }
 
   openErrorBox() {
@@ -90,7 +92,9 @@ class App extends React.Component {
   async updateMaps() {
     let getMapResponse = await MapModel.getMaps();
     if (!getMapResponse.maps) {
-      this.handleLogout();
+      if (cookies.get('user')) {
+        this.handleLogout();
+      }
     } else {
       this.setState({
         maps: getMapResponse.maps
@@ -105,12 +109,13 @@ class App extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <Nav signedIn={this.state.signedIn} logout={this.handleLogout} />
+            <Nav logout={this.handleLogout} />
             <Switch>
-              <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
+              <Route path="/view/:id" render={()=><View/>} />
+              <Route path="/canvas/:id" render={()=><Canvas updateMaps={this.updateMaps}/>} />
               <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
               <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
-              <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}  updateMaps={this.updateMaps}  />} />
+              <Route exact path="/" render={()=><Home maps={this.state.maps} updateMaps={this.updateMaps}  />} />
             </Switch>
           </div>
         </MuiThemeProvider>
