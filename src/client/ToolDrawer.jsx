@@ -3,11 +3,14 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
+import NodeSlider from './Slider.jsx';
+
 
 class ToolDrawer extends React.Component {
 
   constructor(props) {
     super(props);
+
   }
 
   componentDidMount() {
