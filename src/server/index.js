@@ -25,9 +25,12 @@ app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 
+app.get('/')
+
 router(app);
 
 app.all('*', (req, res) => {
+
   res.send(renderApp(APP_NAME));
 });
 

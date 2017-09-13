@@ -25,12 +25,15 @@ class App extends React.Component {
         id: '1234qwer',
         name: 'Loading...'
       }],
+      handleAuthErrorBox: false
 
 
     }
     this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.updateMaps = this.updateMaps.bind(this);
+    this.openErrorBox = this.openErrorBox.bind(this);
+    this.closeErrorBox = this.closeErrorBox.bind(this);
   }
 
 
@@ -47,6 +50,18 @@ class App extends React.Component {
     }
   }
 
+  openErrorBox() {
+    this.setState({
+      handleAuthErrorBox: true
+    });
+  }
+
+  closeErrorBox() {
+    this.setState({
+      handleAuthErrorBox: false
+    });
+  }
+
   async handleAuth(username, password, typeObj) {
     const response = await AuthModel.authenticateUser(username, password, typeObj);
     if (response.status === 201) {
@@ -56,8 +71,10 @@ class App extends React.Component {
       })
       this.props.history.push("/");
       this.updateMaps();
-    } else {
-      alert('Something went wrong...');
+    } else if (response.status === 422) {
+      alert('username already exist');
+    } else if (response.status === 401) {
+      alert('incorrect pw and username')
     }
   }
 
