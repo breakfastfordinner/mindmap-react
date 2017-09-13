@@ -58,11 +58,6 @@ class ToolDrawer extends React.Component {
               <MenuItem primaryText="Straight" onClick={this.props.selectStraight} insetChildren={true}/>,
             ]}
           />
-          <MenuItem
-            primaryText="Node Spacing"
-            rightIcon={<ArrowDropRight />}
-
-          />
 
           <Divider />
 
