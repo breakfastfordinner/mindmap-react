@@ -58,7 +58,7 @@ class Canvas extends React.Component {
     super(props)
       this.state = {
         map: { name: 'random', tree: {}},
-        tree: [{name: 'startup', children: [ {name: '2nd', children: [] } ]}],
+        tree: [{ name: 'Place Holder', children:[]}],
         mapName: '',
         editNameToggle: false,
         toggleNodeNameChange: false,

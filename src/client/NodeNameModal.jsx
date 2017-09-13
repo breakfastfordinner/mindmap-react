@@ -78,9 +78,6 @@ class NodeNameModal extends React.Component {
 
 
   render() {
-    // if (this.props)
-    //   return null
-
 
     const dialog = {
       width: '480px',
