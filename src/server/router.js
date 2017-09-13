@@ -23,6 +23,7 @@ const routes = (app) => {
   // Routes for interacting with maps
   mapRoutes.get('/', requireAuth, MapCtrl.getMaps);
   mapRoutes.get('/:id', requireAuth, MapCtrl.getMap);
+  mapRoutes.get('/view/:id', MapCtrl.getMap);
 
   mapRoutes.post('/create', requireAuth, MapCtrl.createMap);
 
@@ -30,11 +31,6 @@ const routes = (app) => {
   mapRoutes.put('/edit/name/:id', requireAuth, MapCtrl.editMapName);
 
   mapRoutes.delete('/destroy/:id', requireAuth, MapCtrl.destroyMap);
-
-  // dummy route for testing protected route
-  apiRoutes.get('/data', requireAuth, (req, res) => {
-    res.send('Your protected route is working');
-  });
 
   app.use('/api', apiRoutes);
 };

@@ -1,14 +1,12 @@
 .nodeBase {
   cursor: pointer;
-  fill: #03A9F4;
-  stroke: #03A9F4;
   stroke-width: 5;
 }
 
 .leafNodeBase {
   cursor: pointer;
-  fill: #E91E63;
-  stroke: #E91E63;
+  fill: #0CCE6B;
+  stroke: #0CCE6B;
   stroke-width: 5;
   font: 14px 'Roboto';
 }

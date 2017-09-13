@@ -7,6 +7,10 @@ import { layout, select, behavior, event } from 'd3';
 import clone from 'clone';
 import deepEqual from 'deep-equal';
 import uuid from 'uuid';
+import ReactTooltip from 'react-tooltip';
+import Snackbar from 'material-ui/Snackbar';
+
+
 
 import Node from '../Node';
 import Link from '../Link';
@@ -20,31 +24,16 @@ const TreeObject = function(name, id){
   this.children = [];
 };
 
-// TreeObject.prototype.addChild = function(child){
-//   this.children.push(child);
-//   // return the new child node for convenience
-//   return child;
-// };
-
-// TreeObject.prototype.removeChild = function(child){
-//   var index = this.children.indexOf(child);
-//   if(index !== -1){
-//     // remove the child
-//     this.children.splice(index,1);
-//   }else{
-//     throw new Error("That node is not an immediate child of this tree");
-//   }
-// };
-
-
 export default class Tree extends React.Component {
 
   constructor(props) {
-    // console.log(props)
     super(props);
     this.state = {
       initialRender: true,
       data: this.assignInternalProperties(clone(props.data)),
+      message: 'Node deleted',
+      open: false,
+      depth: 0
 
     };
     this.findNodesById = this.findNodesById.bind(this);
@@ -56,16 +45,18 @@ export default class Tree extends React.Component {
     this.createLocalSendData = this.createLocalSendData.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
     this.editMapHelper = this.editMapHelper.bind(this);
   }
 
 
   componentDidMount() {
-    console.log('tree got rendered: ', this);
+    //console.log('tree state: ', this.state);
 
     this.bindZoomListener(this.props);
     // TODO find better way of setting initialDepth, re-render here is suboptimal
     this.setState({ initialRender: false }); // eslint-disable-line
+    // this.editMapHelper();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -101,6 +92,7 @@ export default class Tree extends React.Component {
   setInitialTreeDepth(nodeSet, initialDepth) {
     nodeSet.forEach((n) => {
       n._collapsed = n.depth >= initialDepth;
+      this.setState({ value: '' })
     });
   }
 
@@ -143,7 +135,13 @@ export default class Tree extends React.Component {
    */
   assignInternalProperties(data) {
     return data.map((node) => {
+      // console.log('why do they remake id', node,'node.id:', node.id, '??', node.name, '..', node.depth)
+      if (!node.depth){
+        node.depth = node.depth;
+      }
+
       if(!node.id) {
+        console.log('here?')
         node.id = uuid.v4();
       }
 
@@ -153,6 +151,8 @@ export default class Tree extends React.Component {
         node.children = this.assignInternalProperties(node.children);
         node._children = node.children;
       }
+
+      //this.setState({ depth: node.depth })
       return node;
     });
   }
@@ -169,6 +169,7 @@ export default class Tree extends React.Component {
    */
    // TODO Refactor this into a more readable/reasonable recursive depth-first walk.
   findNodesById(nodeId, nodeSet, hits) {
+
     if (hits.length > 0) {
       return hits;
     }
@@ -176,6 +177,7 @@ export default class Tree extends React.Component {
     hits = hits.concat(nodeSet.filter((node) => node.id === nodeId));
 
     nodeSet.forEach((node) => {
+      //this.setState({ depth: node.depth })
       if (node._children && node._children.length > 0) {
         hits = this.findNodesById(nodeId, node._children, hits);
         return hits;
@@ -238,6 +240,7 @@ export default class Tree extends React.Component {
 
     this.addNode(targetNode, data);
 
+
     // if (this.props.collapsible) {
     //   targetNode._collapsed
     //     ? this.expandNode(targetNode)
@@ -265,6 +268,12 @@ export default class Tree extends React.Component {
       })
   }
 
+  handleRequestClose() {
+    this.setState({
+      open: false,
+    });
+  };
+
 
   createLocalSendData(data) {
 
@@ -288,6 +297,7 @@ export default class Tree extends React.Component {
   }
 
   addNode(targetNode, data) {
+      this.setState({ depth: targetNode.depth })
     if (targetNode.children) {
       targetNode.children.push({name: 'new node', children: []});
       this.setState({
@@ -303,7 +313,10 @@ export default class Tree extends React.Component {
 
   removeNode(nodeId, data) {
     if (data.id === nodeId) {
-      console.log('can not remove original node')
+      this.setState({
+        open: true,
+        message: 'Cannot remove root node'
+      });
       return [data];
     }
     if (data.children) {
@@ -312,7 +325,12 @@ export default class Tree extends React.Component {
           data.children.splice(i, 1);
           return [data]
         }
+        //console.log(data.children[i].name)
         this.removeNode(nodeId, data.children[i])
+        this.setState({
+          open: true,
+          message: 'Node removed'
+        });
       }
     }
     return [data];
@@ -327,7 +345,7 @@ export default class Tree extends React.Component {
    * @return {void}
    */
   handleOnClickCb(targetNode) {
-    console.log(targetNode)
+    console.log('handleOnClickCb', targetNode)
     const { onClick } = this.props;
     if (onClick && typeof onClick === 'function') {
       onClick(clone(targetNode));
@@ -351,6 +369,7 @@ export default class Tree extends React.Component {
       nodeSize,
       orientation,
     } = this.props;
+
 
     const tree = layout.tree()
       .nodeSize(orientation === 'horizontal' ?
@@ -395,10 +414,16 @@ export default class Tree extends React.Component {
 
     return (
       <div className={`rd3t-tree-container ${zoomable ? 'rd3t-grabbable' : undefined}`}>
+        <ReactTooltip place="top" id='node'>
+          <p>Double Click to Add</p>
+          <p>Right Click to Delete</p>
+        </ReactTooltip>
+
         <svg className="rd3t-svg" width="100%" height="100%">
           <g
             className="rd3t-g"
             transform={`translate(${translate.x},${translate.y})`}
+            data-tip data-for='node'
           >
           {links.map((linkData) =>
             <Link
@@ -413,6 +438,7 @@ export default class Tree extends React.Component {
           {nodes.map((nodeData) => {
 
             return (
+
               <Node
                 key={nodeData.id}
                 orientation={orientation}
@@ -420,18 +446,32 @@ export default class Tree extends React.Component {
                 textAnchor="start"
                 nodeData={nodeData}
                 name={nodeData.name}
+                depth={this.state.depth}
                 attributes={nodeData.attributes}
                 circleRadius={circleRadius}
                 styles={styles.nodes}
+                theme={this.props.theme}
                 onClick={this.handleOnClick}
                 onRightClick={this.handleRightClick}
                 onTextClick={this.handleTextClick}
                 toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
-              />
+              >
+              </Node>
+
             )
           })}
           </g>
         </svg>
+
+        <Snackbar
+          open={this.state.open}
+          message={this.state.message}
+          autoHideDuration={1500}
+          onActionTouchTap={this.handleActionTouchTap}
+          onRequestClose={this.handleRequestClose}
+          action={'okay'}
+        />
+
       </div>
     );
   }
@@ -439,11 +479,10 @@ export default class Tree extends React.Component {
 
 Tree.defaultProps = {
   onClick: undefined,
-  orientation: 'horizontal',
+  //orientation: 'horizontal',
   translate: { x: 350, y: 375 },
-  pathFunc: 'elbow',
+  //pathFunc: 'straight',
   // translate: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-  // pathFunc: 'diagonal',
   transitionDuration: 500,
   depthFactor: undefined,
   collapsible: true,
