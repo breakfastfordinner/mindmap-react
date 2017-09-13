@@ -31,7 +31,7 @@ const authenticateUser = async (username, password, { type }) => {
 };
 
 const logOutUser = () => {
-  cookies.remove('user');
+  cookies.remove('user', { path: '/' });
   return {
     status: 204,
   };

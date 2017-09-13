@@ -25,14 +25,15 @@ app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 
-app.get('/', (req, res) => {
-  res.send(renderApp(APP_NAME));
-});
+// app.get('/', (req, res) => {
+//   res.send(renderApp(APP_NAME));
+// });
 
 router(app);
 
 app.all('*', (req, res) => {
-  res.redirect('/');
+  // res.redirect('/');
+  res.send(renderApp(APP_NAME));
 });
 
 app.listen(WEB_PORT, () => {
