@@ -7,8 +7,6 @@ const style = {
   margin: '0 auto'
 };
 
-
-
 export default class NodeSlider extends Component {
   constructor(props) {
     super(props)

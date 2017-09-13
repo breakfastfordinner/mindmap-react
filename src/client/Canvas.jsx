@@ -31,6 +31,7 @@ const styles = {
     padding: '20px 20px',
   },
   drawerButton: {
+    zIndex: 3,
     margin: 0,
     top: 'auto',
     right: 20,
@@ -276,8 +277,6 @@ class Canvas extends React.Component {
             theme={this.state.theme}
             orientation={this.state.orientation}
             pathFunc={this.state.pathFunc}
-            //separation={this.state.separation}
-            //firstSlider={this.state.firstSlider}
             selectHorizontal={this.selectHorizontal}
             selectVertical={this.selectVertical}
             selectDiagonal={this.selectDiagonal}
@@ -315,7 +314,6 @@ class Canvas extends React.Component {
         />
         <div style={styles.slider} >
           <NodeSlider
-            //handleFirstSlider={this.handleFirstSlider}
             onSlide={this.handleFirstSlider}
           />
 

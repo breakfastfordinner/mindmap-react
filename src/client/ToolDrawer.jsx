@@ -5,23 +5,13 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
 import NodeSlider from './Slider.jsx';
 
-const style = {
-  height: '46px',
-  width: '400px',
-  margin: '0 auto'
-};
 
 class ToolDrawer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state={
-      //sliderVal: 0.5,
-    }
 
   }
-
-
 
   componentDidMount() {
      //console.log('tool drawer props', this.props)
@@ -32,11 +22,6 @@ class ToolDrawer extends React.Component {
   toggleChecked() {
     this.setState({open: !this.props.open});
   }
-
-  // handleSliderVal(event, value){
-  //   this.setState({sliderVal: value});
-  //   console.log(this.state.sliderVal)
-  // };
 
   render() {
     return (
