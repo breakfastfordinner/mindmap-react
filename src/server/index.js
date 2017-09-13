@@ -35,7 +35,7 @@ app.all('*', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(WEB_PORT, () => {
+app.listen(80, () => {
   // eslint-disable-next-line no-console
   console.log(`Server running on port ${WEB_PORT} ${isProd ? '(production)' :
     '(development).\nKeep "yarn dev:wds" running in an other terminal'}.`);
