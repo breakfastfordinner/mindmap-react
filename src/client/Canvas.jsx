@@ -4,6 +4,8 @@ import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
 import NodeNameModal from './NodeNameModal.jsx'
 import ToolDrawer from './ToolDrawer.jsx'
+import NodeSlider from './Slider.jsx';
+
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -16,6 +18,8 @@ import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
+import Slider from 'material-ui/Slider';
+
 import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
 import Cookies from 'universal-cookie';
@@ -33,6 +37,11 @@ const styles = {
     bottom: 20,
     left: 'auto',
     position: 'fixed',
+  },
+  slider: {
+    bottom: 0,
+    position: 'fixed',
+    width: '100%'
   },
   editButton: {
     height: '15px',
@@ -56,9 +65,12 @@ class Canvas extends React.Component {
         open: false,
         orientation: 'horizontal',
         pathFunc: 'diagonal',
-        theme: 'default'
+        theme: 'default',
+        separation: { siblings: .5, nonSiblings: 1 },
+        firstSlider: 0.5,
       }
 
+    this.updateMap = this.updateMap.bind(this);
     this.updateMap = this.updateMap.bind(this);
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
@@ -66,6 +78,7 @@ class Canvas extends React.Component {
     this.toggleOnNodeNameModal = this.toggleOnNodeNameModal.bind(this);
     this.toggleOffNodeNameModal = this.toggleOffNodeNameModal.bind(this);
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.handleFirstSlider = this.handleFirstSlider.bind(this);
     this.selectDefaultTheme = this.selectDefaultTheme.bind(this);
     this.selectPiedPiperTheme = this.selectPiedPiperTheme.bind(this);
     this.selectLifeAquaticTheme = this.selectLifeAquaticTheme.bind(this);
@@ -75,6 +88,7 @@ class Canvas extends React.Component {
     this.selectDiagonal = this.selectDiagonal.bind(this);
     this.selectStraight = this.selectStraight.bind(this);
     this.selectElbow = this.selectElbow.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
 
     this.updateMap();
   }
@@ -180,6 +194,23 @@ class Canvas extends React.Component {
     this.updateMap();
   }
 
+  handleRequestClose(){
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleFirstSlider(value){
+    this.setState({
+      firstSlider: value,
+      separation: {
+        siblings: value,
+        nonSiblings: value * 2.5
+      }
+    })
+
+  };
+
   async updateMap() {
     let mapResponse = await MapModel.getMap(this.props.match.params.id);
     this.setState({
@@ -191,7 +222,7 @@ class Canvas extends React.Component {
 
   async updateMapName(mapName) {
     if (mapName === "") {
-      console.log("nothing enter, dont fire request")
+      console.log("nothing entered, don't fire request")
     } else {
       await MapModel.editMapName(this.props.match.params.id, mapName);
 
@@ -203,7 +234,7 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div>
+      <div onClick={this.closeDrawer} >
         {//this.props.match.params.id
         }
 
@@ -241,20 +272,24 @@ class Canvas extends React.Component {
           <Settings />
         </FloatingActionButton>
           <ToolDrawer
-          open={this.state.open}
-          theme={this.state.theme}
-          orientation={this.state.orientation}
-          pathFunc={this.state.pathFunc}
-          selectHorizontal={this.selectHorizontal}
-          selectVertical={this.selectVertical}
-          selectDiagonal={this.selectDiagonal}
-          selectElbow={this.selectElbow}
-          selectStraight={this.selectStraight}
-          selectDefaultTheme={this.selectDefaultTheme}
-          selectPiedPiperTheme={this.selectPiedPiperTheme}
-          selectLifeAquaticTheme={this.selectLifeAquaticTheme}
-          selectFlameTheme={this.selectFlameTheme}
-        />
+            open={this.state.open}
+            theme={this.state.theme}
+            orientation={this.state.orientation}
+            pathFunc={this.state.pathFunc}
+            //separation={this.state.separation}
+            //firstSlider={this.state.firstSlider}
+            selectHorizontal={this.selectHorizontal}
+            selectVertical={this.selectVertical}
+            selectDiagonal={this.selectDiagonal}
+            selectElbow={this.selectElbow}
+            selectStraight={this.selectStraight}
+            selectDefaultTheme={this.selectDefaultTheme}
+            selectPiedPiperTheme={this.selectPiedPiperTheme}
+            selectLifeAquaticTheme={this.selectLifeAquaticTheme}
+            selectFlameTheme={this.selectFlameTheme}
+            handleFirstSlider={this.handleFirstSlider}
+            handleRequestClose={this.handleRequestClose}
+          />
 
         { this.state.toggleNodeNameChange &&
           <NodeNameModal
@@ -270,14 +305,23 @@ class Canvas extends React.Component {
           mapId={this.props.match.params.id}
           orientation={this.state.orientation}
           theme={this.state.theme}
+          separation={this.state.separation}
+          firstSlider={this.state.firstSlider}
           pathFunc={this.state.pathFunc}
           updateMap={this.updateMap}
           toggleOnNodeNameModal={this.toggleOnNodeNameModal}
           toggleNodeNameChange={this.state.toggleNodeNameChange}
           tree={this.state.tree}
         />
+        <div style={styles.slider} >
+          <NodeSlider
+            //handleFirstSlider={this.handleFirstSlider}
+            onSlide={this.handleFirstSlider}
+          />
 
         </div>
+
+      </div>
 
       )
     }

@@ -29,6 +29,8 @@ class TestMap extends React.Component {
         theme={this.props.theme}
         mapId={this.props.mapId}
         orientation={this.props.orientation}
+        separation={this.props.separation}
+        firstSlider={this.props.firstSlider}
         pathFunc={this.props.pathFunc}
         toggleOnNodeNameModal={this.props.toggleOnNodeNameModal}
         toggleNodeNameChange={this.props.toggleNodeNameChange}/>

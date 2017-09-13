@@ -3,8 +3,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
-import Slider from 'material-ui/Slider';
-
+import NodeSlider from './Slider.jsx';
 
 const style = {
   height: '46px',
@@ -17,8 +16,9 @@ class ToolDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state={
-      firstSlider: 0.5,
+      //sliderVal: 0.5,
     }
+
   }
 
 
@@ -33,9 +33,10 @@ class ToolDrawer extends React.Component {
     this.setState({open: !this.props.open});
   }
 
-  handleFirstSlider(event, value){
-    this.setState({firstSlider: value});
-  };
+  // handleSliderVal(event, value){
+  //   this.setState({sliderVal: value});
+  //   console.log(this.state.sliderVal)
+  // };
 
   render() {
     return (
@@ -73,12 +74,9 @@ class ToolDrawer extends React.Component {
             ]}
           />
           <MenuItem
-
             primaryText="Node Spacing"
             rightIcon={<ArrowDropRight />}
-            menuItems={[
-                <Slider style={style} value={this.state.firstSlider} onChange={this.handleFirstSlider} />
-            ]}
+
           />
 
           <Divider />
