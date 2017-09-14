@@ -22,7 +22,7 @@ import Slider from 'material-ui/Slider';
 
 const styles = {
   title: {
-    padding: '20px 20px',
+    cursor: 'pointer !important'
   },
   drawerButton: {
     zIndex: 3,
@@ -158,10 +158,21 @@ class View extends React.Component {
   render() {
     return (
       <div>
-        <div className='mapTitle' style={{'color' : 'black'}}>
-        <br/>
-        {this.state.mapName}
+        <div className='mapTitle' style={styles.title}>
+              <TextField
+                name="mapNameUpdate"
+                defaultValue={this.state.mapName}
+                //hintText={this.state.mapName}
+                placeholder={this.state.mapName}
+                underlineShow={false}
+                disabled={true}
+                inputStyle={{ textAlign: 'center' }}
+                //hintStyle={{ width: '600px', textAlign: 'center' }}
+                style={{ width: '600px' }}
+              />
+
         </div>
+
         <ReactTooltip place="right" />
         <FloatingActionButton
           style={styles.drawerButton}

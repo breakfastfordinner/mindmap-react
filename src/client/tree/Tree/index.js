@@ -141,7 +141,6 @@ export default class Tree extends React.Component {
       }
 
       if(!node.id) {
-        // console.log('here?')
         node.id = uuid.v4();
       }
 

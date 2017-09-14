@@ -23,13 +23,20 @@ import Cookies from 'universal-cookie';
 const cookies = new Cookies();
 
 const styles = {
+  moreButton: {
+    zIndex: 500
+  },
   navlink: {
     textDecoration: 'none',
-    color: '#212121'
+    color: '#212121',
+    width: '80%'
   },
   newmap: {
     paddingLeft: '20px',
     marginRight: '30px'
+  },
+  mapLink: {
+    width: '900px'
   }
 
 };
@@ -109,7 +116,7 @@ class Home extends React.Component {
         )
 
         const rightIconMenu = (
-          <IconMenu iconButtonElement={iconButtonElement}>
+          <IconMenu style={styles.moreButton} iconButtonElement={iconButtonElement}>
             <MenuItem>Share</MenuItem>
             <MenuItem ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
             <MenuItem onClick={()=> {this.handleOpen(map._id)}} >Delete</MenuItem>
@@ -120,9 +127,12 @@ class Home extends React.Component {
           <div key={i}>
             <Divider />
             <ListItem rightIconButton={rightIconMenu} >
-              <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
+              <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>
+                <div style={styles.mapLink}>{map.name}</div>
+              </NavLink>
             </ListItem>
           </div>
+
         );
     })
 

@@ -11,7 +11,6 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Menu from 'material-ui/Menu';
@@ -150,7 +149,9 @@ class Canvas extends React.Component {
   }
 
   selectDefaultTheme() {
-    this.setState({theme: 'default'});
+    this.setState({
+      theme: 'default',
+    });
     this.updateMap();
   }
 
@@ -300,7 +301,7 @@ class Canvas extends React.Component {
           toggleNodeNameChange={this.state.toggleNodeNameChange}
           tree={this.state.tree}
         />
-        <div style={styles.slider} >
+        <div style={styles.slider}>
           <NodeSlider
             onSlide={this.handleFirstSlider}
           />
