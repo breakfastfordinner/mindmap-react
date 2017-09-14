@@ -414,10 +414,10 @@ export default class Tree extends React.Component {
 
     return (
       <div className={`rd3t-tree-container ${zoomable ? 'rd3t-grabbable' : undefined}`}>
-        <ReactTooltip place="top" id='node'>
+        {!this.props.view&&<ReactTooltip place="top" id='node'>
           <p>Double Click to Add</p>
           <p>Right Click to Delete</p>
-        </ReactTooltip>
+        </ReactTooltip>}
 
         <svg className="rd3t-svg" width="100%" height="100%">
           <g

@@ -82,7 +82,6 @@ class View extends React.Component {
   }
 
   handleDrawerToggle() {
-    console.log('?????')
     this.setState({open: !this.state.open})
   }
 
@@ -171,6 +170,7 @@ class View extends React.Component {
                 //hintStyle={{ width: '600px', textAlign: 'center' }}
                 style={{ width: '600px' }}
               />
+
         </div>
 
         <ReactTooltip place="right" />
