@@ -33,9 +33,9 @@ const styles = {
     zIndex: 3,
     margin: 0,
     top: 'auto',
-    right: 20,
-    bottom: 20,
-    left: 'auto',
+    left: 40,
+    top: 90,
+    //left: 'auto',
     position: 'fixed',
   },
   slider: {
@@ -152,7 +152,9 @@ class Canvas extends React.Component {
   }
 
   selectDefaultTheme() {
-    this.setState({theme: 'default'});
+    this.setState({
+      theme: 'default',
+    });
     this.updateMap();
   }
 

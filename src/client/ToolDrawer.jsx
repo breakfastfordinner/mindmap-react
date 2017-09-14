@@ -6,16 +6,15 @@ import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
 import NodeSlider from './Slider.jsx';
 
+import {List, ListItem, makeSelectable} from 'material-ui/List';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
+import {pinkA200, transparent} from 'material-ui/styles/colors';
 
 class ToolDrawer extends React.Component {
 
   constructor(props) {
     super(props);
 
-  }
-
-  toggleChecked() {
-    this.setState({open: !this.props.open});
   }
 
   render() {
@@ -26,40 +25,47 @@ class ToolDrawer extends React.Component {
           docked={false}
           onRequestChange={this.props.handleRequestClose}
         >
-          <Menu desktop={true}>
-            <MenuItem
+          <List >
+            <ListItem
+              disabled={false}
               primaryText="Color Scheme"
-              rightIcon={<ArrowDropRight />}
-              menuItems={[
-                <MenuItem primaryText="Default" onClick={this.props.selectDefaultTheme} insetChildren={true} />,
-                <MenuItem primaryText="Pied Piper"  onClick={this.props.selectPiedPiperTheme} insetChildren={true}/>,
-                <MenuItem primaryText="Life Aquatic" onClick={this.props.selectLifeAquaticTheme} insetChildren={true}/>,
-                <MenuItem primaryText="Flame" onClick={this.props.selectFlameTheme} insetChildren={true}/>,
+              autoGenerateNestedIndicator={true}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={[
+                <ListItem  primaryText="Default" onClick={this.props.selectDefaultTheme}  />,
+                <ListItem primaryText="Pied Piper"  onClick={this.props.selectPiedPiperTheme} />,
+                <ListItem primaryText="Life Aquatic" onClick={this.props.selectLifeAquaticTheme} />,
+                <ListItem primaryText="Flame" onClick={this.props.selectFlameTheme} />,
               ]}
             />
 
-            <MenuItem
+            <ListItem
               primaryText="Orientation"
-              rightIcon={<ArrowDropRight />}
-              menuItems={[
-                <MenuItem primaryText="Horizontal" onClick={this.props.selectHorizontal} insetChildren={true}/>,
-                <MenuItem primaryText="Vertical" onClick={this.props.selectVertical} insetChildren={true}/>,
+              autoGenerateNestedIndicator={true}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={[
+                <ListItem primaryText="Horizontal" onClick={this.props.selectHorizontal} />,
+                <ListItem primaryText="Vertical" onClick={this.props.selectVertical} />,
               ]}
             />
-            <MenuItem
+            <ListItem
               primaryText="Line Style"
-              rightIcon={<ArrowDropRight />}
-              menuItems={[
-                <MenuItem primaryText="Curved" onClick={this.props.selectDiagonal} insetChildren={true}/>,
-                <MenuItem primaryText="Elbow" onClick={this.props.selectElbow} insetChildren={true}/>,
-                <MenuItem primaryText="Straight" onClick={this.props.selectStraight} insetChildren={true}/>,
+              autoGenerateNestedIndicator={true}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={[
+                <ListItem primaryText="Curved" onClick={this.props.selectDiagonal} />,
+                <ListItem primaryText="Elbow" onClick={this.props.selectElbow} />,
+                <ListItem primaryText="Straight" onClick={this.props.selectStraight} />,
               ]}
             />
 
             <Divider />
 
-            <MenuItem primaryText="Share" />
-          </Menu>
+            <ListItem primaryText="Share" />
+          </List>
         </Drawer>
       </div>
     );
