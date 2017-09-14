@@ -3,6 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import TestMap from './TestMap.jsx';
 import MapModel from './actions/maps';
 import ToolDrawer from './ToolDrawer.jsx'
+import NodeSlider from './Slider.jsx';
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import ModeEdit from 'material-ui/svg-icons/editor/mode-edit';
@@ -17,6 +18,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import ReactTooltip from 'react-tooltip';
+import Slider from 'material-ui/Slider';
 
 const styles = {
   title: {
@@ -33,6 +35,11 @@ const styles = {
   editButton: {
     height: '15px',
     width: 'auto',
+  },
+  slider: {
+    bottom: 0,
+    position: 'fixed',
+    width: '95%'
   }
 };
 
@@ -45,10 +52,12 @@ class View extends React.Component {
         map: { name: 'random', tree: {}},
         tree: [{name: 'startup', children: [ {name: '2nd', children: [] } ]}],
         mapName: '',
-        selectedNodeId: '',
         open: false,
         orientation: 'horizontal',
-        pathFunc: 'diagonal'
+        pathFunc: 'diagonal',
+        separation: { siblings: .5, nonSiblings: 1 },
+        firstSlider: 0.5,
+        theme: 'default'
       }
 
     this.updateMap = this.updateMap.bind(this);
@@ -58,27 +67,17 @@ class View extends React.Component {
     this.selectDiagonal = this.selectDiagonal.bind(this);
     this.selectStraight = this.selectStraight.bind(this);
     this.selectElbow = this.selectElbow.bind(this);
-
+    this.handleFirstSlider = this.handleFirstSlider.bind(this);
+    this.selectDefaultTheme = this.selectDefaultTheme.bind(this);
+    this.selectPiedPiperTheme = this.selectPiedPiperTheme.bind(this);
+    this.selectLifeAquaticTheme = this.selectLifeAquaticTheme.bind(this);
+    this.selectFlameTheme = this.selectFlameTheme.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
   }
-
-
-  // componentWillReceiveProps() {
-  //   this.updateMap();
-  // }
-  // shouldComponentUpdate(nextProp, nextState) {
-  //   console.log('inside of should compupdate:', nextProp);
-  //   console.log('inside of should update, nextSTATE:', nextState)
-  //   console.log('will this rerender?', !nextState.toggleNodeNameChange)
-  //   return !nextState.toggleNodeNameChange;
-  // }
 
 
   componentDidMount() {
     this.updateMap();
-    console.log('fjdiosafjdsajfldsjafldj was this rendered?', this.state.map)
-
-    //prevent chrome's default menu on right click
-    // document.addEventListener('contextmenu', event => event.preventDefault());
   }
 
 
@@ -86,7 +85,26 @@ class View extends React.Component {
 
 
   handleDrawerToggle() {
+    console.log('?????')
     this.setState({open: !this.state.open})
+  }
+
+  selectDefaultTheme() {
+    this.setState({theme: 'default'});
+    this.updateMap();
+  }
+
+  selectPiedPiperTheme() {
+    this.setState({theme: 'piedpiper'});
+    this.updateMap();
+  }
+  selectLifeAquaticTheme() {
+    this.setState({theme: 'lifeaquatic'});
+    this.updateMap();
+  }
+  selectFlameTheme() {
+    this.setState({theme: 'flame'});
+    this.updateMap();
   }
 
   selectHorizontal() {
@@ -114,14 +132,23 @@ class View extends React.Component {
     this.updateMap();
   }
 
-  // async updateMap() {
-  //   let mapResponse = await MapModel.getMap(this.props.match.params.id);
-  //   this.setState({
-  //     map: mapResponse.map,
-  //     mapName: mapResponse.map.name,
-  //     tree: mapResponse.map.tree
-  //   })
-  // }
+  handleRequestClose(){
+    this.setState({
+      open: false,
+    });
+  };
+
+  handleFirstSlider(value){
+    this.setState({
+      firstSlider: value,
+      separation: {
+        siblings: value,
+        nonSiblings: value * 2.5
+      }
+    })
+
+  };
+
 
   async updateMap() {
     let mapResponse = await MapModel.getViewMap(this.props.match.params.id);
@@ -132,28 +159,13 @@ class View extends React.Component {
     })
   }
 
-  // async updateMapName(mapName) {
-  //   if (mapName === "") {
-  //     console.log("nothing enter, dont fire request")
-  //   } else {
-  //     await MapModel.editMapName(this.props.match.params.id, mapName);
-
-  //     this.updateMap();
-  //     this.props.updateMaps();
-  //   }
-  // }
-
-
   render() {
     return (
       <div>
-
         <div className='mapTitle'>
         {this.state.mapName}
         </div>
-
         <ReactTooltip place="right" />
-
         <FloatingActionButton
           style={styles.drawerButton}
           onClick={this.handleDrawerToggle}
@@ -162,8 +174,10 @@ class View extends React.Component {
 
           <Settings />
         </FloatingActionButton>
+
           <ToolDrawer
           open={this.state.open}
+          theme={this.state.theme}
           orientation={this.state.orientation}
           pathFunc={this.state.pathFunc}
           selectHorizontal={this.selectHorizontal}
@@ -171,6 +185,12 @@ class View extends React.Component {
           selectDiagonal={this.selectDiagonal}
           selectElbow={this.selectElbow}
           selectStraight={this.selectStraight}
+          selectDefaultTheme={this.selectDefaultTheme}
+          selectPiedPiperTheme={this.selectPiedPiperTheme}
+          selectLifeAquaticTheme={this.selectLifeAquaticTheme}
+          selectFlameTheme={this.selectFlameTheme}
+          handleFirstSlider={this.handleFirstSlider}
+          handleRequestClose={this.handleRequestClose}
           view={true}
         />
 
@@ -180,8 +200,18 @@ class View extends React.Component {
           orientation={this.state.orientation}
           pathFunc={this.state.pathFunc}
           updateMap={this.updateMap}
+          theme={this.state.theme}
+          separation={this.state.separation}
+          firstSlider={this.state.firstSlider}
           tree={this.state.tree}
         />
+
+          <div style={styles.slider} >
+            <NodeSlider
+              onSlide={this.handleFirstSlider}
+            />
+
+          </div>
 
         </div>
 

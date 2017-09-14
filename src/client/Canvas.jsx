@@ -48,7 +48,6 @@ const styles = {
     height: '15px',
     width: 'auto',
   }
-
 };
 
 
@@ -73,7 +72,6 @@ class Canvas extends React.Component {
       }
 
     this.updateMap = this.updateMap.bind(this);
-    this.updateMap = this.updateMap.bind(this);
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
     this.untoggleNameChange = this.untoggleNameChange.bind(this);
@@ -92,7 +90,6 @@ class Canvas extends React.Component {
     this.selectElbow = this.selectElbow.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
 
-    // this.updateMap();
   }
 
 
@@ -113,7 +110,6 @@ class Canvas extends React.Component {
     } else {
       this.props.history.push('/login');
     }
-    // this.updateMap();
 
     //prevent chrome's default menu on right click
     document.addEventListener('contextmenu', event => event.preventDefault());
@@ -236,17 +232,8 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div onClick={this.closeDrawer} >
-        {//this.props.match.params.id
-        }
-
-
+      <div>
         <div className='mapTitle'>
-
-          {//!this.state.editNameToggle &&
-            //<span onClick={this.toggleNameChange}> {this.state.mapName} <ModeEdit style={styles.editButton} /></span>
-          }
-
             <form onSubmit={this.untoggleNameChange}>
               <TextField
                 data-tip="Click to edit"
@@ -264,12 +251,11 @@ class Canvas extends React.Component {
         </div>
 
         <ReactTooltip place="right" />
-
         <FloatingActionButton
           style={styles.drawerButton}
           onClick={this.handleDrawerToggle}
           data-tip="Settings"
-          >
+        >
 
           <Settings />
         </FloatingActionButton>
