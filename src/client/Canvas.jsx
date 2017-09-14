@@ -234,7 +234,7 @@ class Canvas extends React.Component {
 
   render() {
     return (
-      <div onClick={this.closeDrawer} >
+      <div>
         {//this.props.match.params.id
         }
 
@@ -311,7 +311,7 @@ class Canvas extends React.Component {
           toggleNodeNameChange={this.state.toggleNodeNameChange}
           tree={this.state.tree}
         />
-        <div style={styles.slider} >
+        <div style={styles.slider}>
           <NodeSlider
             onSlide={this.handleFirstSlider}
           />
