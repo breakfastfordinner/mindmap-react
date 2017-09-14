@@ -18,6 +18,9 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const styles = {
   navlink: {
@@ -50,7 +53,7 @@ class Home extends React.Component {
 
 
   componentWillMount() {
-    this.props.signedIn? null : this.props.history.push('/login');
+    cookies.get('user')? null : this.props.history.push('/login');
   }
 
   toggleCreateMapForm() {

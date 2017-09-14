@@ -5,6 +5,7 @@ import Home from './Home.jsx';
 import Canvas from './Canvas.jsx';
 import Register from './Register.jsx';
 import Login from './Login.jsx';
+import View from './View.jsx';
 import Nav from './Nav.jsx';
 import d3 from 'd3';
 
@@ -25,26 +26,42 @@ class App extends React.Component {
         id: '1234qwer',
         name: 'Loading...'
       }],
+      handleAuthErrorBox: false
 
 
     }
     this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.updateMaps = this.updateMaps.bind(this);
+    this.openErrorBox = this.openErrorBox.bind(this);
+    this.closeErrorBox = this.closeErrorBox.bind(this);
   }
 
 
   componentDidMount() {
-    if (cookies.get('user')) {
-      this.setState({
-        signedIn: true,
-        user: cookies.get('user')
-      });
+    this.updateMaps();
+    // if (cookies.get('user')) {
+    //   this.setState({
+    //     signedIn: true,
+    //     user: cookies.get('user')
+    //   });
 
-      this.updateMaps();
-    } else {
-      this.props.history.push('/login');
-    }
+    //   this.updateMaps();
+    // } else {
+    //   this.props.history.push('/login');
+    // }
+  }
+
+  openErrorBox() {
+    this.setState({
+      handleAuthErrorBox: true
+    });
+  }
+
+  closeErrorBox() {
+    this.setState({
+      handleAuthErrorBox: false
+    });
   }
 
   async handleAuth(username, password, typeObj) {
@@ -56,8 +73,10 @@ class App extends React.Component {
       })
       this.props.history.push("/");
       this.updateMaps();
-    } else {
-      alert('Something went wrong...');
+    } else if (response.status === 422) {
+      alert('username already exist');
+    } else if (response.status === 401) {
+      alert('incorrect pw and username')
     }
   }
 
@@ -73,7 +92,9 @@ class App extends React.Component {
   async updateMaps() {
     let getMapResponse = await MapModel.getMaps();
     if (!getMapResponse.maps) {
-      this.handleLogout();
+      if (cookies.get('user')) {
+        this.handleLogout();
+      }
     } else {
       this.setState({
         maps: getMapResponse.maps
@@ -88,12 +109,13 @@ class App extends React.Component {
       <div>
         <MuiThemeProvider>
           <div>
-            <Nav signedIn={this.state.signedIn} logout={this.handleLogout} />
+            <Nav logout={this.handleLogout} />
             <Switch>
-              <Route path="/canvas/:id" render={()=><Canvas user={this.state.user} updateMaps={this.updateMaps}/>} />
+              <Route path="/view/:id" render={()=><View/>} />
+              <Route path="/canvas/:id" render={()=><Canvas updateMaps={this.updateMaps}/>} />
               <Route path="/login" render={()=><Login handleAuth={this.handleAuth} signedIn={this.state.signedIn} />} />
               <Route path="/register" render={()=><Register handleAuth={this.handleAuth}/>} />
-              <Route exact path="/" render={()=><Home maps={this.state.maps} signedIn={this.state.signedIn}  updateMaps={this.updateMaps}  />} />
+              <Route exact path="/" render={()=><Home maps={this.state.maps} updateMaps={this.updateMaps}  />} />
             </Switch>
           </div>
         </MuiThemeProvider>

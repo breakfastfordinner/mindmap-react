@@ -141,7 +141,7 @@ export default class Tree extends React.Component {
       }
 
       if(!node.id) {
-        console.log('here?')
+        // console.log('here?')
         node.id = uuid.v4();
       }
 
@@ -233,7 +233,7 @@ export default class Tree extends React.Component {
    */
   handleOnClick(nodeId) {
     // this.handleOnClickCb();
-
+    if (this.props.view) { return; }
     const data = clone(this.state.data);
     const matches = this.findNodesById(nodeId, data, []);
     const targetNode = matches[0];
@@ -258,6 +258,7 @@ export default class Tree extends React.Component {
 
 
   handleRightClick(nodeId) {
+    if (this.props.view) { return; }
     const data = clone(this.state.data);
 
     this.setState({
