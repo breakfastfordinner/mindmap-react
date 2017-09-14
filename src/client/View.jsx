@@ -25,6 +25,7 @@ const styles = {
     padding: '20px 20px',
   },
   drawerButton: {
+    zIndex: 3,
     margin: 0,
     top: 'auto',
     right: 20,
@@ -39,7 +40,7 @@ const styles = {
   slider: {
     bottom: 0,
     position: 'fixed',
-    width: '95%'
+    width: '100%'
   }
 };
 
@@ -80,12 +81,7 @@ class View extends React.Component {
     this.updateMap();
   }
 
-
-
-
-
   handleDrawerToggle() {
-    console.log('?????')
     this.setState({open: !this.state.open})
   }
 
@@ -162,7 +158,8 @@ class View extends React.Component {
   render() {
     return (
       <div>
-        <div className='mapTitle'>
+        <div className='mapTitle' style={{'color' : 'black'}}>
+        <br/>
         {this.state.mapName}
         </div>
         <ReactTooltip place="right" />

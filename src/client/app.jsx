@@ -14,6 +14,9 @@ import MapModel from './actions/maps';
 import Cookies from 'universal-cookie';
 import { Route, Link, Switch, withRouter } from 'react-router-dom';
 
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+
 const cookies = new Cookies();
 
 class App extends React.Component {
@@ -26,15 +29,18 @@ class App extends React.Component {
         id: '1234qwer',
         name: 'Loading...'
       }],
-      handleAuthErrorBox: false
-
+      // handleAuthErrorBox: false,
+      openLoginError: false,
+      openSignUpError: false
 
     }
     this.handleAuth = this.handleAuth.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.updateMaps = this.updateMaps.bind(this);
-    this.openErrorBox = this.openErrorBox.bind(this);
-    this.closeErrorBox = this.closeErrorBox.bind(this);
+    this.closeLoginError = this.closeLoginError.bind(this);
+    this.closeSignUpError = this.closeSignUpError.bind(this);
+    // this.openErrorBox = this.openErrorBox.bind(this);
+    // this.closeErrorBox = this.closeErrorBox.bind(this);
   }
 
 
@@ -52,15 +58,16 @@ class App extends React.Component {
     // }
   }
 
-  openErrorBox() {
+
+  closeLoginError() {
     this.setState({
-      handleAuthErrorBox: true
+      openLoginError: false
     });
   }
 
-  closeErrorBox() {
+  closeSignUpError() {
     this.setState({
-      handleAuthErrorBox: false
+      openSignUpError: false
     });
   }
 
@@ -74,9 +81,15 @@ class App extends React.Component {
       this.props.history.push("/");
       this.updateMaps();
     } else if (response.status === 422) {
-      alert('username already exist');
+      //alert('username already exist');
+      this.setState({
+        openSignUpError: true
+      })
     } else if (response.status === 401) {
-      alert('incorrect pw and username')
+      // alert('incorrect pw and username')
+      this.setState({
+        openLoginError: true
+      })
     }
   }
 
@@ -102,13 +115,53 @@ class App extends React.Component {
     }
 
   }
-
+   // <Dialog
+   //        actions={actions2}
+   //        modal={false}
+   //        open={this.state.openSignUpError}
+   //        onRequsetClose={this.closeSignUpError}
+   //      >
+   //        afkdslajflds
+   //      </Dialog>
   render() {
+    const actions = [
+    <FlatButton
+      label="OK"
+      primary={true}
+      onClick={this.closeLoginError}
+    />
+    ];
+    const actions2 = [
+    <FlatButton
+      label="OK"
+      primary={true}
+      onClick={this.closeSignUpError}
+    />
+    ]
 
     return (
       <div>
         <MuiThemeProvider>
-          <div>
+
+        <div>
+        <Dialog
+        actions={actions}
+        modal={false}
+        open={this.state.openLoginError}
+        onRequestClose={this.closeLoginError}
+        contentStyle={{width: '500px'}}
+        >
+          Error: Incorrect Username or Password.
+        </Dialog>
+        <Dialog
+        actions={actions2}
+        modal={false}
+        open={this.state.openSignUpError}
+        onRequestClose={this.closeSignUpError}
+        contentStyle={{width: '500px'}}
+        >
+          Error: Username already exist.
+        </Dialog>
             <Nav logout={this.handleLogout} />
             <Switch>
               <Route path="/view/:id" render={()=><View/>} />
