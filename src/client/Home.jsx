@@ -70,9 +70,6 @@ class Home extends React.Component {
 
 
   async destroyMap(mapId) {
-    // console.log('should handle delete a map', mapId)
-
-    // fire post to delete a Map
     await MapModel.destroyMap(mapId);
     this.props.updateMaps();
     this.setState({open: false});
@@ -119,9 +116,9 @@ class Home extends React.Component {
         return (
           <div key={i}>
             <Divider />
-            <ListItem rightIconButton={rightIconMenu} >
-              <NavLink style={styles.navlink} to={`/canvas/${map._id}`}>{map.name}</NavLink>
-            </ListItem>
+            <NavLink style={styles.navlink} to={`/canvas/${map._id}`}><ListItem rightIconButton={rightIconMenu} >
+              {map.name}
+            </ListItem></NavLink>
           </div>
         );
     })
