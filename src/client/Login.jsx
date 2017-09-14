@@ -15,7 +15,9 @@ class Login extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      requiredUsername: '',
+      requiredPassword: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -33,7 +35,29 @@ class Login extends React.Component {
 
   async handleLogin(e) {
     e.preventDefault();
-    await this.props.handleAuth(this.state.username, this.state.password, {type: 'login'});
+    if (this.state.password === '' && this.state.username === '') {
+      this.setState({
+        requiredUsername: 'This field is required.',
+        requiredPassword: 'This field is required.'
+      })
+    } else if (this.state.username === '') {
+      this.setState({
+        requiredUsername: 'This field is required.',
+        requiredPassword: ''
+      })
+    } else if (this.state.password === '') {
+      this.setState({
+        requiredUsername: '',
+        requiredPassword: 'This field is required.'
+      })
+
+    } else {
+      this.setState({
+        requiredPassword: '',
+        requiredUsername: ''
+      })
+      await this.props.handleAuth(this.state.username, this.state.password, {type: 'login'});
+    }
   }
 
   render() {
@@ -45,12 +69,14 @@ class Login extends React.Component {
           type="text"
           hintText="username"
           value={this.state.username}
+          errorText={this.state.requiredUsername}
           onChange={this.handleChange}/>
         <br />
         <TextField
           name="password"
           type="password"
           hintText="password"
+          errorText={this.state.requiredPassword}
           onChange={this.handleChange}
           value={this.state.password}/>
         <br />

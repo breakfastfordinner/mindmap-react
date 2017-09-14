@@ -7,6 +7,9 @@ import Timeline from 'material-ui/svg-icons/action/timeline';
 import Flare from 'material-ui/svg-icons/image/flare';
 
 import FlatButton from 'material-ui/FlatButton';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const styles = {
   title: {
@@ -15,11 +18,11 @@ const styles = {
   },
 };
 
-const Nav = ({ signedIn, logout}) => (
+const Nav = ({logout}) => (
   <AppBar
     title={<NavLink className='logo' activeStyle={{ color: 'white', textDecoration: 'none' }}to="/"><span style={styles.title}><Flare style={styles.title}/> Mindflare</span></NavLink>}
     iconElementLeft={<IconButton></IconButton>}
-    iconElementRight={ signedIn ? <FlatButton label="logout" onClick={ () => logout() } /> : <FlatButton label="Login" containerElement={<Link to="/login"/>} />} />
+    iconElementRight={ cookies.get('user') ? <FlatButton label="logout" onClick={ () => logout() } /> : <FlatButton label="Login" containerElement={<Link to="/login"/>} />} />
 );
 
 export default Nav;

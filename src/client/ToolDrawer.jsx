@@ -9,18 +9,48 @@ import NodeSlider from './Slider.jsx';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
 import {pinkA200, transparent} from 'material-ui/styles/colors';
+import SharedLinkModal from './SharedLinkModal.jsx';
 
 class ToolDrawer extends React.Component {
 
   constructor(props) {
     super(props);
 
+    this.state = {
+      toggleSharedLinkModal: false
+    }
+    this.toggleOffSharedLinkModal = this.toggleOffSharedLinkModal.bind(this);
+    this.toggleOnSharedLinkModal = this.toggleOnSharedLinkModal.bind(this);
+  }
+
+
+  componentDidMount() {
+     //console.log('tool drawer props', this.props)
+    // console.log('tool drawer this', this)
+    // console.log('orientation props', this.props.orientation);
+  }
+
+  toggleOnSharedLinkModal() {
+    this.setState({
+      toggleSharedLinkModal: true
+    })
+  }
+
+  toggleOffSharedLinkModal() {
+    this.setState({
+      toggleSharedLinkModal: false
+    })
+  }
+
+  toggleChecked() {
+    this.setState({open: !this.props.open});
   }
 
   render() {
     return (
       <div>
         <Drawer
+          openSecondary={true}
           open={this.props.open}
           docked={false}
           onRequestChange={this.props.handleRequestClose}
@@ -61,10 +91,15 @@ class ToolDrawer extends React.Component {
                 <ListItem primaryText="Straight" onClick={this.props.selectStraight} />,
               ]}
             />
-
             <Divider />
 
-            <ListItem primaryText="Share" />
+          {!this.props.view && <ListItem primaryText="Share" onClick={this.toggleOnSharedLinkModal}/>}
+          { this.state.toggleSharedLinkModal &&
+          <SharedLinkModal
+            sharedLink={this.props.sharedLink}
+            toggleOffSharedLinkModal={this.toggleOffSharedLinkModal}
+          />
+        }
           </List>
         </Drawer>
       </div>

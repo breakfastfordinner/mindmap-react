@@ -5,8 +5,8 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 const REQUESTS = {
-  register: 'http://localhost:8000/api/auth/register',
-  login: 'http://localhost:8000/api/auth/login',
+  register: 'http://mindflare.me/api/auth/register',
+  login: 'http://mindflare.me/api/auth/login',
 };
 const ERROR_CODES = {
   register: 422,

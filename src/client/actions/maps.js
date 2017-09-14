@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-const API = 'http://localhost:8000/api/maps';
+const API = 'http://mindflare.me/api/maps';
 const cookies = new Cookies();
 
 /**
@@ -46,6 +46,21 @@ const getMap = async (id) => {
       headers: {
         Authorization: cookie.auth_token,
       },
+    };
+
+    const response = await axios(options);
+
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const getViewMap = async (id) => {
+  try {
+    const options = {
+      baseURL: API,
+      url: `/view/${id}`,
     };
 
     const response = await axios(options);
@@ -175,4 +190,5 @@ module.exports = {
   editMap,
   editMapName,
   destroyMap,
+  getViewMap,
 };

@@ -21,6 +21,7 @@ class TestMap extends React.Component {
     return (
       <div id="treeWrapper" style={{ width: '100%', height: '1000px'}}>
         <Tree
+        view={this.props.view}
         data={ this.state.data }
         updateMap={ this.props.updateMap }
         theme={this.props.theme}

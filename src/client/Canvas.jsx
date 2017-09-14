@@ -33,9 +33,9 @@ const styles = {
     zIndex: 3,
     margin: 0,
     top: 'auto',
-    left: 40,
-    top: 90,
-    //left: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
     position: 'fixed',
   },
   slider: {
@@ -47,7 +47,6 @@ const styles = {
     height: '15px',
     width: 'auto',
   }
-
 };
 
 
@@ -68,9 +67,9 @@ class Canvas extends React.Component {
         theme: 'default',
         separation: { siblings: .5, nonSiblings: 1 },
         firstSlider: 0.5,
+        sharedLink: `http://localhost:8000/view/${this.props.match.params.id}`
       }
 
-    this.updateMap = this.updateMap.bind(this);
     this.updateMap = this.updateMap.bind(this);
     this.updateMapName = this.updateMapName.bind(this);
     this.toggleNameChange = this.toggleNameChange.bind(this);
@@ -90,7 +89,6 @@ class Canvas extends React.Component {
     this.selectElbow = this.selectElbow.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
 
-    this.updateMap();
   }
 
 
@@ -111,7 +109,6 @@ class Canvas extends React.Component {
     } else {
       this.props.history.push('/login');
     }
-    // this.updateMap();
 
     //prevent chrome's default menu on right click
     document.addEventListener('contextmenu', event => event.preventDefault());
@@ -237,16 +234,7 @@ class Canvas extends React.Component {
   render() {
     return (
       <div>
-        {//this.props.match.params.id
-        }
-
-
         <div className='mapTitle'>
-
-          {//!this.state.editNameToggle &&
-            //<span onClick={this.toggleNameChange}> {this.state.mapName} <ModeEdit style={styles.editButton} /></span>
-          }
-
             <form onSubmit={this.untoggleNameChange}>
               <TextField
                 data-tip="Click to edit"
@@ -264,12 +252,11 @@ class Canvas extends React.Component {
         </div>
 
         <ReactTooltip place="right" />
-
         <FloatingActionButton
           style={styles.drawerButton}
           onClick={this.handleDrawerToggle}
           data-tip="Settings"
-          >
+        >
 
           <Settings />
         </FloatingActionButton>
@@ -289,6 +276,7 @@ class Canvas extends React.Component {
             selectFlameTheme={this.selectFlameTheme}
             handleFirstSlider={this.handleFirstSlider}
             handleRequestClose={this.handleRequestClose}
+            sharedLink={this.state.sharedLink}
           />
 
         { this.state.toggleNodeNameChange &&
