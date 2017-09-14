@@ -25,18 +25,13 @@ app.use(logger('dev'));
 app.use(parser.json());
 app.use(parser.urlencoded({ extended: false }));
 
-// app.get('/', (req, res) => {
-//   res.send(renderApp(APP_NAME));
-// });
-
 router(app);
 
 app.all('*', (req, res) => {
-  // res.redirect('/');
   res.send(renderApp(APP_NAME));
 });
 
-app.listen(WEB_PORT, () => {
+app.listen(8000, () => {
   // eslint-disable-next-line no-console
   console.log(`Server running on port ${WEB_PORT} ${isProd ? '(production)' :
     '(development).\nKeep "yarn dev:wds" running in an other terminal'}.`);

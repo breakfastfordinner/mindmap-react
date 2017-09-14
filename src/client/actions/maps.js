@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
-const API = 'http://localhost:8000/api/maps';
+const API = 'http://mindflare.me/api/maps';
 const cookies = new Cookies();
 
 /**
