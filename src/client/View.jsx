@@ -171,6 +171,7 @@ class View extends React.Component {
           selectDiagonal={this.selectDiagonal}
           selectElbow={this.selectElbow}
           selectStraight={this.selectStraight}
+          view={true}
         />
 
         <TestMap

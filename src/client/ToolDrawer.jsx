@@ -4,19 +4,35 @@ import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import Divider from 'material-ui/Divider';
 import NodeSlider from './Slider.jsx';
-
+import SharedLinkModal from './SharedLinkModal.jsx';
 
 class ToolDrawer extends React.Component {
 
   constructor(props) {
     super(props);
 
+    this.state = {
+      toggleSharedLinkModal: false
+    }
+    this.toggleOffSharedLinkModal = this.toggleOffSharedLinkModal.bind(this);
+    this.toggleOnSharedLinkModal = this.toggleOnSharedLinkModal.bind(this);
   }
 
   componentDidMount() {
      //console.log('tool drawer props', this.props)
     // console.log('tool drawer this', this)
     // console.log('orientation props', this.props.orientation);
+  }
+  toggleOnSharedLinkModal() {
+    this.setState({
+      toggleSharedLinkModal: true
+    })
+  }
+
+  toggleOffSharedLinkModal() {
+    this.setState({
+      toggleSharedLinkModal: false
+    })
   }
 
   toggleChecked() {
@@ -60,8 +76,13 @@ class ToolDrawer extends React.Component {
           />
 
           <Divider />
-
-          <MenuItem primaryText="Share" />
+          {!this.props.view && <MenuItem primaryText="Share" onClick={this.toggleOnSharedLinkModal}/>}
+          { this.state.toggleSharedLinkModal &&
+          <SharedLinkModal
+            sharedLink={this.props.sharedLink}
+            toggleOffSharedLinkModal={this.toggleOffSharedLinkModal}
+          />
+        }
         </Drawer>
       </div>
     );
