@@ -13,12 +13,6 @@ class ToolDrawer extends React.Component {
 
   }
 
-  componentDidMount() {
-     //console.log('tool drawer props', this.props)
-    // console.log('tool drawer this', this)
-    // console.log('orientation props', this.props.orientation);
-  }
-
   toggleChecked() {
     this.setState({open: !this.props.open});
   }
@@ -28,7 +22,8 @@ class ToolDrawer extends React.Component {
       <div>
         <Drawer
           open={this.props.open}
-          onRequestChange={(open) => this.setState({open: !this.props.open})}
+          docked={false}
+          onRequestChange={this.props.handleRequestClose}
         >
           <MenuItem
             primaryText="Color Scheme"
