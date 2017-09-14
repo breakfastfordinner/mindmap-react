@@ -9,7 +9,6 @@ import FlatButton from 'material-ui/FlatButton';
 class SharedLinkModal extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
     }
     this.closeModal = this.closeModal.bind(this);

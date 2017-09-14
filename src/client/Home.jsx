@@ -73,9 +73,6 @@ class Home extends React.Component {
 
 
   async destroyMap(mapId) {
-    // console.log('should handle delete a map', mapId)
-
-    // fire post to delete a Map
     await MapModel.destroyMap(mapId);
     this.props.updateMaps();
     this.setState({open: false});

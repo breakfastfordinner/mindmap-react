@@ -220,7 +220,7 @@ class Canvas extends React.Component {
 
   async updateMapName(mapName) {
     if (mapName === "") {
-      console.log("nothing entered, don't fire request")
+      // console.log("nothing entered, don't fire request")
     } else {
       await MapModel.editMapName(this.props.match.params.id, mapName);
 
@@ -244,7 +244,7 @@ class Canvas extends React.Component {
                 underlineShow={false}
                 inputStyle={{ textAlign: 'center' }}
                 //hintStyle={{ width: '600px', textAlign: 'center' }}
-                style={{ width: '600px' }}
+                style={{ width: '600px', color: 'black' }}
               />
               <input type="submit" value="update" style={{ visibility: 'hidden' }}/>
             </form>
