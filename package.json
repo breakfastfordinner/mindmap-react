@@ -78,6 +78,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-cookie": "^2.0.8",
+    "react-copy-to-clipboard": "^5.0.0",
     "react-d3-tree": "^1.4.0",
     "react-dom": "^15.6.1",
     "react-hot-loader": "next",
