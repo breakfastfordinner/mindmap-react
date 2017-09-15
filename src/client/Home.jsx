@@ -84,8 +84,6 @@ class Home extends React.Component {
     this.setState({ value: '' })
   };
 
-
-
   async destroyMap(mapId) {
     await MapModel.destroyMap(mapId);
     this.props.updateMaps();

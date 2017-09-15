@@ -6,41 +6,6 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import {indigo500} from 'material-ui/styles/colors'
 
-/*
-    let modalStyle = {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      zIndex: '9999',
-      background: '#fff',
-      borderRadius: '10px',
-
-    }
-
-    let backdropStyle = {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      top: '0px',
-      left: '0px',
-      zIndex: '9998',
-      background: 'rgba(0, 0, 0, 0.3)'
-    }
-
-    return (
-      <div>
-        <div style={modalStyle}>
-        <button onClick={this.closeModal}>X</button>
-        Update your node:
-        <form className='nodeNameForm' onSubmit={this.handleOnNodeNameSubmit}>
-          <TextField className="nodeNameUpdate" name="nodeNameUpdate" placeholder="enter new name" />
-          <input type="submit"/>
-        </form>
-        </div>
-        <div style={backdropStyle} />
-*/
-
 class NodeNameModal extends React.Component {
   constructor(props) {
     super(props)
@@ -97,12 +62,10 @@ class NodeNameModal extends React.Component {
 
         <form className='nodeNameForm' onSubmit={this.handleOnNodeNameSubmit}>
           <TextField className="nodeNameUpdate" name="nodeNameUpdate" placeholder="enter new name" />
-          <FlatButton type = "submit" label="accept" primary={true} labelStyle={color= indigo500}/>
-          <FlatButton onClick={this.closeModal} secondary={true} >Cancel</FlatButton>
+          <FlatButton type = "submit" label="accept" primary={true}/>
+          <FlatButton onClick={this.closeModal} secondary={true}>Cancel</FlatButton>
         </form>
         </Dialog>
-
-
 
       </div>
     )
