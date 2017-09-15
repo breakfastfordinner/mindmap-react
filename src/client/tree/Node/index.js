@@ -10,7 +10,6 @@ import './style.css';
 export default class Node extends React.Component {
 
   constructor(props) {
-    // console.log('the props in node:', props)
     super(props);
     const { parent } = props.nodeData;
     const originX = parent ? parent.x : 0;
@@ -27,7 +26,6 @@ export default class Node extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleRightClick = this.handleRightClick.bind(this);
     this.handleTextClick = this.handleTextClick.bind(this);
-    // window = this.setTransformOrientation
   }
 
   componentDidMount() {
@@ -98,55 +96,55 @@ export default class Node extends React.Component {
 
     if (this.props.theme === 'default') {
       //default theme
-      if (this.props.depth === 0){
-        nodeColor = '#540D6E'
-      } else if (this.props.depth === 1){
-        nodeColor = '#0CCE6B'
-      } else if (this.props.depth === 2){
-        nodeColor = '#DCED31'
-      } else if (this.props.depth === 3){
-        nodeColor = '#EF2D56'
-      } else {
-        nodeColor =  '#ED7D3A'
+      if (this.props.nodeData.depth%5 === 0){
+        nodeColor = '#B23409'
+      } else if (this.props.nodeData.depth%5 === 1){
+        nodeColor = '#00B28A'
+      } else if (this.props.nodeData.depth%5 === 2){
+        nodeColor = '#FF5319'
+      } else if (this.props.nodeData.depth%5 === 3){
+        nodeColor = '#19FFCA'
+      } else if (this.props.nodeData.depth%5 === 4) {
+        nodeColor =  '#FF6633'
       }
     } else if (this.props.theme === 'piedpiper') {
         //pied piper
-        if (this.props.depth === 0){
+        if (this.props.nodeData.depth%5 === 0){
           nodeColor = '#182F08'
-        } else if (this.props.depth === 1){
+        } else if (this.props.nodeData.depth%5 === 1){
           nodeColor = '#2E5016'
-        } else if (this.props.depth === 2){
+        } else if (this.props.nodeData.depth%5 === 2){
           nodeColor = '#5C9E2C'
-        } else if (this.props.depth === 3){
+        } else if (this.props.nodeData.depth%5 === 3){
           nodeColor = '#8FD260'
-        } else {
+        } else if (this.props.nodeData.depth%5 === 4) {
           nodeColor =  '#B7FF80'
         }
     } else if (this.props.theme === 'lifeaquatic') {
         //life aquatic
-        if (this.props.depth === 0){
-          nodeColor = '#C4CFD0'
-        } else if (this.props.depth === 1){
-          nodeColor = '#F24D29'
-        } else if (this.props.depth === 2){
-          nodeColor = '#E5C4A1'
-        } else if (this.props.depth === 3){
-          nodeColor = '#1C366B'
-        } else {
-          nodeColor =  '#1DACE8'
+        if (this.props.nodeData.depth%5 === 0){
+          nodeColor = '#172A3A'
+        } else if (this.props.nodeData.depth%5 === 1){
+          nodeColor = '#6A0136'
+        } else if (this.props.nodeData.depth%5 === 2){
+          nodeColor = '#026C7C'
+        } else if (this.props.nodeData.depth%5 === 3){
+          nodeColor = '#B81365'
+        } else if (this.props.nodeData.depth%5 === 4){
+          nodeColor =  '#BFAB25'
         }
     } else if (this.props.theme === 'flame') {
         //flame
-        if (this.props.depth === 0){
-          nodeColor = '#421201'
-        } else if (this.props.depth === 1){
-          nodeColor = '#6B1808'
-        } else if (this.props.depth === 2){
-          nodeColor = '#B5210E'
-        } else if (this.props.depth === 3){
-          nodeColor = '#D33E08'
-        } else {
-          nodeColor =  '#F6AA1C'
+        if (this.props.nodeData.depth%5 === 0){
+          nodeColor = '#401D00'
+        } else if (this.props.nodeData.depth%5 === 1){
+          nodeColor = '#7F3900'
+        } else if (this.props.nodeData.depth%5 === 2){
+          nodeColor = '#BF5600'
+        } else if (this.props.nodeData.depth%5 === 3){
+          nodeColor = '#E56700'
+        } else if (this.props.nodeData.depth%5 === 4){
+          nodeColor =  '#FF7200'
         }
     }
 
@@ -177,8 +175,8 @@ export default class Node extends React.Component {
           className="nodeNameBase"
           textAnchor={this.props.textAnchor}
           style={nodeStyle.name}
-          x="10"
-          y="-10"
+          x="13"
+          y="-17"
           dy=".35em"
           onClick={this.handleTextClick}
         >
