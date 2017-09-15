@@ -133,11 +133,11 @@ export default class Tree extends React.Component {
    *
    * @return {array} `data` array with internal properties added
    */
-  assignInternalProperties(data) {
+  assignInternalProperties(data, depth = 0) {
     return data.map((node) => {
       // console.log('why do they remake id', node,'node.id:', node.id, '??', node.name, '..', node.depth)
       if (!node.depth){
-        node.depth = node.depth;
+        node.depth = depth;
       }
 
       if(!node.id) {
@@ -147,7 +147,7 @@ export default class Tree extends React.Component {
       node._collapsed = false;
       // if there are children, recursively assign properties to them too
       if (node.children && node.children.length > 0) {
-        node.children = this.assignInternalProperties(node.children);
+        node.children = this.assignInternalProperties(node.children, depth+1);
         node._children = node.children;
       }
 
@@ -491,7 +491,7 @@ Tree.defaultProps = {
   scaleExtent: { min: 0.1, max: 1 },
   nodeSize: { x: 150, y: 150 },
   separation: { siblings: .5, nonSiblings: 1 },
-  circleRadius: 7,
+  circleRadius: 10,
   styles: {},
 };
 
