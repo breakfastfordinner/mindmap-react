@@ -20,6 +20,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
 import TextField from 'material-ui/TextField';
 import Cookies from 'universal-cookie';
+import SharedLinkModal from './SharedLinkModal.jsx';
+
 
 const cookies = new Cookies();
 
@@ -49,7 +51,9 @@ class Home extends React.Component {
       createToggle: false,
       open: false,
       selectedId: '',
-      value: ''
+      value: '',
+      toggleSharedLinkModal: false,
+      sharedLink: ''
     };
     this.createMap = this.createMap.bind(this);
     this.destroyMap = this.destroyMap.bind(this);
@@ -57,6 +61,8 @@ class Home extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.toggleOffSharedLinkModal = this.toggleOffSharedLinkModal.bind(this);
+    this.toggleOnSharedLinkModal = this.toggleOnSharedLinkModal.bind(this);
   }
 
 
@@ -88,7 +94,7 @@ class Home extends React.Component {
 
   handleChange(event) {
     this.setState({
-      value: event.target.value,
+      value: event.target.value
     });
   }
 
@@ -100,6 +106,19 @@ class Home extends React.Component {
   handleClose() {
     this.setState({open: false});
   };
+
+  toggleOnSharedLinkModal(mapId) {
+    this.setState({
+      toggleSharedLinkModal: true,
+      sharedLink: `http://localhost:8000/view/${mapId}`
+    })
+  }
+
+  toggleOffSharedLinkModal() {
+    this.setState({
+      toggleSharedLinkModal: false
+    })
+  }
 
   render() {
 
@@ -118,7 +137,7 @@ class Home extends React.Component {
 
         const rightIconMenu = (
           <IconMenu style={styles.moreButton} iconButtonElement={iconButtonElement}>
-            <MenuItem>Share</MenuItem>
+            <MenuItem onClick={()=>{this.toggleOnSharedLinkModal(map._id)}}>Share</MenuItem>
             <MenuItem ><NavLink style={styles.navlink} to={`/canvas/${map._id}`}>Edit</NavLink></MenuItem>
             <MenuItem onClick={()=> {this.handleOpen(map._id)}} >Delete</MenuItem>
           </IconMenu>
@@ -163,6 +182,12 @@ class Home extends React.Component {
                 <ContentAdd />
               </FloatingActionButton>
             </div>
+          }
+          { this.state.toggleSharedLinkModal &&
+          <SharedLinkModal
+            sharedLink={this.state.sharedLink}
+            toggleOffSharedLinkModal={this.toggleOffSharedLinkModal}
+          />
           }
 
           <Dialog
