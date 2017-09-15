@@ -8,7 +8,8 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 const styles = {
   copied: {
-    height: '20px'
+    height: '20px',
+    width: '480px',
   }
 }
 
