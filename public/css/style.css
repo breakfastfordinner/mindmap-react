@@ -5,7 +5,7 @@ body {
   width: 100%;
   margin: auto;
   font-family: 'Roboto';
-  color: #546E7A;
+  color: #37474F;
 }
 
 h1 {
@@ -24,7 +24,8 @@ h1 {
   padding: 60px 0 0 0;
   width: 300px;
   margin: 0 auto;
-}
+  color: #37474F !important;
+ }
 
 .loginLink {
   padding-top: 20px !important;
@@ -47,4 +48,8 @@ h1 {
 .mapTitle {
   text-align: center;
   background-color: rgba(255, 255, 255, 0);
+}
+
+.slider-control {
+    background-color: gray !important;
 }

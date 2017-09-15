@@ -2,11 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {red400, blueGrey800, indigo500, indigoA200, fullWhite} from 'material-ui/styles/colors'
 
 const styles = {
   link: {
     textDecoration: 'none',
-    color: '#FF9800'
+    color: red400
+  },
+  text: {
+    color: blueGrey800
   }
 };
 
@@ -63,7 +67,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="auth">
-        <h1 className="login"> Welcome back! </h1>
+        <h1 className="login" style={styles.text}> Welcome back! </h1>
         <TextField
           name="username"
           type="text"
@@ -83,7 +87,8 @@ class Login extends React.Component {
         <RaisedButton
           className='submitButton'
           label="Submit"
-          primary={true}
+          backgroundColor={red400}
+          labelStyle={{color: '#fff'}}
           onClick={ this.handleLogin } />
         <p> Need an account? <Link style={styles.link} to="/register">Sign Up</Link></p>
       </div>

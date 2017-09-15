@@ -6,6 +6,12 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
+const styles = {
+  copied: {
+    height: '20px'
+  }
+}
+
 
 class SharedLinkModal extends React.Component {
   constructor(props) {
@@ -33,10 +39,6 @@ class SharedLinkModal extends React.Component {
 
   render() {
 
-    const dialog = {
-      width: '480px',
-    };
-
     return (
       <div>
         <Dialog
@@ -44,9 +46,9 @@ class SharedLinkModal extends React.Component {
           title="Copy the following link!"
           modal={false}
           onRequestClose={this.closeModal}
-          contentStyle={dialog}
+          contentStyle={styles.copied}
         >
-        {this.state.copied? <div>Link copied!</div> : null}
+        {this.state.copied? <div style={styles.copied}>Link copied!</div> : <div style={styles.copied}></div>}
         <form className='SharedLink'>
           <TextField className="sharedLink" name="sharedLink" value={this.props.sharedLink} />
           <CopyToClipboard text={this.props.sharedLink} onCopy={this.onCopy}>
@@ -60,7 +62,7 @@ class SharedLinkModal extends React.Component {
     )
   }
 
-   
+
 }
 
 

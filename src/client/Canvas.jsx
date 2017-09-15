@@ -5,6 +5,7 @@ import MapModel from './actions/maps';
 import NodeNameModal from './NodeNameModal.jsx'
 import ToolDrawer from './ToolDrawer.jsx'
 import NodeSlider from './Slider.jsx';
+import {red400} from 'material-ui/styles/colors'
 
 
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
@@ -15,7 +16,6 @@ import IconButton from 'material-ui/IconButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import Slider from 'material-ui/Slider';
 
@@ -253,6 +253,7 @@ class Canvas extends React.Component {
 
         <ReactTooltip place="right" />
         <FloatingActionButton
+          backgroundColor={red400}
           style={styles.drawerButton}
           onClick={this.handleDrawerToggle}
           data-tip="Settings"
