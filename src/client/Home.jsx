@@ -108,7 +108,7 @@ class Home extends React.Component {
   toggleOnSharedLinkModal(mapId) {
     this.setState({
       toggleSharedLinkModal: true,
-      sharedLink: `http://localhost:8000/view/${mapId}`
+      sharedLink: `http://mindflare.me/view/${mapId}`
     })
   }
 

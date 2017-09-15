@@ -67,7 +67,7 @@ class Canvas extends React.Component {
         theme: 'default',
         separation: { siblings: .5, nonSiblings: 1 },
         firstSlider: 0.5,
-        sharedLink: `http://localhost:8000/view/${this.props.match.params.id}`
+        sharedLink: `http://mindflare.me/view/${this.props.match.params.id}`
       }
 
     this.updateMap = this.updateMap.bind(this);
