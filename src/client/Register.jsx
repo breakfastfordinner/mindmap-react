@@ -2,11 +2,15 @@ import React from 'react';
 import { BrowserRouter as Router, withRouter, Route, Link } from 'react-router-dom';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import {red400, blueGrey800, indigo500, indigoA200, fullWhite} from 'material-ui/styles/colors'
 
 const styles = {
   link: {
     textDecoration: 'none',
-    color: '#FF9800'
+    color: red400
+  },
+  text: {
+    color: blueGrey800
   }
 };
 
@@ -31,8 +35,6 @@ class Register extends React.Component {
     this.setState({
       [e.target.name]: e.target.value
     })
-    // console.log('pw:', this.state.password);
-    // console.log('un', this.state.username);
   }
 
   async handleRegister(e) {
@@ -65,7 +67,7 @@ class Register extends React.Component {
   render() {
     return (
       <div className="auth">
-        <h1 className="register"> Create An Account </h1>
+        <h1 className="register" style={styles.text}> Create An Account </h1>
         <TextField
           name="username"
           type="text"
@@ -84,8 +86,9 @@ class Register extends React.Component {
         <br />
         <RaisedButton
           className='submitButton'
-          label="Submit"
-          primary={true}
+          backgroundColor={red400}
+          label="Submit "
+          labelStyle={{color: '#fff'}}
           onClick={ this.handleRegister } />
         <p> Already registered?<Link style={styles.link} to="/login"> Login</Link></p>
       </div>

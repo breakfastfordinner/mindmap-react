@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Link, NavLink, withRouter } from 'react-router-do
 import MapModel from './actions/maps';
 
 import Avatar from 'material-ui/Avatar';
+import {red400} from 'material-ui/styles/colors'
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import Dialog from 'material-ui/Dialog';
 import Divider from 'material-ui/Divider';
@@ -140,7 +141,14 @@ class Home extends React.Component {
       <div>
         <div className="home">
 
-          <FlatButton label="New Map" primary={true} onClick={this.toggleCreateMapForm} />
+          <FlatButton
+            style={{
+              color: red400,
+            }}
+            label="New Map"
+            primary={true}
+            onClick={this.toggleCreateMapForm}
+          />
           <br />
           { this.state.createToggle &&
             <div>
@@ -149,7 +157,9 @@ class Home extends React.Component {
                 hintText='Name your map...'
                 value={ this.state.value }
                 onChange={ this.handleChange } />
-              <FloatingActionButton onClick={this.createMap} mini={true}>
+              <FloatingActionButton
+                backgroundColor={red400}
+                onClick={this.createMap} mini={true}>
                 <ContentAdd />
               </FloatingActionButton>
             </div>

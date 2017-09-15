@@ -4,6 +4,8 @@ import MapModel from './actions/maps';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import {indigo500} from 'material-ui/styles/colors'
+
 /*
     let modalStyle = {
       position: 'absolute',
@@ -95,7 +97,7 @@ class NodeNameModal extends React.Component {
 
         <form className='nodeNameForm' onSubmit={this.handleOnNodeNameSubmit}>
           <TextField className="nodeNameUpdate" name="nodeNameUpdate" placeholder="enter new name" />
-          <FlatButton type = "submit" label="accept" primary={true}/>
+          <FlatButton type = "submit" label="accept" primary={true} labelStyle={color= indigo500}/>
           <FlatButton onClick={this.closeModal} secondary={true} >Cancel</FlatButton>
         </form>
         </Dialog>
@@ -106,7 +108,7 @@ class NodeNameModal extends React.Component {
     )
   }
 
-   
+
 }
 
 

@@ -95,11 +95,11 @@ class ToolDrawer extends React.Component {
 
           {!this.props.view && <ListItem primaryText="Share" onClick={this.toggleOnSharedLinkModal}/>}
           { this.state.toggleSharedLinkModal &&
-          <SharedLinkModal
-            sharedLink={this.props.sharedLink}
-            toggleOffSharedLinkModal={this.toggleOffSharedLinkModal}
-          />
-        }
+            <SharedLinkModal
+              sharedLink={this.props.sharedLink}
+              toggleOffSharedLinkModal={this.toggleOffSharedLinkModal}
+            />
+          }
           </List>
         </Drawer>
       </div>
